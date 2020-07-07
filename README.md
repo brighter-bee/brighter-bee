@@ -1,6 +1,6 @@
 # Installation guide
 
-Download and setuo node using link https://nodejs.org/en/
+Download and setup node using link https://nodejs.org/en/
 
 ```
 cd my-app
