@@ -40,19 +40,19 @@ class Opportunity(models.Model):
 
 class Person(models.Model):
     TYPES = (
-        'Student',
-        'Professional',
-        'Organization',
-        'Others'
+        ('S', 'Student'),
+        ('p', 'Professional'),
+        ('Z', 'Organization'),
+        ('O', 'Others')
     )
-    type = models.TextField()
+    type = models.TextField(choices=TYPES)
     name = models.CharField(max_length=100)
     desc = models.TextField()
     location = models.TextField()
     avatar = models.ImageField(upload_to='images/', default='images/avatar.jpg')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    skills = models.ManyToManyField(Skill)
-    opportunities = models.ManyToManyField(Opportunity)
+    skills = models.ManyToManyField(Skill, blank=True)
+    opportunities = models.ManyToManyField(Opportunity, blank=True)
 
     def __str__(self):
         return self.name + " - " + self.user.username
@@ -66,6 +66,9 @@ class Meeting(models.Model):
     number = models.TextField()
     time = models.DateTimeField()
     participants = models.ManyToManyField(Person)
+
+    def __str__(self):
+        return self.name + " - " + self.number
 
 
 class AbstractPost(models.Model):
@@ -82,6 +85,12 @@ class AbstractPost(models.Model):
 class Post(AbstractPost):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class Reply(AbstractPost):
     replyTo = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.replyTo.id) + " - reply"
