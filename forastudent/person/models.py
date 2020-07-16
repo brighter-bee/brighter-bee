@@ -37,6 +37,9 @@ class Opportunity(models.Model):
     def __str__(self):
         return self.name + " - " + self.type
 
+    class Meta:
+        verbose_name_plural = 'Opportunities'
+
 
 class Person(models.Model):
     TYPES = (
@@ -94,3 +97,6 @@ class Reply(AbstractPost):
 
     def __str__(self):
         return str(self.replyTo.id) + " - reply"
+
+    class Meta:
+        verbose_name_plural = 'Replies'
