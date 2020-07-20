@@ -44,6 +44,26 @@ class Opportunity(models.Model):
         verbose_name_plural = 'Opportunities'
 
 
+class ForumSection(models.Model):
+    name = models.CharField(max_length=100)
+    desc = models.TextField()
+    order = models.PositiveIntegerField()
+    isDeleted = models.BooleanField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+    icon = models.ImageField(upload_to='images/', default='images/avatar.jpg')
+
+    def __str__(self):
+        return "Category: " + self.name
+
+
+class ForumCategory(ForumSection):
+    section = models.ForeignKey(ForumSection, on_delete=models.CASCADE, related_name="BelongsForumSection")
+
+    def __str__(self):
+        return "Category: " + self.name
+
+
 class Person(models.Model):
     TYPES = (
         ('S', 'Student'),
@@ -60,6 +80,8 @@ class Person(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     skills = models.ManyToManyField(Skill, blank=True)
     opportunities = models.ManyToManyField(Opportunity, blank=True)
+    forumSection = models.ManyToManyField(ForumSection, blank=True, related_name="ManagesForumSection")
+    forumCategory = models.ManyToManyField(ForumCategory, blank=True, related_name="ManagesForumCategory")
 
     def __str__(self):
         return self.name + " - " + self.user.username
@@ -79,8 +101,9 @@ class Meeting(models.Model):
 
 
 class AbstractPost(models.Model):
-    isOriginal = models.BooleanField()
+    isDeleted = models.BooleanField()
     content = models.TextField()
+    markdown = models.TextField(null=True, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
     poster = models.ForeignKey(Person, on_delete=models.CASCADE)
@@ -91,6 +114,7 @@ class AbstractPost(models.Model):
 
 class Post(AbstractPost):
     name = models.CharField(max_length=100)
+    category = models.ForeignKey(ForumCategory, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
