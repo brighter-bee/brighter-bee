@@ -54,7 +54,7 @@ class ForumSection(models.Model):
     icon = models.ImageField(upload_to='images/', default='images/avatar.jpg')
 
     def __str__(self):
-        return "Category: " + self.name
+        return "Section: " + self.name
 
 
 class ForumCategory(ForumSection):
@@ -62,6 +62,9 @@ class ForumCategory(ForumSection):
 
     def __str__(self):
         return "Category: " + self.name
+
+    class Meta:
+        verbose_name_plural = 'Forum Categories'
 
 
 class Person(models.Model):
