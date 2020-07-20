@@ -10,4 +10,8 @@ admin.site.register(Person)
 admin.site.register(Meeting)
 admin.site.register(Post)
 admin.site.register(Reply)
+admin.site.register(Course)
+admin.site.register(ForumCategory)
+admin.site.register(ForumSection)
+
 
