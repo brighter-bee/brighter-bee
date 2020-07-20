@@ -47,7 +47,8 @@ class Opportunity(models.Model):
 class Person(models.Model):
     TYPES = (
         ('S', 'Student'),
-        ('p', 'Professional'),
+        ('A', 'Academic Mentor'),
+        ('I', 'Industry Mentor'),
         ('Z', 'Organization'),
         ('O', 'Others')
     )
