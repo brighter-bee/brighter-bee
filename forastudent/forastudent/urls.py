@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 
 import person.api_views
@@ -24,6 +24,9 @@ urlpatterns = [
     path('api/v2/persons', person.api_views.PersonList.as_view()),
     path('api/v2/meetings', person.api_views.MeetingList.as_view()),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/v2/meetings/new', person.api_views.MeetingCreate.as_view()),
+    path('api/v2/meetings/<int:id>/', person.api_views.MeetingRetrieveUpdateDestroy.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
