@@ -83,8 +83,6 @@ class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     skills = models.ManyToManyField(Skill, blank=True)
     opportunities = models.ManyToManyField(Opportunity, blank=True)
-    forumSection = models.ManyToManyField(ForumSection, blank=True, related_name="ManagesForumSection")
-    forumCategory = models.ManyToManyField(ForumCategory, blank=True, related_name="ManagesForumCategory")
 
     def __str__(self):
         return self.name + " - " + self.user.username
