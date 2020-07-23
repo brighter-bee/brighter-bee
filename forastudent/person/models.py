@@ -80,7 +80,7 @@ class Person(models.Model):
     desc = models.TextField()
     location = models.TextField()
     avatar = models.ImageField(upload_to='images/', default='images/avatar.jpg')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     skills = models.ManyToManyField(Skill, blank=True)
     opportunities = models.ManyToManyField(Opportunity, blank=True)
     forumSection = models.ManyToManyField(ForumSection, blank=True, related_name="ManagesForumSection")
