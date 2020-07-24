@@ -27,6 +27,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/v2/meetings/new', person.api_views.MeetingCreate.as_view()),
     path('api/v2/meetings/<int:id>/', person.api_views.MeetingRetrieveUpdateDestroy.as_view()),
+    path('api/v2/accounts/', include('rest_registration.api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
