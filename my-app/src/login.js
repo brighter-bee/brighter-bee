@@ -31,6 +31,7 @@ class LoginPage extends React.Component{
         axios.post('http://localhost:8000/api/v2/accounts/login/', this.state.userData)
 			.then((response) => {
 				console.log(response);
+				window.location.pathname = '/home'
 			}, (error) => {
 				console.log(error);
 			});
