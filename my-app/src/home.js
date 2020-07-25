@@ -12,6 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -47,7 +48,7 @@ export default function ClippedDrawer() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Website Name
+            BrighterBee
           </Typography>
         </Toolbar>
       </AppBar>
@@ -62,7 +63,7 @@ export default function ClippedDrawer() {
         <div className={classes.drawerContainer}>
           <List>
             {['Forum', 'Find Jobs', 'Skill Up', 'Set Uo Meeting','Find Projects'].map((text, index) => (
-              <ListItem button key={text}>
+              <ListItem button component={Link} to='/skillRecommend'>
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
