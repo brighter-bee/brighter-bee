@@ -15,10 +15,10 @@ import CloseIcon from '@material-ui/icons/Close';
 class LoginPage extends React.Component{
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             userData:{
-                userName:'',
+                login:'',
                 password:'',
             },
             alertOpen:false
@@ -27,37 +27,43 @@ class LoginPage extends React.Component{
 
     LoginHandler = () => {
         // check if user and password exists in database
-        // console.log("Login action fired");
-        // axios.post('http://localhost:4000/api/auth',this.state.userData)
-        //     .then(res=>{
-        //         if(res.data.data.length){
-        //             // if it does -> redirect to HomePage
-        //             auth.setUserDetails(this.state.userData.userName)
-        //             auth.login(()=>{
-        //                 this.props.history.push('/home')
-        //             })
-        //         }else{
-        //             // if it does not -> throw error
-        //             console.log("Username or password incorrect")
-        //             console.log(res.data.data.length)
-        //             this.setState({alertOpen:true})
-        //             console.log(this.state)
-        //         }
-        //     })
-        //     .catch(error=>{
-        //         console.log(error.response)
-        //     })
-    }
+        console.log("Login action fired");
+        axios.post('http://localhost:8000/api/v2/accounts/login/', this.state.userData)
+			.then((response) => {
+				console.log(response);
+			}, (error) => {
+				console.log(error);
+			});
+			// .then(res=>{
+            //     if (res.data.data.length){
+            //         // if it does -> redirect to HomePage
+            //         // auth.setUserDetails(this.state.userData.userName);
+            //         // auth.login(()=>{
+            //         //     this.props.history.push('/home')
+            //         // });
+			// 		console.log("Login success");
+            //     } else{
+            //         // if it does not -> throw error
+            //         console.log("Username or password incorrect");
+            //         console.log(res.data.data.length);
+            //         this.setState({alertOpen:true});
+            //         console.log(this.state);
+            //     }
+            // })
+            // .catch(error=>{
+            //     console.log(error)
+            // })
+    };
 
     HandleOnBlur(event){
-        var Obj=this.state.userData
-        Obj[event.target.name] = event.target.value
-        this.setState({userData:Obj,alertOpen:this.state.alertOpen})
+        var Obj=this.state.userData;
+        Obj[event.target.name] = event.target.value;
+        this.setState({userData:Obj,alertOpen:this.state.alertOpen});
         console.log(this.state)
     }
 
-    HandleClose(event){
-        console.log(this.state)
+    HandleClose(){
+        console.log(this.state);
         this.setState({userData:{...this.state.userData},alertOpen:false})
     }
 
@@ -77,7 +83,7 @@ class LoginPage extends React.Component{
                             label="User Name"
                             type="email"
                             fullWidth
-                            name='userName'
+                            name='login'
                             required
                             onBlur = {this.HandleOnBlur.bind(this)}
                         />
@@ -89,7 +95,7 @@ class LoginPage extends React.Component{
                             fullWidth
                             name='password'
                             required
-                            onBlur = {this.HandleOnBlur.bind(this)}   
+                            onBlur = {this.HandleOnBlur.bind(this)}
                         />
                     </DialogContent>
                     <DialogActions>
