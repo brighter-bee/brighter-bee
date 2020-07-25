@@ -11,18 +11,26 @@ import axios from 'axios';
 class SignUpPage extends React.Component{
 
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
-            userName:'',
+            username:'',
+			email:'',
             password:'',
-            firstName:'',
-            lastName:''
+			password_confirm:'',
+            first_name:'',
+            last_name:''
         }
     }
 
     SignUpHandler = () => {
         // check if entry exists in database
-
+		axios.post('http://localhost:8000/api/v2/accounts/register/', this.state)
+			.then((response) => {
+				console.log(response);
+				window.location.pathname = '/login'
+			}, (error) => {
+				console.log(error);
+			});
         // if it does throw error
 
         // if it does not create entry in user table in the database
@@ -37,23 +45,25 @@ class SignUpPage extends React.Component{
         // //console.log(this.state)
         // console.log("Sign up is done")
         // redirect to login page
-    }
+    };
 
     setUserName(event){
-        this.setState({userName:event.target.value}) 
+        this.setState({username:event.target.value});
+		this.setState({email:event.target.value});
     }
 
     setPassword(event){
-        this.setState({password:event.target.value}) 
+        this.setState({password:event.target.value});
+		this.setState({password_confirm:event.target.value})
     }
 
 
     setFirstName(event){
-        this.setState({firstName:event.target.value}) 
+        this.setState({first_name:event.target.value})
     }
 
     setLastName(event){
-        this.setState({lastName:event.target.value}) 
+        this.setState({last_name:event.target.value})
     }
 
     render(){
@@ -71,7 +81,7 @@ class SignUpPage extends React.Component{
                             margin="dense"
                             id="first-name"
                             label="First Name"
-                            type="email"
+                            type="text"
                             fullWidth
                             onBlur={this.setFirstName.bind(this)}
                         />
@@ -79,7 +89,7 @@ class SignUpPage extends React.Component{
                             margin="dense"
                             id="last-name"
                             label="Last Name"
-                            type="email"
+                            type="text"
                             fullWidth
                             onBlur={this.setLastName.bind(this)}
                         />
@@ -97,7 +107,7 @@ class SignUpPage extends React.Component{
                             label="Password"
                             type="password"
                             fullWidth
-                            onBlur={this.setPassword.bind(this)}   
+                            onBlur={this.setPassword.bind(this)}
                         />
                     </DialogContent>
                     <DialogActions>
