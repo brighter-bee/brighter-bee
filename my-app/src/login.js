@@ -30,6 +30,12 @@ class LoginPage extends React.Component{
         console.log("Login action fired");
         axios.post('http://localhost:8000/api/v2/accounts/login/', this.state.userData)
 			.then((response) => {
+        this.setState({
+            userData: {
+                username: response.data.username,
+                password: response.data.password
+            }
+          })
 				console.log(response);
 				window.location.pathname = '/home'
 			}, (error) => {
