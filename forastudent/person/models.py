@@ -36,6 +36,7 @@ class Opportunity(models.Model):
     link = models.TextField()
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+    skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
         return self.name + " - " + self.type
