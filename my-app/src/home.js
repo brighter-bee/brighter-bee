@@ -14,7 +14,22 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { Link } from 'react-router-dom';
 
+// icons 
+import ForumIcon from '@material-ui/icons/Forum';
+import WorkIcon from '@material-ui/icons/Work';
+import BuildIcon from '@material-ui/icons/Build';
+import GroupIcon from '@material-ui/icons/Group';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+
 const drawerWidth = 240;
+
+const ALL_PAGES = [
+ {name:'Forum',icon:<ForumIcon />},
+ {name:'Find Jobs',icon:<WorkIcon />}, 
+ {name:'Skill Up',icon:<BuildIcon />}, 
+ {name:'Set Up Meeting',icon:<GroupIcon />},
+ {name:'Find Projects', icon:<AssessmentIcon />}
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +63,7 @@ export default function ClippedDrawer() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            BrighterBee
+            Brighter Bee
           </Typography>
         </Toolbar>
       </AppBar>
@@ -62,21 +77,16 @@ export default function ClippedDrawer() {
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            {['Forum', 'Find Jobs', 'Skill Up', 'Set Uo Meeting','Find Projects'].map((text, index) => (
+            {ALL_PAGES.map((text, index) => (
               <ListItem button component={Link} to='/skillRecommend'>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemIcon>{text.icon}</ListItemIcon>
+                <ListItemText primary={text.name} />
               </ListItem>
             ))}
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+           
           </List>
         </div>
       </Drawer>
@@ -93,17 +103,6 @@ export default function ClippedDrawer() {
           imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
           arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
           donec massa sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-          tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-          hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-          tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-          nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
       </main>
     </div>
