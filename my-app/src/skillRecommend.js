@@ -80,16 +80,12 @@ class Skill extends React.Component {
   constructor(props) {
       super(props);
 
-      this.state = {
-        skill: []
-      }
-
       // this.state = {
       //     username: this.props.match.params.username
       //   };
       this.state = {
           userData:{
-              id: "1",
+              username: "1",
               skill: "",
           }
         }
@@ -100,12 +96,12 @@ class Skill extends React.Component {
       }
 
       async getSkills() {
-          await axios.get('http://localhost:8000/personskill/' + this.state.userData.id)
+          await axios.get('http://localhost:8000/personskill/' + this.state.userData.username)
           .then(response => {
               console.log(response)
               this.setState({
                 userData:{
-                    id: "1",
+                    username: "sahil.punchhi",
                     skill: response.data.results[0].skills,
                 }
               })
