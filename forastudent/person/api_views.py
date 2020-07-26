@@ -34,15 +34,23 @@ class MeetingList(ListAPIView):
     search_fields = ('name',)
     pagination_class = GeneralPagination
 
+
 user_skill_dict = defaultdict(list)
 project_skill_dict = defaultdict(list)
 category_skill_dict = defaultdict(list)
-
 # retrieve list of all skills for a specific user
 class Person_SkillList(ListAPIView):
 
+    username = "sahil.punchhi"
+    person_id = 1
+
+    # with connection.cursor() as cursor:
+    #     cursor.execute('''SELECT a.id FROM person_person a
+    #     LEFT JOIN person_auth_user b on a.user_id = b.id
+    #     WHERE b.username = %s''', [username])
+    #     row = cursor.fetchone()
+    # person_id = row[0]
     # for testing purposes
-    myid = 1
 
     with connection.cursor() as cursor:
         cursor.execute('''SELECT * FROM person_skill a''')
@@ -51,7 +59,6 @@ class Person_SkillList(ListAPIView):
         if flag:
             print(row)
     ########################################
-
 
     def user_skill(my_id):
         my_list=[]
@@ -74,7 +81,7 @@ class Person_SkillList(ListAPIView):
         return category_skill_dict
 
 
-    user_skill_dict[myid] = user_skill(myid)
+    user_skill_dict[person_id] = user_skill(person_id)
     category_skill_dict = category_skill()
     if flag:
         print(user_skill_dict)
@@ -160,10 +167,10 @@ class Person_SkillList(ListAPIView):
 
         return recommended_skill
 
-    recommend_skill_algo(myid, user_skill_dict, category_skill_dict, project_skill_dict)
+    recommend_skill_algo(person_id, user_skill_dict, category_skill_dict, project_skill_dict)
 
     queryset = Person.objects.all()
-    lookup_field = 'user'
+    lookup_field = 'location'
     serializer_class = PersonSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     pagination_class = GeneralPagination
