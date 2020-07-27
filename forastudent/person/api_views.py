@@ -22,9 +22,14 @@ class PersonList(ListAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    filter_fields = ('type', 'location')
+    filter_fields = ('type', 'location', 'user')
     search_fields = ('name',)
-    pagination_class = GeneralPagination
+
+
+class PersonRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = Person.objects.all()
+    lookup_field = 'id'
+    serializer_class = PersonSerializer
 
 
 class MeetingList(ListAPIView):

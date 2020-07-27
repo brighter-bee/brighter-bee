@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/v2/skills', person.api_views.RecommendSkill.as_view()),
     path('recommend/<int:person_id>', person.views.recommend_skill),
     path('api/v2/persons', person.api_views.PersonList.as_view()),
+    path('api/v2/persons/<int:id>/', person.api_views.PersonRetrieveUpdateDestroy.as_view()),
     path('api/v2/meetings', person.api_views.MeetingList.as_view()),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
