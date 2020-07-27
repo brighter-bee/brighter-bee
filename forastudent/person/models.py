@@ -133,7 +133,6 @@ class Reply(AbstractPost):
 
 
 class Course(models.Model):
-    code = models.CharField(max_length=100)
     name = models.CharField(max_length=100, blank=True, null=True)
     link = models.TextField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
@@ -145,6 +144,8 @@ class Course(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=1000)
     desc = models.TextField(blank=True, null=True)
+    start_date = models.DateTimeField(blank=True, null=True)
+    duration = models.CharField(max_length=200, blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
