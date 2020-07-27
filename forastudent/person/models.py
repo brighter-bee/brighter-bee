@@ -140,3 +140,12 @@ class Course(models.Model):
 
     def __str__(self):
         return self.code + " " + self.name
+
+
+class Project(models.Model):
+    name = models.CharField(max_length=1000)
+    desc = models.TextField(blank=True, null=True)
+    skills = models.ManyToManyField(Skill, blank=True)
+
+    def __str__(self):
+        return self.name

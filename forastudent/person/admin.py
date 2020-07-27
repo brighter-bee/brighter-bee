@@ -5,6 +5,7 @@ from .models import *
 
 admin.site.register(Category)
 admin.site.register(Skill)
+admin.site.register(Project)
 admin.site.register(Opportunity)
 admin.site.register(Person)
 admin.site.register(Meeting)
