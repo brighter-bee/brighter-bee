@@ -42,3 +42,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class RecommendSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ('user', 'skills')
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        hottest_skill = Skill.objects.all().order_by('name')[:1].get().name
+        data['recommended_skill'] = hottest_skill
+        return data
