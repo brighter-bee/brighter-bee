@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React,{useEffect,useState} from 'react';
+import { fade,makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,6 +24,11 @@ import ForumsPage from './forum';
 import FindJobsPage from './findJobs';
 import SkillRecommend from './skillRecommend';
 
+// search
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import Button from '@material-ui/core/Button';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +37,49 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(25),
+      width: 'auto',
+    },
+  },
+  searchBtn:{
+    color:'white',
+    backgroundColor:'inherit',
+    borderColor:'white',
+    border:'1px solid white',
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '60ch',
+    },
   },
   drawer: {
     width: drawerWidth,
@@ -49,10 +97,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ClippedDrawer() {
+function ClippedDrawer(props) {
   const classes = useStyles();
 
   let { path, url } = useRouteMatch();
+  
+  const [showSearch, setshowSearch] = useState(false);
+
+  useEffect(() => {
+   props.location.pathname.includes('findjobs') ? setshowSearch(true):setshowSearch(false);
+  }, [props.location]);
 
   const ALL_PAGES = [
     {name:'Forum',icon:<ForumIcon />,urlVal:url + '/forums'},
@@ -70,6 +124,20 @@ function ClippedDrawer() {
           <Typography variant="h6" noWrap>
             Brighter Bee
           </Typography>
+          { showSearch && <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>}
+          {showSearch && <Button className={classes.searchBtn} >Search</Button>}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -122,4 +190,4 @@ function ClippedDrawer() {
   );
 }
 
-export default (withRouter)(ClippedDrawer);
+export default withRouter(ClippedDrawer);
