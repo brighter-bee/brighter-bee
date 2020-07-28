@@ -35,8 +35,8 @@ class LoginPage extends React.Component {
                     .then((response) => {
                         console.log(response);
                         localStorage.setItem('user', response.data[0].id);
+                        window.location.pathname = '/home'
                     });
-                window.location.pathname = '/home'
             }, (error) => {
                 console.log(error);
             });
