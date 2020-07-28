@@ -25,22 +25,22 @@ const useStyles = makeStyles({
 
 export default function JobCard(props) {
   const classes = useStyles();
-  let string1;
+  var sanitizeHtml = require('sanitize-html');
 
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {props.company}
+         {props.company}
         </Typography>
         <Typography variant="h5" component="h2">
-         {props.title.replace('<strong>','').replace('</strong>','')}
+         {sanitizeHtml(props.title,{allowedTags: []})}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           {props.location}
         </Typography>
         <Typography variant="body2" component="p">
-          {props.description}
+          {sanitizeHtml(props.description,{allowedTags:[]})}
         </Typography>
       </CardContent>
       <CardActions>
