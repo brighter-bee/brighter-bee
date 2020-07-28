@@ -24,6 +24,7 @@ import person.views
 urlpatterns = [
     path('api/v2/skills', person.api_views.RecommendSkill.as_view()),
     path('recommend/<int:person_id>', person.views.recommend_skill),
+    path('api/v2/users', person.api_views.UserList.as_view()),
     path('api/v2/persons', person.api_views.PersonList.as_view()),
     path('api/v2/persons/<int:id>/', person.api_views.PersonRetrieveUpdateDestroy.as_view()),
     path('api/v2/meetings', person.api_views.MeetingList.as_view()),

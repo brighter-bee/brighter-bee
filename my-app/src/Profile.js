@@ -20,7 +20,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/api/v2/persons?user=1')
+        axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
             .then((response) => {
                 console.log(response);
                 this.setState({
@@ -44,7 +44,7 @@ class Profile extends Component {
 
     updateProfile(e) {
         e.preventDefault();
-        axios.patch('http://localhost:8000/api/v2/persons/1/', this.state)
+        axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', this.state)
             .then((response) => {
                 console.log(response);
             });

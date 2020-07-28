@@ -18,6 +18,13 @@ class GeneralPagination(LimitOffsetPagination):
     max_limit = 10
 
 
+class UserList(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    filter_backends = (DjangoFilterBackend, )
+    filter_fields = ('username', )
+
+
 class PersonList(ListAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
