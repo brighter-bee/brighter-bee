@@ -17,12 +17,14 @@ import WorkIcon from '@material-ui/icons/Work';
 import BuildIcon from '@material-ui/icons/Build';
 import GroupIcon from '@material-ui/icons/Group';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 // routes
 import {Route, Switch ,useRouteMatch,Link,withRouter,useParams} from 'react-router-dom';
 import ForumsPage from './forum';
 import FindJobsPage from './findJobs';
 import SkillRecommend from './skillRecommend';
+import Profile from './Profile';
 
 // search
 import SearchIcon from '@material-ui/icons/Search';
@@ -101,7 +103,7 @@ function ClippedDrawer(props) {
   const classes = useStyles();
 
   let { path, url } = useRouteMatch();
-  
+
   const [showSearch, setshowSearch] = useState(false);
 
   useEffect(() => {
@@ -110,10 +112,11 @@ function ClippedDrawer(props) {
 
   const ALL_PAGES = [
     {name:'Forum',icon:<ForumIcon />,urlVal:url + '/forums'},
-    {name:'Find Jobs',icon:<WorkIcon />,urlVal:url + '/findjobs'}, 
-    {name:'Skill Up',icon:<BuildIcon />,urlVal:url + '/skillup'}, 
+    {name:'Find Jobs',icon:<WorkIcon />,urlVal:url + '/findjobs'},
+    {name:'Skill Up',icon:<BuildIcon />,urlVal:url + '/skillup'},
     {name:'Set Up Meeting',icon:<GroupIcon />,urlVal:url + '/meetings'},
-    {name:'Find Projects', icon:<AssessmentIcon />,urlVal:url + '/findprojects'}
+    {name:'Find Projects', icon:<AssessmentIcon />,urlVal:url + '/findprojects'},
+    {name:'My Profile', icon:<AccountBoxIcon />,urlVal:url + '/profile'}
    ];
 
   return (
@@ -159,7 +162,7 @@ function ClippedDrawer(props) {
           </List>
           <Divider />
           <List>
-           
+
           </List>
         </div>
       </Drawer>
@@ -183,6 +186,9 @@ function ClippedDrawer(props) {
               </Route>
               <Route path={`${path}/findprojects`}>
                 <SkillRecommend/>
+              </Route>
+              <Route path={`${path}/profile`}>
+                <Profile />
               </Route>
           </Switch>
       </main>

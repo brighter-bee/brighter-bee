@@ -12,70 +12,69 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-class LoginPage extends React.Component{
+class LoginPage extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            userData:{
-                login:'',
-                password:'',
+            userData: {
+                login: '',
+                password: '',
             },
-            alertOpen:false
-        }
+            alertOpen: false
+        };
     }
 
     LoginHandler = () => {
         // check if user and password exists in database
         console.log("Login action fired");
         axios.post('http://localhost:8000/api/v2/accounts/login/', this.state.userData)
-			.then((response) => {
-        this.setState({
-            userData: {
-                username: response.data.username,
-                password: response.data.password
-            }
-          })
-				console.log(response);
-				window.location.pathname = '/home'
-			}, (error) => {
-				console.log(error);
-			});
-			// .then(res=>{
-            //     if (res.data.data.length){
-            //         // if it does -> redirect to HomePage
-            //         // auth.setUserDetails(this.state.userData.userName);
-            //         // auth.login(()=>{
-            //         //     this.props.history.push('/home')
-            //         // });
-			// 		console.log("Login success");
-            //     } else{
-            //         // if it does not -> throw error
-            //         console.log("Username or password incorrect");
-            //         console.log(res.data.data.length);
-            //         this.setState({alertOpen:true});
-            //         console.log(this.state);
-            //     }
-            // })
-            // .catch(error=>{
-            //     console.log(error)
-            // })
+            .then((response) => {
+                console.log(response);
+                axios.get('http://localhost:8000/api/v2/users?username=' + this.state.userData.login)
+                    .then((response) => {
+                        console.log(response);
+                        localStorage.setItem('user', response.data[0].id);
+                        window.location.pathname = '/home'
+                    });
+            }, (error) => {
+                console.log(error);
+            });
+        // .then(res=>{
+        //     if (res.data.data.length){
+        //         // if it does -> redirect to HomePage
+        //         // auth.setUserDetails(this.state.userData.userName);
+        //         // auth.login(()=>{
+        //         //     this.props.history.push('/home')
+        //         // });
+        // 		console.log("Login success");
+        //     } else{
+        //         // if it does not -> throw error
+        //         console.log("Username or password incorrect");
+        //         console.log(res.data.data.length);
+        //         this.setState({alertOpen:true});
+        //         console.log(this.state);
+        //     }
+        // })
+        // .catch(error=>{
+        //     console.log(error)
+        // })
     };
 
-    HandleOnBlur(event){
-        var Obj=this.state.userData;
+    HandleOnBlur(event) {
+        var Obj = this.state.userData;
         Obj[event.target.name] = event.target.value;
-        this.setState({userData:Obj,alertOpen:this.state.alertOpen});
+        this.setState({userData: Obj, alertOpen: this.state.alertOpen});
         console.log(this.state)
     }
 
-    HandleClose(){
+    HandleClose() {
         console.log(this.state);
-        this.setState({userData:{...this.state.userData},alertOpen:false})
+        this.setState({userData: {...this.state.userData}, alertOpen: false})
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <Dialog open={true}>
                     <DialogTitle id="form-dialog-title">Login</DialogTitle>
@@ -92,7 +91,7 @@ class LoginPage extends React.Component{
                             fullWidth
                             name='login'
                             required
-                            onBlur = {this.HandleOnBlur.bind(this)}
+                            onBlur={this.HandleOnBlur.bind(this)}
                         />
                         <TextField
                             margin="dense"
@@ -102,7 +101,7 @@ class LoginPage extends React.Component{
                             fullWidth
                             name='password'
                             required
-                            onBlur = {this.HandleOnBlur.bind(this)}
+                            onBlur={this.HandleOnBlur.bind(this)}
                         />
                     </DialogContent>
                     <DialogActions>
@@ -116,22 +115,22 @@ class LoginPage extends React.Component{
                 </Dialog>
                 <Snackbar
                     anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                        vertical: 'top',
+                        horizontal: 'center',
                     }}
                     onClose={this.HandleClose.bind(this)}
                     open={this.state.alertOpen}
                     autoHideDuration={6000}
                     message="Username or password incorrect"
                     action={
-                    <React.Fragment>
-                        <Button color="secondary" size="small" onClick={this.HandleClose.bind(this)}>
-                        UNDO
-                        </Button>
-                        <IconButton size="small" aria-label="close" color="inherit" onClick={this.HandleClose.bind(this)} >
-                        <CloseIcon fontSize="small" />
-                        </IconButton>
-                    </React.Fragment>
+                        <React.Fragment>
+                            <Button color="secondary" size="small" onClick={this.HandleClose.bind(this)}>
+                                UNDO
+                            </Button>
+                            <IconButton size="small" aria-label="close" color="inherit" onClick={this.HandleClose.bind(this)}>
+                                <CloseIcon fontSize="small"/>
+                            </IconButton>
+                        </React.Fragment>
                     }
                 />
             </div>

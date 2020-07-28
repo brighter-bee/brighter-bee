@@ -12,7 +12,7 @@ class LandingPage extends React.Component {
                     <Route exact path='/' component={LoginPage}/>
                     <Route exact path='/login' component={LoginPage}/>
                     <Route exact path='/signup' component={SignUpPage}/>
-                    <Route path='/home' component={ClippedDrawer} />
+                    <Route path='/home' component={ClippedDrawer}/>
                 </Switch>
             </BrowserRouter>
         );
