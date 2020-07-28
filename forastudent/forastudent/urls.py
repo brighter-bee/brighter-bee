@@ -23,7 +23,7 @@ import person.views
 import person.skill_view
 
 urlpatterns = [
-    path('api/v2/skills', person.api_views.RecommendSkill.as_view()),
+    # path('api/v2/skills', person.api_views.RecommendSkill.as_view()),
     path('recommend/<int:person_id>', person.views.recommend_skill),
     path('api/v2/users', person.api_views.UserList.as_view()),
     path('api/v2/persons', person.api_views.PersonList.as_view()),
