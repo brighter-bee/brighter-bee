@@ -7,6 +7,7 @@ export default function FindJobsPage(props){
         <div>
             {props.jobs.map((job)=>
                 <div key={job.adref} style={{marginTop:'1rem'}}>
+                    {/* load job data here */}
                     <JobCard 
                     title={job.title} 
                     description={job.description}
