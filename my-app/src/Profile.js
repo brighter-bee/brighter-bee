@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
 import axios from "axios";
 
 class Profile extends Component {
@@ -13,7 +14,8 @@ class Profile extends Component {
         this.state = {
             name: '',
             location: '',
-            desc: ''
+            desc: '',
+            avatar: ''
         };
         this.updateField = this.updateField.bind(this);
         this.updateProfile = this.updateProfile.bind(this);
@@ -26,7 +28,8 @@ class Profile extends Component {
                 this.setState({
                     name: response.data[0].name,
                     location: response.data[0].location,
-                    desc: response.data[0].desc
+                    desc: response.data[0].desc,
+                    avatar: response.data[0].avatar
                 });
             });
     }
@@ -53,9 +56,24 @@ class Profile extends Component {
     render() {
         return (
             <React.Fragment>
-                <Typography variant="h6" gutterBottom>
-                    My Profile
-                </Typography>
+                <Grid container spacing={3} justify="space-between">
+                    <Typography variant="h6" gutterBottom>
+                        My Profile
+                    </Typography>
+                    <Avatar alt={this.state.name} src={this.state.avatar}/>
+                    <Button
+                        variant="contained"
+                        component="label"
+                    >
+                        Upload Avatar
+                        <input
+                            type="file"
+                            style={{display: "none"}}
+                            name="avatar"
+                            onChange={this.updateField}
+                        />
+                    </Button>
+                </Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <TextField
