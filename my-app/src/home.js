@@ -30,6 +30,8 @@ import Profile from './Profile';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
+import Axios from 'axios';
+
 
 const drawerWidth = 240;
 
@@ -106,8 +108,29 @@ function ClippedDrawer(props) {
 
   const [showSearch, setshowSearch] = useState(false);
 
+  const [searchValue, setSearchValue] = useState('');
+
+  const [jobList, setJobList] = useState([])
+
+  const updateSearchValue = (event) =>{
+    setSearchValue(event.target.value);
+  }
+
+  const getJobs = () => {
+    const API_URL =  'https://api.adzuna.com/v1/api/jobs/au/search/1?app_id=170a278c&app_key=14c6ba39db072dd540d0dfdb40e57c12&what='+ searchValue;
+    Axios.get(API_URL).then((resp)=>{
+      setJobList([...resp.data.results])
+      console.log(resp.data.results);
+    });
+  }
+
   useEffect(() => {
-   props.location.pathname.includes('findjobs') ? setshowSearch(true):setshowSearch(false);
+   if(props.location.pathname.includes('findjobs')){
+    setshowSearch(true);
+    getJobs();
+   }else{
+    setshowSearch(false);
+   }
   }, [props.location]);
 
   const ALL_PAGES = [
@@ -138,9 +161,10 @@ function ClippedDrawer(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onKeyUp = {updateSearchValue}
             />
           </div>}
-          {showSearch && <Button className={classes.searchBtn} >Search</Button>}
+          {showSearch && <Button onClick={getJobs} className={classes.searchBtn} >Search</Button>}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -154,7 +178,7 @@ function ClippedDrawer(props) {
         <div className={classes.drawerContainer}>
           <List>
             {ALL_PAGES.map((text, index) => (
-              <ListItem button component={Link} to={text.urlVal}>
+              <ListItem key={text.name} button component={Link} to={text.urlVal}>
                 <ListItemIcon>{text.icon}</ListItemIcon>
                 <ListItemText primary={text.name} />
               </ListItem>
@@ -179,7 +203,7 @@ function ClippedDrawer(props) {
                 <SkillRecommend/>
               </Route>
               <Route path={`${path}/findjobs`}>
-                <FindJobsPage/>
+                <FindJobsPage jobs={jobList}/>
               </Route>
               <Route path={`${path}/meetings`}>
                 <SkillRecommend/>
