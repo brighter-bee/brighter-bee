@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.core.cache import cache
 from rest_framework import generics
 
+
 class GeneralPagination(LimitOffsetPagination):
     default_limit = 5
     max_limit = 10
@@ -27,6 +28,10 @@ class PersonList(ListAPIView):
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('type', 'location', 'user')
     search_fields = ('name',)
+
+
+class PersonCreate(CreateAPIView):
+    serializer_class = PersonSerializer
 
 
 class PersonRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):

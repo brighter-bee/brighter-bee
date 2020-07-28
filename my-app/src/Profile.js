@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import axios from "axios";
@@ -60,19 +58,7 @@ class Profile extends Component {
                     <Typography variant="h6" gutterBottom>
                         My Profile
                     </Typography>
-                    <Avatar alt={this.state.name} src={this.state.avatar}/>
-                    <Button
-                        variant="contained"
-                        component="label"
-                    >
-                        Upload Avatar
-                        <input
-                            type="file"
-                            style={{display: "none"}}
-                            name="avatar"
-                            onChange={this.updateField}
-                        />
-                    </Button>
+                    <Avatar>{this.state.name}</Avatar>
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
@@ -108,6 +94,7 @@ class Profile extends Component {
                             onChange={this.updateField}
                         />
                     </Grid>
+                    <ChipsArray/>
                     <Grid item xs={12}>
                         <Button
                             variant="contained"
