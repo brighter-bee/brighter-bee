@@ -13,6 +13,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "latest",
     "react-scripts": "3.4.1",
+    "sanitize-html": "^1.27.1",
     "typescript": "^3.9.7"
   },
   "scripts": {
