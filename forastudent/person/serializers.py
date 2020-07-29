@@ -7,6 +7,13 @@ from collections import defaultdict
 
 flag = True
 
+
+class SkillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = '__all__'
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -20,9 +27,24 @@ class OpportunitySerializer(serializers.ModelSerializer):
 
 
 class PersonSerializer(serializers.ModelSerializer):
+    skills = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='name'
+    )
+
     class Meta:
         model = Person
         fields = '__all__'
+
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     skillList = []
+    #     for skillId in data['skills']:
+    #         skill = Skill.objects.all().get(id=skillId)
+    #         skillList.append(skill)
+    #     data['named_skills'] = serialize('json', skillList)
+    #     return data
 
 
 class MeetingSerializer(serializers.ModelSerializer):

@@ -86,6 +86,13 @@ class MeetingRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         return response
 
 
+class SkillList(ListAPIView):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filter_fields = ('id', )
+    search_fields = ('name',)
+
 # class SkillRecommendList(generics.ListAPIView):
 #
 #     serializer_class = SkillRecommendSerializer

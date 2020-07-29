@@ -5,6 +5,19 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import axios from "axios";
+import {makeStyles} from "@material-ui/core/styles";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Chip from "@material-ui/core/Chip";
+
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 300,
+    },
+}));
 
 class Profile extends Component {
     constructor() {
@@ -13,7 +26,8 @@ class Profile extends Component {
             name: '',
             location: '',
             desc: '',
-            avatar: ''
+            type: '',
+            skills: [],
         };
         this.updateField = this.updateField.bind(this);
         this.updateProfile = this.updateProfile.bind(this);
@@ -27,7 +41,8 @@ class Profile extends Component {
                     name: response.data[0].name,
                     location: response.data[0].location,
                     desc: response.data[0].desc,
-                    avatar: response.data[0].avatar
+                    type: response.data[0].type,
+                    skills: response.data[0].skills
                 });
             });
     }
@@ -61,7 +76,7 @@ class Profile extends Component {
                     <Avatar>{this.state.name}</Avatar>
                 </Grid>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <TextField
                             required
                             id="name"
@@ -72,7 +87,7 @@ class Profile extends Component {
                             onChange={this.updateField}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <TextField
                             required
                             id="location"
@@ -83,7 +98,22 @@ class Profile extends Component {
                             onChange={this.updateField}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <FormControl>
+                            <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                name="type"
+                                value={this.state.type}
+                                onChange={this.updateField}
+                            >
+                                <MenuItem value="A">Academic Mentor</MenuItem>
+                                <MenuItem value="S">Student</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             required
                             id="desc"
@@ -94,7 +124,12 @@ class Profile extends Component {
                             onChange={this.updateField}
                         />
                     </Grid>
-                    <ChipsArray/>
+                    <Grid item xs={12} sm={6}>
+                        <div>Skills:</div>
+                        {this.state.skills.map((item, index) => (
+                            <Chip key={index} label={item} />
+                        ))}
+                    </Grid>
                     <Grid item xs={12}>
                         <Button
                             variant="contained"
