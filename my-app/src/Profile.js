@@ -10,6 +10,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Chip from "@material-ui/core/Chip";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 class Profile extends Component {
     constructor() {
@@ -20,7 +22,7 @@ class Profile extends Component {
             desc: '',
             type: '',
             skills: [],
-
+            success: false
         };
         this.resume = '';
         this.updateField = this.updateField.bind(this);
@@ -64,6 +66,9 @@ class Profile extends Component {
         axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', this.state)
             .then((response) => {
                     console.log(response);
+                    this.setState({
+                        success: true
+                    });
                 }, (error) => {
                     console.log(error);
                 }
@@ -76,6 +81,9 @@ class Profile extends Component {
         axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', data)
             .then((response) => {
                     console.log(response);
+                    this.setState({
+                        success: true
+                    });
                 }, (error) => {
                     console.log(error);
                 }
@@ -151,7 +159,7 @@ class Profile extends Component {
                             variant="contained"
                             component="label"
                         >
-                            Upload File
+                            Upload Resume
                             <input
                                 type="file"
                                 name="resume"
@@ -169,6 +177,11 @@ class Profile extends Component {
                             Update
                         </Button>
                     </Grid>
+                    <Snackbar open={this.state.success} autoHideDuration={6000} anchorOrigin={{horizontal: 'center', vertical: 'top'}} onClose={() => this.setState({success: false})}>
+                        <Alert severity="success">
+                            You have updated your profile!
+                        </Alert>
+                    </Snackbar>
                 </Grid>
             </React.Fragment>
         )
