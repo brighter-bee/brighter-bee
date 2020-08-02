@@ -5,19 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import axios from "axios";
-import {makeStyles} from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Chip from "@material-ui/core/Chip";
-
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 300,
-    },
-}));
 
 class Profile extends Component {
     constructor() {
@@ -28,7 +20,9 @@ class Profile extends Component {
             desc: '',
             type: '',
             skills: [],
+
         };
+        this.resume = '';
         this.updateField = this.updateField.bind(this);
         this.updateProfile = this.updateProfile.bind(this);
     }
@@ -42,16 +36,23 @@ class Profile extends Component {
                     location: response.data[0].location,
                     desc: response.data[0].desc,
                     type: response.data[0].type,
-                    skills: response.data[0].skills
+                    skills: response.data[0].skills,
                 });
+                this.resume = response.data[0].resume;
             });
     }
 
     updateField(e) {
         e.preventDefault();
         const target = e.target;
-        const value = target.value;
         const name = target.name;
+
+        if (name === 'resume') {
+            this.resume = target.files[0];
+            return;
+        }
+
+        let value = target.value;
 
         this.setState({
             [name]: value
@@ -62,8 +63,23 @@ class Profile extends Component {
         e.preventDefault();
         axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', this.state)
             .then((response) => {
-                console.log(response);
-            });
+                    console.log(response);
+                }, (error) => {
+                    console.log(error);
+                }
+            );
+        let data = new FormData();
+        data.append(
+            "resume",
+            this.resume
+        );
+        axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', data)
+            .then((response) => {
+                    console.log(response);
+                }, (error) => {
+                    console.log(error);
+                }
+            );
     }
 
     render() {
@@ -127,8 +143,22 @@ class Profile extends Component {
                     <Grid item xs={12} sm={6}>
                         <div>Skills:</div>
                         {this.state.skills.map((item, index) => (
-                            <Chip key={index} label={item} />
+                            <Chip key={index} label={item}/>
                         ))}
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Button
+                            variant="contained"
+                            component="label"
+                        >
+                            Upload File
+                            <input
+                                type="file"
+                                name="resume"
+                                style={{display: "none"}}
+                                onChange={this.updateField}
+                            />
+                        </Button>
                     </Grid>
                     <Grid item xs={12}>
                         <Button
