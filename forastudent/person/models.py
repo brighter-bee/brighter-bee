@@ -81,6 +81,7 @@ class Person(models.Model):
     desc = models.TextField(blank=True, null=True)
     location = models.TextField(blank=True, null=True)
     avatar = models.ImageField(upload_to='images/', default='images/avatar.jpg', blank=True, null=True)
+    resume = models.FileField(upload_to='resume/', blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     skills = models.ManyToManyField(Skill, blank=True)
     opportunities = models.ManyToManyField(Opportunity, blank=True)
@@ -138,7 +139,7 @@ class Course(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
-        return self.code + " " + self.name
+        return self.name
 
 
 class Project(models.Model):
