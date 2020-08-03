@@ -69,6 +69,7 @@ class ForumCategory(ForumSection):
 
 
 class Person(models.Model):
+    id = models.PositiveIntegerField(primary_key=True)
     TYPES = (
         ('S', 'Student'),
         ('A', 'Academic Mentor'),
