@@ -12,6 +12,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Chip from "@material-ui/core/Chip";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import {Build, Create, DescriptionOutlined, Person, PersonPin, Work} from "@material-ui/icons";
 
 class Profile extends Component {
     constructor() {
@@ -107,6 +109,13 @@ class Profile extends Component {
                             name="name"
                             label="Name"
                             fullWidth
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Person/>
+                                    </InputAdornment>
+                                ),
+                            }}
                             value={this.state.name}
                             onChange={this.updateField}
                         />
@@ -118,22 +127,37 @@ class Profile extends Component {
                             name="location"
                             label="Location"
                             fullWidth
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <PersonPin/>
+                                    </InputAdornment>
+                                ),
+                            }}
                             value={this.state.location}
                             onChange={this.updateField}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <FormControl>
-                            <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                        <FormControl style={{width: "100%"}}>
+                            <InputLabel id="demo-simple-select-label">Role</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 name="type"
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <Work/>
+                                    </InputAdornment>
+                                }
                                 value={this.state.type}
                                 onChange={this.updateField}
                             >
-                                <MenuItem value="A">Academic Mentor</MenuItem>
                                 <MenuItem value="S">Student</MenuItem>
+                                <MenuItem value="A">Academic Mentor</MenuItem>
+                                <MenuItem value="I">Industry Mentor</MenuItem>
+                                <MenuItem value="Z">Organization</MenuItem>
+                                <MenuItem value="O">Others</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -144,22 +168,34 @@ class Profile extends Component {
                             name="desc"
                             label="Description"
                             fullWidth
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Create/>
+                                    </InputAdornment>
+                                ),
+                            }}
                             value={this.state.desc}
                             onChange={this.updateField}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <div>Skills:</div>
+                        <Build/>
                         {this.state.skills.map((item, index) => (
                             <Chip key={index} label={item}/>
                         ))}
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} style={{marginBottom: "50px"}}>
+                        <InputLabel id="demo-simple-select-label" style={{marginBottom: "10px"}}>Resume</InputLabel>
                         <Button
-                            variant="contained"
+                            variant="outlined"
+                            color="primary"
+                            size="small"
                             component="label"
                         >
-                            Upload Resume
+                            <DescriptionOutlined/>
+                            Upload
                             <input
                                 type="file"
                                 name="resume"
@@ -172,6 +208,7 @@ class Profile extends Component {
                         <Button
                             variant="contained"
                             color="primary"
+                            size="large"
                             onClick={this.updateProfile}
                         >
                             Update
