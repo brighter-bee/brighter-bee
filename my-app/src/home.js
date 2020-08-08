@@ -107,6 +107,7 @@ function ClippedDrawer(props) {
   const classes = useStyles();
 
   let { path, url } = useRouteMatch();
+  const [username, setuserName] = useState(localStorage.getItem('user'));
 
   const [showSearch, setshowSearch] = useState(false);
 
