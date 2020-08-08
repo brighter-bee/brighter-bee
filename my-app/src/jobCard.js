@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -27,6 +28,27 @@ export default function JobCard(props) {
   const classes = useStyles();
   var sanitizeHtml = require('sanitize-html');
 
+  
+  const handleSaveJob = () =>{
+    // add job to opportunity table
+    let item = {
+        "type": "J",
+        "name": sanitizeHtml(props.title,{allowedTags: []}),
+        "company_name":  props.company,
+        "location": props.location,
+        "desc": sanitizeHtml(props.description,{allowedTags:[]}),
+        "link": props.url,
+        "skills": []
+    }
+    axios.post('http://localhost:8000/api/opportunity/',item)
+    .then((resp)=>{
+      console.log(resp);
+      // add opportunity id to list of opportunities for that user
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -45,7 +67,7 @@ export default function JobCard(props) {
       </CardContent>
       <CardActions>
         <Button variant="contained" color="primary" href={props.url} size="small">Apply</Button>
-        <Button  variant="contained" color="primary" size="small">Save</Button>
+        <Button  variant="contained" color="primary" size="small" onClick={handleSaveJob}>Save</Button>
       </CardActions>
     </Card>
   );

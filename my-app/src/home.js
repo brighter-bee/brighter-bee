@@ -115,6 +115,8 @@ function ClippedDrawer(props) {
 
   const [jobList, setJobList] = useState([])
 
+  const [savedjobList, setsavedJobList] = useState([])
+
   const updateSearchValue = (event) =>{
     setSearchValue(event.target.value);
   }
@@ -139,6 +141,7 @@ function ClippedDrawer(props) {
   const ALL_PAGES = [
     {name:'Forum',icon:<ForumIcon />,urlVal:url + '/forums'},
     {name:'Find Jobs',icon:<WorkIcon />,urlVal:url + '/findjobs'},
+    {name:'Saved Jobs',icon:<WorkIcon />,urlVal:url + '/savedjobs'},
     {name:'Skill Up',icon:<BuildIcon />,urlVal:url + '/skillup'},
     {name:'Set Up Meeting',icon:<GroupIcon />,urlVal:url + '/meetings'},
     {name:'Find Projects', icon:<AssessmentIcon />,urlVal:url + '/findprojects'},
@@ -207,6 +210,9 @@ function ClippedDrawer(props) {
               </Route>
               <Route path={`${path}/findjobs`}>
                 <FindJobsPage jobs={jobList} username={username}/>
+              </Route>
+              <Route path={`${path}/savedjobs`}>
+                <FindJobsPage jobs={savedjobList} username={username}/>
               </Route>
               <Route path={`${path}/meetings`}>
                 <MeetingsPage username={username}/>
