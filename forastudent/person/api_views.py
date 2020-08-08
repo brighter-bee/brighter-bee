@@ -8,6 +8,14 @@ from rest_framework.exceptions import ValidationError
 from django.utils import timezone
 from django.core.cache import cache
 from rest_framework import generics
+from rest_framework import viewsets
+
+
+class OpportunityViewSet(viewsets.ModelViewSet):
+    queryset = Opportunity.objects.all()
+    serializer_class = OpportunitySerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('id', )
 
 
 class GeneralPagination(LimitOffsetPagination):
@@ -65,6 +73,15 @@ class SkillList(ListAPIView):
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('id', )
     search_fields = ('name',)
+
+
+class OpportunityList(ListAPIView):
+    queryset = Opportunity.objects.all()
+    serializer_class = OpportunitySerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filter_fields = ('id', 'person')
+    search_fields = ('name',)
+
 
 # class SkillRecommendList(generics.ListAPIView):
 #
