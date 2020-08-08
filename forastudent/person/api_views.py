@@ -9,11 +9,24 @@ from django.utils import timezone
 from django.core.cache import cache
 from rest_framework import generics
 from rest_framework import viewsets
+import django_filters
+
+
+class InListFilter(django_filters.Filter):
+    def filter(self, qs, value):
+        if value:
+            return qs.filter(**{self.field_name+'__in': value.split(',')})
+        return qs
+
+
+class MultiIdFilterSet(django_filters.FilterSet):
+    id = InListFilter(field_name='id')
 
 
 class OpportunityViewSet(viewsets.ModelViewSet):
     queryset = Opportunity.objects.all()
     serializer_class = OpportunitySerializer
+    filter_class = MultiIdFilterSet
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('id', )
 
