@@ -33,7 +33,6 @@ class LoginPage extends React.Component {
                 console.log(response);
                 axios.get('http://localhost:8000/api/v2/users?username=' + this.state.userData.login)
                     .then((response) => {
-                        console.log(response.data[0].opportunity);
                         localStorage.setItem('user', response.data[0].id);
                         window.location.pathname = '/home'
                     });

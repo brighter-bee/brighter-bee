@@ -129,6 +129,14 @@ function ClippedDrawer(props) {
     });
   }
 
+  useEffect(()=>{
+    Axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
+    .then((resp)=>{
+      // get all save opportunities of user
+      console.log(resp.data[0].opportunities);
+    })
+  },[])
+
   useEffect(() => {
    if(props.location.pathname.includes('findjobs')){
     setshowSearch(true);
