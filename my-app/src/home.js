@@ -200,19 +200,19 @@ function ClippedDrawer(props) {
                 <ForumsPage/>
               </Route>
               <Route exact path={`${path}/forums`}>
-                <ForumsPage/>
+                <ForumsPage username={username}/>
               </Route>
               <Route path={`${path}/skillup`}>
-                <SkillRecommend/>
+                <SkillRecommend username={username}/>
               </Route>
               <Route path={`${path}/findjobs`}>
-                <FindJobsPage jobs={jobList}/>
+                <FindJobsPage jobs={jobList} username={username}/>
               </Route>
               <Route path={`${path}/meetings`}>
-                <MeetingsPage/>
+                <MeetingsPage username={username}/>
               </Route>
               <Route path={`${path}/findprojects`}>
-                <FindProjectsPage/>
+                <FindProjectsPage username={username}/>
               </Route>
               <Route path={`${path}/profile`}>
                 <Profile />
