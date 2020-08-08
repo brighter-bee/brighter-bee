@@ -25,6 +25,8 @@ import ForumsPage from './forum';
 import FindJobsPage from './findJobs';
 import SkillRecommend from './skillRecommend';
 import Profile from './Profile';
+import FindProjectsPage from './findProjects';
+import MeetingsPage from './meetings';
 
 // search
 import SearchIcon from '@material-ui/icons/Search';
@@ -206,10 +208,10 @@ function ClippedDrawer(props) {
                 <FindJobsPage jobs={jobList}/>
               </Route>
               <Route path={`${path}/meetings`}>
-                <SkillRecommend/>
+                <MeetingsPage/>
               </Route>
               <Route path={`${path}/findprojects`}>
-                <SkillRecommend/>
+                <FindProjectsPage/>
               </Route>
               <Route path={`${path}/profile`}>
                 <Profile />
