@@ -2,10 +2,10 @@ import React from 'react';
 
 
 
-export default function ForumsPage(props){
+export default function MeetingsPage(props){
     return (
         <div>
-            This is the Forum Page
+            This is the Meetings Page
         </div>   
     )
 

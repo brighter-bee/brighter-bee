@@ -25,6 +25,8 @@ import ForumsPage from './forum';
 import FindJobsPage from './findJobs';
 import SkillRecommend from './skillRecommend';
 import Profile from './Profile';
+import FindProjectsPage from './findProjects';
+import MeetingsPage from './meetings';
 
 // search
 import SearchIcon from '@material-ui/icons/Search';
@@ -105,6 +107,7 @@ function ClippedDrawer(props) {
   const classes = useStyles();
 
   let { path, url } = useRouteMatch();
+  const [username, setuserName] = useState(localStorage.getItem('user'));
 
   const [showSearch, setshowSearch] = useState(false);
 
@@ -197,19 +200,19 @@ function ClippedDrawer(props) {
                 <ForumsPage/>
               </Route>
               <Route exact path={`${path}/forums`}>
-                <ForumsPage/>
+                <ForumsPage username={username}/>
               </Route>
               <Route path={`${path}/skillup`}>
-                <SkillRecommend/>
+                <SkillRecommend username={username}/>
               </Route>
               <Route path={`${path}/findjobs`}>
-                <FindJobsPage jobs={jobList}/>
+                <FindJobsPage jobs={jobList} username={username}/>
               </Route>
               <Route path={`${path}/meetings`}>
-                <SkillRecommend/>
+                <MeetingsPage username={username}/>
               </Route>
               <Route path={`${path}/findprojects`}>
-                <SkillRecommend/>
+                <FindProjectsPage username={username}/>
               </Route>
               <Route path={`${path}/profile`}>
                 <Profile />
