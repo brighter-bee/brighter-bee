@@ -40,13 +40,37 @@ export default function JobCard(props) {
         "link": props.url,
         "skills": []
     }
+    // add to ops table
     axios.post('http://localhost:8000/api/opportunity/',item)
-    .then((resp)=>{
-      console.log(resp);
-      // add opportunity id to list of opportunities for that user
+    .then((response)=>{
+      // get existing ops of user
+      axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
+      .then((resp)=>{
+        let ops = resp.data[0]
+        //ops.opportunities.push()
+        ops.opportunities.push(response.data.id);
+        // update existing ops of user
+        axios.put('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', ops)
+        .then(()=>{
+            console.log('Job Saved')
+        })
+      })
     }).catch((err)=>{
       console.log(err);
     })
+  }
+
+  const handleDelete = () => {
+    // remove it from user ops arrays
+    axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
+      .then((resp)=>{
+        let ops = resp.data[0]
+        ops.opportunities.splice(ops.opportunities.indexOf(props.adref), 1 );
+        axios.put('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', ops)
+        .then(()=>{
+            console.log('Job Deleted')
+        })
+      })
   }
 
   return (
@@ -65,10 +89,16 @@ export default function JobCard(props) {
           {sanitizeHtml(props.description,{allowedTags:[]})}
         </Typography>
       </CardContent>
-      <CardActions>
+      {!props.delete
+      ?(<CardActions>
         <Button variant="contained" color="primary" href={props.url} size="small">Apply</Button>
         <Button  variant="contained" color="primary" size="small" onClick={handleSaveJob}>Save</Button>
-      </CardActions>
+      </CardActions>):
+      (<CardActions>
+        <Button variant="contained" color="primary" href={props.url} size="small">Apply</Button>
+        <Button variant="contained" color="secondary" size="small" onClick={handleDelete}>Delete</Button>
+      </CardActions>)
+      }
     </Card>
   );
 }
