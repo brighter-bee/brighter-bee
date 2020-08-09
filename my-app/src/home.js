@@ -23,6 +23,7 @@ import {Route, Switch ,useRouteMatch,Link,withRouter,useParams} from 'react-rout
 import ForumsPage from './forum';
 import FindJobsPage from './findJobs';
 import SkillRecommend from './skillRecommend';
+import Meetings from './meetings';
 
 const drawerWidth = 240;
 
@@ -111,7 +112,7 @@ function ClippedDrawer() {
                 <FindJobsPage/>
               </Route>
               <Route path={`${path}/meetings`}>
-                <SkillRecommend/>
+                <Meetings/>
               </Route>
               <Route path={`${path}/findprojects`}>
                 <SkillRecommend/>
