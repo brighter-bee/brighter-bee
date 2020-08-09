@@ -252,7 +252,7 @@ function ClippedDrawer(props) {
                 <FindJobsPage opsList={opsList} jobs={jobList} username={username}/>
               </Route>
               <Route path={`${path}/savedjobs`}>
-                <FindJobsPage jobs={savedjobList} delete={true} username={username}/>
+                <FindJobsPage handlePageRefresh={getSavedJobs} jobs={savedjobList} delete={true} username={username}/>
               </Route>
               <Route path={`${path}/meetings`}>
                 <MeetingsPage username={username}/>
