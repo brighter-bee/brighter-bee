@@ -102,18 +102,16 @@ class MeetingCreate(CreateAPIView):
         datetime = request_obj['date'] + "T" + request_obj["time"] + ":00"
         meeting_id = createMeeting(datetime, request_obj['duration'],request_obj['topic'])
         db_datetime = request_obj['date'] + "T" + request_obj["time"] + "+11:00"
-        print(db_datetime)
         participants = request_obj['participants']
-        print(participants)
-        # check errors
-        with connection.cursor() as cursor:
-            sql = f"""INSERT INTO person_meeting (name, number, time, participants) 
-               VALUES ('{request_obj['topic']}',{meeting_id},'{db_datetime}', {participants});"""
-            cursor.execute(sql)
-            cursor.execute('select * from person_meeting where number = ' + str(meeting_id))
-            new_meeting = cursor.fetchall()
-            print(new_meeting)
 
+        meeting = Meeting(name=request_obj['topic'],number=meeting_id,time=db_datetime)
+        meeting.save()
+        for user in participants:
+            if (user != None):
+                print(Person.objects.get(pk = user["value"]))
+                meeting.participants.add(Person.objects.get(pk = user["value"]))
+        # check errors
+        print(Meeting.objects.all())
 
         response = HttpResponse(getMeeting(meeting_id))   
         return response
