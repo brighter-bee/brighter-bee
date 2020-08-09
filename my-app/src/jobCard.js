@@ -69,6 +69,7 @@ export default function JobCard(props) {
         axios.put('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', ops)
         .then(()=>{
             console.log('Job Deleted')
+            props.freshPage();
         })
       })
   }
