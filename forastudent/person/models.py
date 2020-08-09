@@ -32,6 +32,8 @@ class Opportunity(models.Model):
     )
     type = models.TextField(choices=TYPES)
     name = models.CharField(max_length=100)
+    company_name = models.TextField()
+    location = models.TextField()
     desc = models.TextField()
     link = models.TextField()
     createdAt = models.DateTimeField(auto_now_add=True)

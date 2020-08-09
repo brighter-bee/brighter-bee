@@ -115,6 +115,10 @@ function ClippedDrawer(props) {
 
   const [jobList, setJobList] = useState([])
 
+  const [savedjobList, setsavedJobList] = useState([]);
+
+  const [opsList, setopsList] = useState([]);
+
   const updateSearchValue = (event) =>{
     setSearchValue(event.target.value);
   }
@@ -123,15 +127,53 @@ function ClippedDrawer(props) {
     const API_URL =  'https://api.adzuna.com/v1/api/jobs/au/search/1?app_id=170a278c&app_key=14c6ba39db072dd540d0dfdb40e57c12&what='+ searchValue;
     Axios.get(API_URL).then((resp)=>{
       setJobList([...resp.data.results])
-      console.log(resp.data.results);
     });
+  }
+
+  const getSavedJobs = () => {
+    Axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
+    .then((resp)=>{
+      // get all save opportunities of user
+      
+      if (resp.data[0].opportunities.length){
+
+        let ops = resp.data[0].opportunities.join(',')
+        let opsArray =[]
+
+        // covert array to string
+        Axios.get('http://localhost:8000/api/opportunity/?id=' + ops)
+        .then((resp)=>{
+          resp.data.forEach((job)=>{
+            opsArray.push({
+              adref:job.id,
+              title:job.name,
+              description:job.desc,
+              company:{
+                display_name: job.company_name
+              },
+              location:{
+                display_name: job.location
+              },
+              redirect_url: job.link
+            })
+          })
+          setsavedJobList(opsArray)
+        })
+      }else{
+        setsavedJobList([])
+      }
+    })
   }
 
   useEffect(() => {
    if(props.location.pathname.includes('findjobs')){
     setshowSearch(true);
     getJobs();
-   }else{
+   }else if(props.location.pathname.includes('savedjobs')){
+    getSavedJobs();
+    setshowSearch(false);
+   }
+   else{
     setshowSearch(false);
    }
   }, [props.location]);
@@ -139,6 +181,7 @@ function ClippedDrawer(props) {
   const ALL_PAGES = [
     {name:'Forum',icon:<ForumIcon />,urlVal:url + '/forums'},
     {name:'Find Jobs',icon:<WorkIcon />,urlVal:url + '/findjobs'},
+    {name:'Saved Jobs',icon:<WorkIcon />,urlVal:url + '/savedjobs'},
     {name:'Skill Up',icon:<BuildIcon />,urlVal:url + '/skillup'},
     {name:'Set Up Meeting',icon:<GroupIcon />,urlVal:url + '/meetings'},
     {name:'Find Projects', icon:<AssessmentIcon />,urlVal:url + '/findprojects'},
@@ -206,7 +249,10 @@ function ClippedDrawer(props) {
                 <SkillRecommend username={username}/>
               </Route>
               <Route path={`${path}/findjobs`}>
-                <FindJobsPage jobs={jobList} username={username}/>
+                <FindJobsPage opsList={opsList} jobs={jobList} username={username}/>
+              </Route>
+              <Route path={`${path}/savedjobs`}>
+                <FindJobsPage jobs={savedjobList} delete={true} username={username}/>
               </Route>
               <Route path={`${path}/meetings`}>
                 <MeetingsPage username={username}/>

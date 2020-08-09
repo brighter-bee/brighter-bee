@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -27,6 +28,51 @@ export default function JobCard(props) {
   const classes = useStyles();
   var sanitizeHtml = require('sanitize-html');
 
+  
+  const handleSaveJob = () =>{
+    // add job to opportunity table
+    let item = {
+        "type": "J",
+        "name": sanitizeHtml(props.title,{allowedTags: []}),
+        "company_name":  props.company,
+        "location": props.location,
+        "desc": sanitizeHtml(props.description,{allowedTags:[]}),
+        "link": props.url,
+        "skills": []
+    }
+    // add to ops table
+    axios.post('http://localhost:8000/api/opportunity/',item)
+    .then((response)=>{
+      // get existing ops of user
+      axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
+      .then((resp)=>{
+        let ops = resp.data[0]
+        //ops.opportunities.push()
+        ops.opportunities.push(response.data.id);
+        // update existing ops of user
+        axios.put('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', ops)
+        .then(()=>{
+            console.log('Job Saved')
+        })
+      })
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+
+  const handleDelete = () => {
+    // remove it from user ops arrays
+    axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
+      .then((resp)=>{
+        let ops = resp.data[0]
+        ops.opportunities.splice(ops.opportunities.indexOf(props.adref), 1 );
+        axios.put('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', ops)
+        .then(()=>{
+            console.log('Job Deleted')
+        })
+      })
+  }
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -43,10 +89,16 @@ export default function JobCard(props) {
           {sanitizeHtml(props.description,{allowedTags:[]})}
         </Typography>
       </CardContent>
-      <CardActions>
+      {!props.delete
+      ?(<CardActions>
         <Button variant="contained" color="primary" href={props.url} size="small">Apply</Button>
-        <Button  variant="contained" color="primary" size="small">Save</Button>
-      </CardActions>
+        <Button  variant="contained" color="primary" size="small" onClick={handleSaveJob}>Save</Button>
+      </CardActions>):
+      (<CardActions>
+        <Button variant="contained" color="primary" href={props.url} size="small">Apply</Button>
+        <Button variant="contained" color="secondary" size="small" onClick={handleDelete}>Delete</Button>
+      </CardActions>)
+      }
     </Card>
   );
 }
