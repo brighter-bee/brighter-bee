@@ -4,14 +4,19 @@ import ReactDOM from 'react-dom'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
+const options =  [];
 
-const options = [
-	  { value: 'chocolate', label: 'Chocolate' },
-	  { value: 'strawberry', label: 'Strawberry' },
-	  { value: 'vanilla', label: 'Vanilla' }
-]
+axios.get('http://localhost:8000/api/v2/persons').then(	res => {
+	console.log(res['data']['results']);
+	var user;
+	for (user in res['data']['results']) {
+		console.log(res['data']['results'][user]['name']);
+		options.push({value: res['data']['results'][user]['name'], label: res['data']['results'][user]['name']});
+	}
+})
+
 const animatedComponents = makeAnimated();
-
+console.log(options)
 	
 class Meetings extends React.Component {
 
@@ -22,19 +27,22 @@ class Meetings extends React.Component {
 			date: null,
 			duration: null,
 			topic: null,
+			participants: null,
+			meetingsList: [],
 		};
 	}
 
 	handleSubmit = (event) => {
 	    event.preventDefault();
 		console.log(this.state)
+		this.setState({participants : this.state.participants.concat(localStorage.getItem("user"))})
 		try {
 			if (this.state.time != null && this.state.date != null && this.state.duration != null) {
 				axios.post('http://localhost:8000/api/v2/meetings/new', this.state)
 					.then((response) => {
 						console.log(response);
 						console.log("Posted")
-						ReactDOM.render(<div> {response['data']} </div>, document.getElementById('meetings_list'))
+						//ReactDOM.render(<div> {response['data']} </div>, document.getElementById('meetings_list'))
 					}, (error) => {
 						console.log(error);
 					});
@@ -48,9 +56,30 @@ class Meetings extends React.Component {
 	}
 
 	
- 	getMeetings (event) {
+ 	componentDidMount() {
+		console.log("Fired")
 		// get user id and request meetings list from backend then serve them
+		axios.get('http://localhost:8000/api/v2/meetings')//'?participant=' + localStorage.getItem("user"))
+			.then((response) => {
+				console.log(response);
+				var index;
+				for (index in response['data']['results']) {
+					var res = response['data']['results'][index]
+					var title = res['name'];
+					var time = res['time'];
+					var participants = res['participants'];
+					var number = res['number']
+					var id = res['id']
+					var newList = this.state.meetingsList.concat({"title" : title, "time" : time, "participants" : participants, "number" : number, "id" : id});
+					this.setState({meetingsList : newList})
+				}
+				console.log(this.state.meetingsList)
+				//ReactDOM.render(<div> {response['data']['results']} </div>, document.getElementById('meetings_list'));
+			}, (error) => {
+				console.log(error);
+			}	);
 	}
+	
     myChangeHandler = (event) => {
 		console.log(event.target.name)
 		console.log(event.target.value)
@@ -59,12 +88,34 @@ class Meetings extends React.Component {
     	let val = event.target.value;
     	this.setState({[nam]: val});
 	}
+	
+	selectChange = (selected) => {
+		this.setState({participants: selected});
+	}
+
   	render() {
 	    return (
 	      <div>
 			<h1> Meetings Page </h1>
 			<h2> Meetings List </h2>
-			<ol onLoad={this.getMeetings} id="meetings_list"></ol>
+			<ol id="meetings_list"> 
+				{this.state.meetingsList.map((item, index) => (
+					<div>
+						Title: {item['title']} <br></br>
+						Time: {item['time']} <br></br>
+						People:
+						<ul>
+							{item['participants']}
+						</ul>
+						<button>Update</button>
+						<button>Get Zoom Link</button>
+						<button>Cancel Attendance</button>
+					</div>
+					))
+				}
+				
+			</ol>
+			<h2> Create a New Meeting </h2>
 			<form onSubmit = {this.handleSubmit}>
 				Select a topic for your meeting <br></br>
 				<input type="text" name="topic" onChange={this.myChangeHandler}/> <br></br>
@@ -75,12 +126,12 @@ class Meetings extends React.Component {
 				Select a duration for your meeting <br></br>
 				<input type="number" name="duration" onChange={this.myChangeHandler}/> <br></br>
 				Select participants
-			    <Select
+			    <Select name="participants" onChange={this.selectChange}
 			      closeMenuOnSelect={false}
 			      components={animatedComponents}
 			      isMulti
 			      options={options}
-			    />
+			    /> <br></br>
 				
 	
 				<input type="submit" value="Submit" onSubmit = {this.handleSubmit}/>
