@@ -8,29 +8,36 @@ import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import axios from 'axios';
 
-class SignUpPage extends React.Component{
+class SignUpPage extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            username:'',
-			email:'',
-            password:'',
-			password_confirm:'',
-            first_name:'',
-            last_name:''
-        }
+            username: '',
+            password: '',
+            password_confirm: '',
+        };
     }
 
     SignUpHandler = () => {
         // check if entry exists in database
-		axios.post('http://localhost:8000/api/v2/accounts/register/', this.state)
-			.then((response) => {
-				console.log(response);
-				window.location.pathname = '/login'
-			}, (error) => {
-				console.log(error);
-			});
+        console.log(this.state);
+        axios.post('http://localhost:8000/api/v2/accounts/register/', this.state)
+            .then((response) => {
+                console.log(response);
+                const data = {
+                    "id": response.data.id,
+                    "name": this.state.username,
+                    "user": response.data.id,
+                };
+                axios.post('http://localhost:8000/api/v2/persons/new', data)
+                    .then((response) => {
+                        console.log(response);
+                        window.location.pathname = '/login'
+                    });
+            }, (error) => {
+                console.log(error);
+            });
         // if it does throw error
 
         // if it does not create entry in user table in the database
@@ -47,28 +54,18 @@ class SignUpPage extends React.Component{
         // redirect to login page
     };
 
-    setUserName(event){
-        this.setState({username:event.target.value});
-		this.setState({email:event.target.value});
+    setUserName(event) {
+        this.setState({username: event.target.value});
     }
 
-    setPassword(event){
-        this.setState({password:event.target.value});
-		this.setState({password_confirm:event.target.value})
+    setPassword(event) {
+        this.setState({password: event.target.value});
+        this.setState({password_confirm: event.target.value})
     }
 
+    render() {
 
-    setFirstName(event){
-        this.setState({first_name:event.target.value})
-    }
-
-    setLastName(event){
-        this.setState({last_name:event.target.value})
-    }
-
-    render(){
-
-        return(
+        return (
             <div>
                 <Dialog open={true}>
                     <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
@@ -77,27 +74,10 @@ class SignUpPage extends React.Component{
                             Please enter your details down below.
                         </DialogContentText>
                         <TextField
-                            autoFocus
-                            margin="dense"
-                            id="first-name"
-                            label="First Name"
-                            type="text"
-                            fullWidth
-                            onBlur={this.setFirstName.bind(this)}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="last-name"
-                            label="Last Name"
-                            type="text"
-                            fullWidth
-                            onBlur={this.setLastName.bind(this)}
-                        />
-                        <TextField
                             margin="dense"
                             id="user-name"
                             label="User Name"
-                            type="email"
+                            type="text"
                             fullWidth
                             onBlur={this.setUserName.bind(this)}
                         />

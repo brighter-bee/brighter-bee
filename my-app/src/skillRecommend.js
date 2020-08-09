@@ -4,6 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 import axios from 'axios';
 
+var  flag = false // console.log flag
+
 const useStyles = theme => ({
   root: {
     display: 'flex',
@@ -60,12 +62,12 @@ class Skill extends React.Component {
       super(props);
 
       // this.state = {
-      //     username: this.props.match.params.username
+      //     person_id: this.props.match.params.person_id
       //   };
       this.state = {
           userData:{
-              username: "1",
-              skill: "",
+              person_id: "1",
+              recommended_skill: "",
           }
         }
       }
@@ -75,46 +77,31 @@ class Skill extends React.Component {
       }
 
       async getSkills() {
-          await axios.get('http://localhost:8000/personskill/' + this.state.userData.username)
+          await axios.get('http://localhost:8000/skill-recommend/' + this.state.userData.person_id) //if by flask
+          //await axios.get('http://localhost:8000/my-skill-recommend?q=' + this.state.userData.person_id) // if by django api view
           .then(response => {
-              console.log(response)
+              if (flag) {
+                console.log(response)}
               this.setState({
                 userData:{
-                    username: "sahil.punchhi",
-                    skill: response.data.results[0].skills,
+                    person_id: "1",
+                    recommended_skill: response.data.recommended_skill, // if by flask
+                    //recommended_skill: response.data[0].recommended_skill, // if by django api view
                 }
               })
-              console.log(this.state.userData.skill)
+              if (flag) {
+                console.log(this.state.userData.recommended_skill)}
           })
           .catch(error => {
               console.log(error)
           });
       }
 
-      // async getSkills2() {
-      //     axios.post('http://localhost:8000/personskill2/' , {
-      //        'user': this.state.userData.id
-      //      })
-      //     .then(response => {
-      //         console.log(response)
-      //         this.setState({
-      //           userData:{
-      //               id: "1",
-      //               skill: response.data.results[0].skills,
-      //           }
-      //         })
-      //         console.log(this.state.userData.skill)
-      //     })
-      //     .catch(error => {
-      //         console.log(error)
-      //     });
-      // }
-
   render() {
 
     return (
     <div style={{fontFamily: 'Avenir'}}>
-      <h2>&nbsp; {this.state.userData.skill}</h2>
+      <h2>&nbsp; {this.state.userData.recommended_skill}</h2>
       <br></br>
 
     </div>);
@@ -164,7 +151,7 @@ class SkillRecommend extends React.Component {
           {this.state.isAddCourseState && <Course />}
         </div>
 
-      
+
   );
 }
 }

@@ -11,11 +11,16 @@ class LandingPage extends React.Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path='/' component={LoginPage}/>
-                    <Route exact path='/login' component={LoginPage}/>
+                    <Route exact path='/'>
+                        <LoginPage/>
+                    </Route>
+                    <Route exact path='/login'>
+                        <LoginPage/>
+                    </Route>
                     <Route exact path='/signup' component={SignUpPage}/>
-                    <Route path='/home' component={ClippedDrawer} />
-                    <Route path='/meetings' component={Meetings} />
+                    <Route path='/home'>
+                        <ClippedDrawer/>
+                    </Route>
                 </Switch>
             </BrowserRouter>
         );
