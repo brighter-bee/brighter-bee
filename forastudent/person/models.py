@@ -151,6 +151,7 @@ class Project(models.Model):
     start_date = models.DateTimeField(blank=True, null=True)
     duration = models.CharField(max_length=200, blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
+    email = models.EmailField(blank=True)
 
     def __str__(self):
         return self.name
