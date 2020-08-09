@@ -11,14 +11,14 @@ axios.get('http://localhost:8000/api/v2/persons').then(	res => {
 	var user;
 	for (user in res['data']['results']) {
 		console.log(res['data']['results'][user]['name']);
-		options.push({value: res['data']['results'][user]['name'], label: res['data']['results'][user]['name']});
+		options.push({value: res['data']['results'][user]['id'], label: res['data']['results'][user]['name']});
 	}
 })
 
 const animatedComponents = makeAnimated();
 console.log(options)
 	
-class Meetings extends React.Component {
+export default function MeetingsPage(props) {
 
 	constructor(props) {
 		super(props);
