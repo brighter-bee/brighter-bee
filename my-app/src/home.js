@@ -27,7 +27,7 @@ import SkillRecommend from './skillRecommend';
 import Meetings from './meetings';
 import Profile from './Profile';
 import FindProjectsPage from './findProjects';
-import Meetings from './meetings';
+import MeetingsPage from './meetings';
 
 // search
 import SearchIcon from '@material-ui/icons/Search';

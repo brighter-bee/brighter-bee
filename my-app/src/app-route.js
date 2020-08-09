@@ -2,7 +2,6 @@ import React from 'react';
 import ClippedDrawer from './home';
 import LoginPage from './login';
 import SignUpPage from './signup';
-import Meetings from './meetings';
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
