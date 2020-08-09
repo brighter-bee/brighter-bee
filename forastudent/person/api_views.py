@@ -7,13 +7,11 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.exceptions import ValidationError
 from django.utils import timezone
 from django.core.cache import cache
-<<<<<<< HEAD
 from django.db import connection
 from collections import defaultdict
 from .createMeeting import createMeeting, getMeeting
 from django.http import HttpResponse
 import json
-=======
 from rest_framework import generics
 from rest_framework import viewsets
 import django_filters
@@ -36,7 +34,6 @@ class OpportunityViewSet(viewsets.ModelViewSet):
     filter_class = MultiIdFilterSet
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('id', )
->>>>>>> master
 
 
 class GeneralPagination(LimitOffsetPagination):
@@ -78,7 +75,6 @@ class MeetingList(ListAPIView):
     pagination_class = GeneralPagination
 
 
-<<<<<<< HEAD
 user_skill_dict = defaultdict(list)
 project_skill_dict = defaultdict(list)
 category_skill_dict = defaultdict(list)
@@ -136,10 +132,11 @@ class MeetingCreate(CreateAPIView):
         #     raise ValidationError({'time': 'Must be in the future'})
         #
         return super().create(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         request_string = request.read().decode('utf-8')
         request_obj = json.loads(request_string)
-        
+
         datetime = request_obj['date'] + "T" + request_obj["time"] + ":00"
         meeting_id = createMeeting(datetime, request_obj['duration'],request_obj['topic'])
         db_datetime = request_obj['date'] + "T" + request_obj["time"] + "+11:00"
@@ -148,21 +145,13 @@ class MeetingCreate(CreateAPIView):
         print(participants)
         # check errors
         with connection.cursor() as cursor:
-            sql = f"""INSERT INTO person_meeting (name, number, time, participants) 
+            sql = f"""INSERT INTO person_meeting (name, number, time, participants)
                VALUES ('{request_obj['topic']}',{meeting_id},'{db_datetime}', {participants});"""
             cursor.execute(sql)
             cursor.execute('select * from person_meeting where number = ' + str(meeting_id))
             new_meeting = cursor.fetchall()
             print(new_meeting)
 
-=======
-class MeetingCreate(CreateAPIView):
-    serializer_class = MeetingSerializer
-
->>>>>>> master
-
-        response = HttpResponse(getMeeting(meeting_id))   
-        return response
 
 class MeetingRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Meeting.objects.all()

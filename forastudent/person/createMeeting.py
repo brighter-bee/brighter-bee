@@ -6,7 +6,7 @@ import json
 
 
 
-# Go to 
+# Go to
 # Then get API Key, API Secret and insert below
 api_key = 'p-zpPVCrQMy4SnOlAV9BGw'
 api_sec = '8NWGe7uCQd8574r8EKpZJi3nrNRm3UPezoY7'
@@ -42,9 +42,9 @@ def createMeeting(start_time, duration, topic):
     print(response_obj)
 
     return response_obj['id']
-    
-    
-def getMeeting(id): 
+
+
+def getMeeting(id):
     conn.request("GET", "/v2/meetings/" + str(id) + "/invitation", headers=headers)
     res = conn.getresponse()
     response_string = res.read().decode('utf-8')
@@ -52,5 +52,5 @@ def getMeeting(id):
     print(response_obj)
     return response_obj['invitation']
 
-            
+
 #createMeeting("2021-08-30T22:00:00Z", 60, "TestTopic", ["jamesclark@outlook.com.au"])
