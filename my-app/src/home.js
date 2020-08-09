@@ -25,6 +25,7 @@ import ForumsPage from './forum';
 import FindJobsPage from './findJobs';
 import SkillRecommend from './skillRecommend';
 import Profile from './Profile';
+import NewProject from "./NewProject";
 import FindProjectsPage from './findProjects';
 import MeetingsPage from './meetings';
 
@@ -185,6 +186,7 @@ function ClippedDrawer(props) {
     {name:'Skill Up',icon:<BuildIcon />,urlVal:url + '/skillup'},
     {name:'Set Up Meeting',icon:<GroupIcon />,urlVal:url + '/meetings'},
     {name:'Find Projects', icon:<AssessmentIcon />,urlVal:url + '/findprojects'},
+    {name:'Add Project', icon:<AssessmentIcon />,urlVal:url + '/addproject'},
     {name:'My Profile', icon:<AccountBoxIcon />,urlVal:url + '/profile'}
    ];
 
@@ -259,6 +261,9 @@ function ClippedDrawer(props) {
               </Route>
               <Route path={`${path}/findprojects`}>
                 <FindProjectsPage username={username}/>
+              </Route>
+              <Route path={`${path}/addproject`}>
+                <NewProject username={username}/>
               </Route>
               <Route path={`${path}/profile`}>
                 <Profile />
