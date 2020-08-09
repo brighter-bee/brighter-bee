@@ -18,7 +18,7 @@ axios.get('http://localhost:8000/api/v2/persons').then(	res => {
 const animatedComponents = makeAnimated();
 console.log(options)
 	
-export default function MeetingsPage(props) {
+class Meetings extends React.Component {
 
 	constructor(props) {
 		super(props);
