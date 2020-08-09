@@ -24,6 +24,7 @@ import {Route, Switch ,useRouteMatch,Link,withRouter,useParams} from 'react-rout
 import ForumsPage from './forum';
 import FindJobsPage from './findJobs';
 import SkillRecommend from './skillRecommend';
+import Meetings from './meetings';
 import Profile from './Profile';
 import FindProjectsPage from './findProjects';
 import MeetingsPage from './meetings';
@@ -33,7 +34,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import Axios from 'axios';
-
 
 const drawerWidth = 240;
 
@@ -255,7 +255,7 @@ function ClippedDrawer(props) {
                 <FindJobsPage handlePageRefresh={getSavedJobs} jobs={savedjobList} delete={true} username={username}/>
               </Route>
               <Route path={`${path}/meetings`}>
-                <MeetingsPage username={username}/>
+                <Meetings/>
               </Route>
               <Route path={`${path}/findprojects`}>
                 <FindProjectsPage username={username}/>
