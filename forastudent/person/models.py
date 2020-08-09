@@ -32,6 +32,8 @@ class Opportunity(models.Model):
     )
     type = models.TextField(choices=TYPES)
     name = models.CharField(max_length=100)
+    company_name = models.TextField()
+    location = models.TextField()
     desc = models.TextField()
     link = models.TextField()
     createdAt = models.DateTimeField(auto_now_add=True)
@@ -149,6 +151,7 @@ class Project(models.Model):
     start_date = models.DateTimeField(blank=True, null=True)
     duration = models.CharField(max_length=200, blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
+    email = models.EmailField(blank=True)
 
     def __str__(self):
         return self.name
