@@ -66,7 +66,7 @@ class Skill extends React.Component {
       //   };
       this.state = {
           userData:{
-              person_id: "1",
+              person_id: localStorage.getItem('user'),
               recommended_skill: "",
               course_list: [],
           }
