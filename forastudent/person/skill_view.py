@@ -7,7 +7,7 @@ from django.views.decorators.http import require_http_methods
 
 # Create your views here.
 
-flag = True # print flag
+flag = False # print flag
 
 # Skill Recommendation View in Flask
 user_skill_dict = defaultdict(list)
@@ -16,6 +16,11 @@ category_skill_dict = defaultdict(list)
 
 @require_http_methods(["GET"])
 def recommend_skill(request, person_id):
+
+    data = {
+        'recommended_skill': "",
+        'course_list': []
+    }
 
     ########### for testing purposes #########
     with connection.cursor() as cursor:
@@ -171,7 +176,24 @@ def recommend_skill(request, person_id):
         return recommended_skill
 
     recommended_skill = recommend_skill_algo(person_id, user_skill_dict, category_skill_dict, project_skill_dict)
+
+    course_list = []
+    with connection.cursor() as cursor:
+        cursor.execute('''SELECT b.name, b.link
+                          FROM person_course_skills a
+                          LEFT JOIN person_course b on a.course_id = b.id
+                          WHERE a.skill_id = (select c.id from person_skill c where c.name = %s)''', [recommended_skill])
+        rows = cursor.fetchall()
+
+
+    for row in rows:
+        course_data = {
+            'course_name': row[0],
+            'course_link': row[1]}
+
+        data['course_list'].append(course_data)
+
     return JsonResponse({
-        'person_id': person_id,
-        'recommended_skill': recommended_skill
+        'recommended_skill': recommended_skill,
+        'course_list': data['course_list']
     })

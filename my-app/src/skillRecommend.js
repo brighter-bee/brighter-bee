@@ -47,15 +47,15 @@ const WelcomeText = props => {
   );
 }
 
-const CourseButton = props => {
-  return (
-    <div style={{fontFamily: 'Roboto'}}>
-      <Button onClick={props.addCourse} variant="contained" color="primary">
-        WHERE CAN I LEARN THIS SKILL?
-      </Button>
-    </div>
-  );
-};
+// const CourseButton = props => {
+//   return (
+//     <div style={{fontFamily: 'Roboto'}}>
+//       <Button onClick={props.addCourse} variant="contained" color="primary">
+//         WHERE CAN I LEARN THIS SKILL?
+//       </Button>
+//     </div>
+//   );
+// };
 
 class Skill extends React.Component {
   constructor(props) {
@@ -68,6 +68,7 @@ class Skill extends React.Component {
           userData:{
               person_id: "1",
               recommended_skill: "",
+              course_list: [],
           }
         }
       }
@@ -84,9 +85,9 @@ class Skill extends React.Component {
                 console.log(response)}
               this.setState({
                 userData:{
-                    person_id: "1",
-                    recommended_skill: response.data.recommended_skill, // if by flask
+                    recommended_skill: response.data.recommended_skill,// if by flask
                     //recommended_skill: response.data[0].recommended_skill, // if by django api view
+                    course_list: response.data.course_list,
                 }
               })
               if (flag) {
@@ -103,19 +104,27 @@ class Skill extends React.Component {
     <div style={{fontFamily: 'Avenir'}}>
       <h2>&nbsp; {this.state.userData.recommended_skill}</h2>
       <br></br>
+      <br></br>
+      <h2 style={{color : '#3f51b5'}}>Recommended courses to learn this skill:</h2>
+      {this.state.userData.course_list.map((item, index) => (
+        <div>
+          <h3>&nbsp; {item.course_name} &nbsp; <a href={item.course_link}>course link</a></h3>
+        </div>
+      ))}
+
 
     </div>);
   }
 };
 
-class Course extends React.Component {
-  render() {
-    return (
-    <div style={{fontFamily: 'Avenir'}}>
-      <h2>&nbsp; Lynda.com</h2>
-    </div>);
-  }
-};
+// class Course extends React.Component {
+//   render() {
+//     return (
+//     <div style={{fontFamily: 'Avenir'}}>
+//       <h2>&nbsp; Lynda.com</h2>
+//     </div>);
+//   }
+// };
 
 class SkillRecommend extends React.Component {
   constructor(props) {
@@ -147,9 +156,10 @@ class SkillRecommend extends React.Component {
         <div>
           {<WelcomeText addSkill={this.triggerAddSkillState} />}
           {this.state.isAddSkillState && <Skill />}
-          {this.state.isAddSkillState && <CourseButton addCourse={this.triggerAddCourseState} />}
-          {this.state.isAddCourseState && <Course />}
         </div>
+          // {this.state.isAddSkillState && <CourseButton addCourse={this.triggerAddCourseState} />}
+          // {this.state.isAddCourseState && <Course />}
+
 
 
   );
