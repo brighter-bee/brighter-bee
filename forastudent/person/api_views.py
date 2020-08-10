@@ -36,12 +36,12 @@ class OpportunityViewSet(viewsets.ModelViewSet):
     filter_fields = ('id', )
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter)
-    search_fields = ('name', )
-    filter_fields = ('id', )
+#class ProjectViewSet(viewsets.ModelViewSet):
+ #   queryset = Project.objects.all()
+  #  serializer_class = ProjectSerializer
+   # filter_backends = (DjangoFilterBackend, SearchFilter)
+    #search_fields = ('name', )
+    #filter_fields = ('id', )
 
 
 class SkillViewSet(viewsets.ModelViewSet):
@@ -175,6 +175,12 @@ class MeetingRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Meeting.objects.all()
     lookup_field = 'id'
     serializer_class = MeetingSerializer
+    def get(self, request, id):
+        print(id)
+        m = Meeting.objects.get(pk=int(id))
+        response = super().get(request, id)
+        response.data["url"] = getMeeting(m.number)
+        return response
 
 
 class SkillList(ListAPIView):
