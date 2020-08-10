@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.db import connection
 from collections import defaultdict
 from django.views.decorators.http import require_http_methods
-
+import random
 # Create your views here.
 
 flag = False # print flag
@@ -100,80 +100,88 @@ def recommend_skill(request, person_id):
     # skill recommendation algorithm
     def recommend_skill_algo(user, user_skill_dict, category_skill_dict, project_skill_dict):
 
-        no_of_skill_project = defaultdict(int)
-        no_of_skill_category = defaultdict(int)
-        no_of_skill_short_of_project = defaultdict(int)
+        try:
+            no_of_skill_project = defaultdict(int)
+            no_of_skill_category = defaultdict(int)
+            no_of_skill_short_of_project = defaultdict(int)
 
-        for skill in user_skill_dict[user]:
-            for key, value in project_skill_dict.items():
-                if skill in value:
-                    no_of_skill_project[key] += 1
-            for key,value in category_skill_dict.items():
-                if skill in value:
-                    no_of_skill_category[key] += 1
+            result = ""
 
-        for key,value in no_of_skill_project.items():
-            no_of_skill_short_of_project[key] = len(project_skill_dict[key])-value
+            for skill in user_skill_dict[user]:
+                for key, value in project_skill_dict.items():
+                    if skill in value:
+                        no_of_skill_project[key] += 1
+                for key,value in category_skill_dict.items():
+                    if skill in value:
+                        no_of_skill_category[key] += 1
 
-        # list of skills which are only short by 2 in the project
-        skills = []
-        t = 0; s = None
+            for key,value in no_of_skill_project.items():
+                no_of_skill_short_of_project[key] = len(project_skill_dict[key])-value
 
-        no_of_skill_short_of_project = {k: v for k, v in sorted(no_of_skill_short_of_project.items(), key=lambda item: item[1]) if v != 0}
+            # list of skills which are only short by 2 in the project
+            skills = []
+            t = 0; s = None
 
-        if len(no_of_skill_short_of_project) > 0:
-            s,t = next(iter(no_of_skill_short_of_project.items()))
+            no_of_skill_short_of_project = {k: v for k, v in sorted(no_of_skill_short_of_project.items(), key=lambda item: item[1]) if v != 0}
 
-        no_of_skill_category = {k: v for k, v in sorted(no_of_skill_category.items(), reverse=True, key=lambda item: item[1])}
-        flag_ = True
+            if len(no_of_skill_short_of_project) > 0:
+                s,t = next(iter(no_of_skill_short_of_project.items()))
 
-        # if short of only 1 skill in the project
-        if t == 1:
-            project = s
-            for skill in project_skill_dict[s]:
-                if skill not in user_skill_dict[user]:
-                    result = skill
-                    break
+            no_of_skill_category = {k: v for k, v in sorted(no_of_skill_category.items(), reverse=True, key=lambda item: item[1])}
+            flag_ = True
 
-        # if short of 2 skills in the project
-        elif t == 2:
-            project = s
-            for skill in project_skill_dict[s]:
-                if skill not in user_skill_dict[user]:
-                    skills.append(skill)
-
-            for key in no_of_skill_category.keys():
-                for skill in skills:
-                    if skill in category_skill_dict[key]:
+            # if short of only 1 skill in the project
+            if t == 1:
+                project = s
+                for skill in project_skill_dict[s]:
+                    if skill not in user_skill_dict[user]:
                         result = skill
                         break
 
-        # in all other cases (selects category which has maximum skills)
-        else:
-            for key in no_of_skill_category.keys():
-                if flag_:
-                    for skill in category_skill_dict[key]:
-                        if skill not in user_skill_dict[user]:
+            # if short of 2 skills in the project
+            elif t == 2:
+                project = s
+                for skill in project_skill_dict[s]:
+                    if skill not in user_skill_dict[user]:
+                        skills.append(skill)
+
+                for key in no_of_skill_category.keys():
+                    for skill in skills:
+                        if skill in category_skill_dict[key]:
                             result = skill
-                            flag_ = False
                             break
-                else:
-                    break
+
+            # in all other cases (selects category which has maximum skills)
+            else:
+                for key in no_of_skill_category.keys():
+                    if flag_:
+                        for skill in category_skill_dict[key]:
+                            if skill not in user_skill_dict[user]:
+                                result = skill
+                                flag_ = False
+                                break
+                    else:
+                        break
 
 
-        with connection.cursor() as cursor:
-            cursor.execute('''SELECT a.name FROM person_skill a WHERE a.id = %s''', [result])
-            row = cursor.fetchone()
-            recommended_skill = row[0]
+            with connection.cursor() as cursor:
+                cursor.execute('''SELECT a.name FROM person_skill a WHERE a.id = %s''', [result])
+                row = cursor.fetchone()
+                recommended_skill = row[0]
 
-        if flag:
-            print(no_of_skill_project)
-            print(no_of_skill_category)
-            print(no_of_skill_short_of_project)
-            print("result is", result)
-            print(recommended_skill)
+            if flag:
+                print(no_of_skill_project)
+                print(no_of_skill_category)
+                print(no_of_skill_short_of_project)
+                print("result is", result)
+                print(recommended_skill)
 
-        return recommended_skill
+            return recommended_skill
+
+        except:
+            recommended_skill = random.choice(["Teams and collaboration", "Leadership skills", "Personal effectiveness", "Time management", "Microsoft teams"])
+            return recommended_skill
+
 
     recommended_skill = recommend_skill_algo(person_id, user_skill_dict, category_skill_dict, project_skill_dict)
 
