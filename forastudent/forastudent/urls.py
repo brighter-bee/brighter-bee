@@ -32,7 +32,7 @@ router.register(r'skill', person.api_views.SkillViewSet)
 
 urlpatterns = [
     # path('api/v2/skills', person.api_views.RecommendSkill.as_view()),
-    path('project', person.views.get_projects),
+    # path('project', person.views.get_projects),
     path('api/', include(router.urls)),
     path('recommend/<int:person_id>', person.views.recommend_skill),
     path('api/v2/skills', person.api_views.SkillList.as_view()),
