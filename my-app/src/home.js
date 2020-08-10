@@ -25,10 +25,11 @@ import ForumsPage from './forum';
 import FindJobsPage from './findJobs';
 import SkillRecommend from './skillRecommend';
 import Meetings from './meetings';
+import AddMeeting from './addMeeting';
+
 import Profile from './Profile';
 import NewProject from "./NewProject";
 import FindProjectsPage from './findProjects';
-import MeetingsPage from './meetings';
 
 // search
 import SearchIcon from '@material-ui/icons/Search';
@@ -184,10 +185,12 @@ function ClippedDrawer(props) {
     {name:'Find Jobs',icon:<WorkIcon />,urlVal:url + '/findjobs'},
     {name:'Saved Jobs',icon:<WorkIcon />,urlVal:url + '/savedjobs'},
     {name:'Skill Up',icon:<BuildIcon />,urlVal:url + '/skillup'},
-    {name:'Set Up Meeting',icon:<GroupIcon />,urlVal:url + '/meetings'},
+    {name:'Meetings Page',icon:<GroupIcon />,urlVal:url + '/meetings'},
+    {name:'Create Meeting',icon:<GroupIcon />,urlVal:url + '/addMeeting'},
     {name:'Find Projects', icon:<AssessmentIcon />,urlVal:url + '/findprojects'},
     {name:'Add Project', icon:<AssessmentIcon />,urlVal:url + '/addproject'},
     {name:'My Profile', icon:<AccountBoxIcon />,urlVal:url + '/profile'}
+
    ];
 
   return (
@@ -258,6 +261,9 @@ function ClippedDrawer(props) {
               </Route>
               <Route path={`${path}/meetings`}>
                 <Meetings/>
+              </Route>
+              <Route path={`${path}/addMeeting`}>
+                <AddMeeting/>
               </Route>
               <Route path={`${path}/findprojects`}>
                 <FindProjectsPage username={username}/>
