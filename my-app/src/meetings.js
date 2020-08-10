@@ -26,7 +26,7 @@ class Meetings extends React.Component {
  	componentDidMount() {
 		console.log(localStorage.getItem("user"))
 		// get user id and request meetings list from backend then serve them
-		axios.get('http://localhost:8000/api/v2/meetings?participant=' + localStorage.getItem("user"))
+		axios.get('http://localhost:8000/api/v2/meetings?participants=' + localStorage.getItem("user"))
 			.then((response) => {
 				console.log(response);
 				var index;
