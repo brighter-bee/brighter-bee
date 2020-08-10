@@ -14,11 +14,6 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Build, Create, DescriptionOutlined, Person, PersonPin, Work} from "@material-ui/icons";
-import Checkbox from '@material-ui/core/Checkbox';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import SkillRecommend from "./skillRecommend";
 import Skills from "./Skills";
 
 class Profile extends Component {
@@ -41,7 +36,7 @@ class Profile extends Component {
             .then((response) => {
                 this.setState({
                     skills_all: response.data,
-                })
+                });
             });
     }
 
@@ -122,7 +117,7 @@ class Profile extends Component {
                     <Typography variant="h6" gutterBottom>
                         My Profile
                     </Typography>
-                    <Avatar>{this.state.name}</Avatar>
+                    <Avatar>{this.state.name.slice(0, 1)}</Avatar>
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6} md={3}>
