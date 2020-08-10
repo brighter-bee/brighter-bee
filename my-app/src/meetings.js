@@ -4,17 +4,10 @@ import ReactDOM from 'react-dom'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-const options =  [];
-axios.get('http://localhost:8000/api/v2/persons').then(	res => {
-	var user;
-	for (user in res['data']) {
-		options.push({value: res['data'][user]['id'], label: res['data'][user]['name']});
-	}
-})
+
 
 const animatedComponents = makeAnimated();
-console.log(options)
-	
+
 class Meetings extends React.Component {
 
 	constructor(props) {
@@ -26,8 +19,10 @@ class Meetings extends React.Component {
 			topic: null,
 			participants: null,
 			meetingsList: [],
+			options: [],
 		};
 	}
+
 
 	handleSubmit = (event) => {
 	    event.preventDefault();
@@ -39,6 +34,7 @@ class Meetings extends React.Component {
 					.then((response) => {
 						console.log(response);
 						console.log("Posted")
+						alert("Success! Refresh to see the new meeting")
 						//ReactDOM.render(<div> {response['data']} </div>, document.getElementById('meetings_list'))
 					}, (error) => {
 						console.log(error);
@@ -65,6 +61,8 @@ class Meetings extends React.Component {
 					var title = res['name'];
 					var time = res['time'];
 					var participants = res['participants'];
+					var i;
+					var part = []
 					var number = res['number']
 					var id = res['id']
 					var newList = this.state.meetingsList.concat({"title" : title, "time" : time, "participants" : participants, "number" : number, "id" : id});
@@ -75,6 +73,13 @@ class Meetings extends React.Component {
 			}, (error) => {
 				console.log(error);
 			}	);
+			axios.get('http://localhost:8000/api/v2/persons').then(	res => {
+				var user;
+				for (user in res['data']) {
+					var newList = this.state.options.concat({value: res['data'][user]['id'], label: res['data'][user]['name']});
+					this.setState({options : newList});
+				}
+			});
 	}
 	
     myChangeHandler = (event) => {
@@ -109,13 +114,14 @@ class Meetings extends React.Component {
 	
 	getUsername = (userID) => {
 		var index;
-		for (index in options) {
-			if (userID == options[index]['value']) {
+		console.log(this.state.options)
+		for (index in this.state.options) {
+			if (userID == this.state.options[index]['value']) {
 				console.log("MATCHED")
-				return options[index]['label']
+				return this.state.options[index]['label']
 			}
 		}
-		return "User not found: May have deleted account"
+		return "Not found"
 
 	}
 
@@ -136,7 +142,6 @@ class Meetings extends React.Component {
 							))}
 						</ul>
 
-						<button>Update</button>
 						<button onClick={() => this.getZoomLink(item['id'])}>Get Zoom Link</button>
 						<button onClick={() => this.cancelMeeting(item['id'])}>Cancel Meeting</button>
 					</div>
@@ -144,27 +149,6 @@ class Meetings extends React.Component {
 				}
 				
 			</ol>
-			<h2> Create a New Meeting </h2>
-			<form onSubmit = {this.handleSubmit}>
-				Select a topic for your meeting <br></br>
-				<input type="text" name="topic" onChange={this.myChangeHandler}/> <br></br>
-				Select a date for your meeting <br></br>
-				<input type="date" name="date" onChange={this.myChangeHandler}/> <br></br>
-				Select a time for your meeting <br></br>
-				<input type="time" name="time" onChange={this.myChangeHandler}/> <br></br>
-				Select a duration for your meeting <br></br>
-				<input type="number" name="duration" onChange={this.myChangeHandler}/> <br></br>
-				Select participants
-			    <Select name="participants" onChange={this.selectChange}
-			      closeMenuOnSelect={false}
-			      components={animatedComponents}
-			      isMulti
-			      options={options}
-			    /> <br></br>
-				
-	
-				<input type="submit" value="Submit" onSubmit = {this.handleSubmit}/>
-			</form>
 	      </div>
 	    );
   	}
