@@ -37,7 +37,7 @@ class OpportunityViewSet(viewsets.ModelViewSet):
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
+ #   queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     search_fields = ('name',)
@@ -88,7 +88,7 @@ class MeetingList(ListAPIView):
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('id', 'number', 'participants', 'time')
     search_fields = ('name',)
-    pagination_class = GeneralPagination
+   # pagination_class = GeneralPagination
 
 
 user_skill_dict = defaultdict(list)
