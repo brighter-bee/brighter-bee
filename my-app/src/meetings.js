@@ -3,7 +3,9 @@ import axios from 'axios';
 import ReactDOM from 'react-dom'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
+import { withStyles }  from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from "@material-ui/core/Button";
 
 
 const animatedComponents = makeAnimated();
@@ -22,7 +24,7 @@ class Meetings extends React.Component {
 			options: [],
 		};
 	}
-	
+
  	componentDidMount() {
 		console.log(localStorage.getItem("user"))
 		// get user id and request meetings list from backend then serve them
@@ -65,7 +67,7 @@ class Meetings extends React.Component {
 			window.open(response['data']['url'], "_blank")
 		})
 	}
-	
+
 	cancelMeeting = (meetingId) => {
 		axios.delete('http://localhost:8000/api/v2/meetings/' + meetingId)
 		.then((response) => {
@@ -73,7 +75,7 @@ class Meetings extends React.Component {
 		})
 		window.location.reload(false)
 	}
-	
+
 	getUsername = (userID) => {
 		var index;
 		console.log(this.state.options)
@@ -90,12 +92,14 @@ class Meetings extends React.Component {
   	render() {
 	    return (
 	      <div>
-			<h1> Meetings Page </h1>
-			<h2> Meetings List </h2>
-			<ol id="meetings_list"> 
+			<h1> Your upcoming meetings </h1>
+
+			<ol id="meetings_list">
 				{this.state.meetingsList.map((item, index) => (
 					<div key={item['id']}>
-						Title: {item['title']} <br></br>
+					<Typography>
+					<p>
+						Title: <b>{item['title']} </b><br></br>
 						Time: {item['time']} <br></br>
 						People:
 						<ul>
@@ -104,12 +108,16 @@ class Meetings extends React.Component {
 							))}
 						</ul>
 
-						<button onClick={() => this.getZoomLink(item['id'])}>Get Zoom Link</button>
-						<button onClick={() => this.cancelMeeting(item['id'])}>Cancel Meeting</button>
+						<Button variant="contained" color="primary" size="small" onClick={() => this.getZoomLink(item['id'])}>Get Zoom Link</Button>
+						<Button variant="contained" color="secondary" size="small" onClick={() => this.cancelMeeting(item['id'])}>Cancel Meeting</Button>
+					</p>
+					</Typography>
+					<hr style={{width : '50%', margin: "0"}}></hr>
+
 					</div>
 					))
 				}
-				
+
 			</ol>
 	      </div>
 	    );
