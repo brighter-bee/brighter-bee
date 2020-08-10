@@ -22,42 +22,16 @@ class Meetings extends React.Component {
 			options: [],
 		};
 	}
-
-
-	handleSubmit = (event) => {
-	    event.preventDefault();
-		console.log(this.state)
-		this.setState({participants : this.state.participants.concat(localStorage.getItem("user"))})
-		try {
-			if (this.state.time != null && this.state.date != null && this.state.duration != null) {
-				axios.post('http://localhost:8000/api/v2/meetings/new', this.state)
-					.then((response) => {
-						console.log(response);
-						console.log("Posted")
-						alert("Success! Refresh to see the new meeting")
-						//ReactDOM.render(<div> {response['data']} </div>, document.getElementById('meetings_list'))
-					}, (error) => {
-						console.log(error);
-					});
-			} else {
-				console.log("else?")
-			}
-		} catch (exception) {
-			console.log("g")
-		}
-
-	}
-
 	
  	componentDidMount() {
-		console.log("Fired")
+		console.log(localStorage.getItem("user"))
 		// get user id and request meetings list from backend then serve them
-		axios.get('http://localhost:8000/api/v2/meetings')//'?participant=' + localStorage.getItem("user"))
+		axios.get('http://localhost:8000/api/v2/meetings?participant=' + localStorage.getItem("user"))
 			.then((response) => {
 				console.log(response);
 				var index;
-				for (index in response['data']['results']) {
-					var res = response['data']['results'][index]
+				for (index in response['data']) {
+					var res = response['data'][index]
 					var title = res['name'];
 					var time = res['time'];
 					var participants = res['participants'];
@@ -81,20 +55,8 @@ class Meetings extends React.Component {
 				}
 			});
 	}
-	
-    myChangeHandler = (event) => {
-		console.log(event.target.name)
-		console.log(event.target.value)
 
-    	let nam = event.target.name;
-    	let val = event.target.value;
-    	this.setState({[nam]: val});
-	}
-	
-	selectChange = (selected) => {
-		this.setState({participants: selected});
-	}
-	
+
 	getZoomLink = (meetingId) => {
 		console.log(meetingId)
 		axios.get('http://localhost:8000/api/v2/meetings/' + meetingId)

@@ -50,36 +50,14 @@ class AddMeeting extends React.Component {
 
 	
  	componentDidMount() {
-		console.log("Fired")
-		// get user id and request meetings list from backend then serve them
-		axios.get('http://localhost:8000/api/v2/meetings')//'?participant=' + localStorage.getItem("user"))
-			.then((response) => {
-				console.log(response);
-				var index;
-				for (index in response['data']['results']) {
-					var res = response['data']['results'][index]
-					var title = res['name'];
-					var time = res['time'];
-					var participants = res['participants'];
-					var i;
-					var part = []
-					var number = res['number']
-					var id = res['id']
-					var newList = this.state.meetingsList.concat({"title" : title, "time" : time, "participants" : participants, "number" : number, "id" : id});
-					this.setState({meetingsList : newList})
-				}
-				console.log(this.state.meetingsList)
-				//ReactDOM.render(<div> {response['data']['results']} </div>, document.getElementById('meetings_list'));
-			}, (error) => {
-				console.log(error);
-			}	);
-			axios.get('http://localhost:8000/api/v2/persons').then(	res => {
+		console.log(localStorage.getItem("user"))
+		axios.get('http://localhost:8000/api/v2/persons').then(	res => {
 				var user;
 				for (user in res['data']) {
 					var newList = this.state.options.concat({value: res['data'][user]['id'], label: res['data'][user]['name']});
 					this.setState({options : newList});
 				}
-			});
+		});
 	}
 	
     myChangeHandler = (event) => {
