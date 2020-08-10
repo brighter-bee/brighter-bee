@@ -14,6 +14,12 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Build, Create, DescriptionOutlined, Person, PersonPin, Work} from "@material-ui/icons";
+import Checkbox from '@material-ui/core/Checkbox';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import SkillRecommend from "./skillRecommend";
+import Skills from "./Skills";
 
 class Profile extends Component {
     constructor() {
@@ -24,11 +30,19 @@ class Profile extends Component {
             desc: '',
             type: '',
             skills: [],
-            success: false
+            success: false,
+            skills_names: [],
+            skills_all: [],
         };
         this.resume = '';
         this.updateField = this.updateField.bind(this);
         this.updateProfile = this.updateProfile.bind(this);
+        axios.get('http://localhost:8000/api/skill')
+            .then((response) => {
+                this.setState({
+                    skills_all: response.data,
+                })
+            });
     }
 
     componentDidMount() {
@@ -41,6 +55,7 @@ class Profile extends Component {
                     desc: response.data[0].desc,
                     type: response.data[0].type,
                     skills: response.data[0].skills,
+                    skills_names: response.data[0].skills_names,
                 });
                 this.resume = response.data[0].resume;
             });
@@ -65,6 +80,7 @@ class Profile extends Component {
 
     updateProfile(e) {
         e.preventDefault();
+        console.info(this.state.skills);
         axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', this.state)
             .then((response) => {
                     console.log(response);
@@ -90,6 +106,13 @@ class Profile extends Component {
                     console.log(error);
                 }
             );
+    }
+
+    updateSkills(skills) {
+        this.setState({
+            skills: skills
+        });
+        console.log(this.state);
     }
 
     render() {
@@ -180,13 +203,6 @@ class Profile extends Component {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <div>Skills:</div>
-                        <Build/>
-                        {this.state.skills.map((item, index) => (
-                            <Chip key={index} label={item}/>
-                        ))}
-                    </Grid>
-                    <Grid item xs={12} style={{marginBottom: "50px"}}>
                         <InputLabel id="demo-simple-select-label" style={{marginBottom: "10px"}}>Resume</InputLabel>
                         <Button
                             variant="outlined"
@@ -204,6 +220,29 @@ class Profile extends Component {
                             />
                         </Button>
                     </Grid>
+                    <Grid item xs={12}>
+                        <div>Your skills:</div>
+                        <Build/>
+                        {this.state.skills_names.map((item, index) => (
+                            <Chip key={index} label={item}/>
+                        ))}
+                    </Grid>
+                    {/*<Grid item xs={12} sm={6}>*/}
+                    {/*    <Autocomplete*/}
+                    {/*        style={{width: "100%"}}*/}
+                    {/*        fullWidth*/}
+                    {/*        multiple*/}
+                    {/*        getOptionSelected={(option, value) => option.name === value}*/}
+                    {/*        id="multiple-limit-tags"*/}
+                    {/*        options={this.state.skills_all}*/}
+                    {/*        defaultValue={this.state.skills_names}*/}
+                    {/*        getOptionLabel={(option) => option.name}*/}
+                    {/*        renderInput={(params) => (*/}
+                    {/*            <TextField {...params} variant="outlined" label="Skills" placeholder="Skills"/>*/}
+                    {/*        )}*/}
+                    {/*    />*/}
+                    {/*</Grid>*/}
+                    <Skills handleSkills={this.updateSkills.bind(this)} skills={this.state.skills}/>
                     <Grid item xs={12}>
                         <Button
                             variant="contained"

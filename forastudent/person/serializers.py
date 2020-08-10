@@ -9,9 +9,19 @@ flag = True
 
 
 class SkillSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    category = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+
     class Meta:
         model = Skill
         fields = '__all__'
+
+    def get_full_name(self, instance):
+        return '{} ({})'.format(instance.name, instance.category)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -33,15 +43,17 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class PersonSerializer(serializers.ModelSerializer):
-    skills = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='name'
-    )
+    skills_names = serializers.SerializerMethodField()
 
     class Meta:
         model = Person
         fields = '__all__'
+
+    def get_skills_names(self, instance):
+        skills_names = []
+        for s in instance.skills.all():
+            skills_names.append(s.name)
+        return skills_names
 
     # def to_representation(self, instance):
     #     data = super().to_representation(instance)
