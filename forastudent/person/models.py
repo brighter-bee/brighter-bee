@@ -32,6 +32,8 @@ class Opportunity(models.Model):
     )
     type = models.TextField(choices=TYPES)
     name = models.CharField(max_length=100)
+    company_name = models.TextField()
+    location = models.TextField()
     desc = models.TextField()
     link = models.TextField()
     createdAt = models.DateTimeField(auto_now_add=True)
@@ -69,6 +71,7 @@ class ForumCategory(ForumSection):
 
 
 class Person(models.Model):
+    id = models.PositiveIntegerField(primary_key=True)
     TYPES = (
         ('S', 'Student'),
         ('A', 'Academic Mentor'),
@@ -81,6 +84,7 @@ class Person(models.Model):
     desc = models.TextField(blank=True, null=True)
     location = models.TextField(blank=True, null=True)
     avatar = models.ImageField(upload_to='images/', default='images/avatar.jpg', blank=True, null=True)
+    resume = models.FileField(upload_to='resume/', blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     skills = models.ManyToManyField(Skill, blank=True)
     opportunities = models.ManyToManyField(Opportunity, blank=True)
@@ -138,7 +142,7 @@ class Course(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
-        return self.code + " " + self.name
+        return self.name
 
 
 class Project(models.Model):
@@ -147,6 +151,7 @@ class Project(models.Model):
     start_date = models.DateTimeField(blank=True, null=True)
     duration = models.CharField(max_length=200, blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
+    email = models.EmailField(blank=True)
 
     def __str__(self):
         return self.name

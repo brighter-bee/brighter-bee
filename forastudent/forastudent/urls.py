@@ -18,12 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 
+from rest_framework import routers
+
 import person.api_views
 import person.views
 import person.skill_view
 
+router = routers.DefaultRouter()
+router.register(r'opportunity', person.api_views.OpportunityViewSet)
+router.register(r'project', person.api_views.ProjectViewSet)
+
 urlpatterns = [
     # path('api/v2/skills', person.api_views.RecommendSkill.as_view()),
+    path('api/', include(router.urls)),
     path('recommend/<int:person_id>', person.views.recommend_skill),
     path('api/v2/skills', person.api_views.SkillList.as_view()),
     path('api/v2/users', person.api_views.UserList.as_view()),

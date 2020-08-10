@@ -26,6 +26,12 @@ class OpportunitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+
 class PersonSerializer(serializers.ModelSerializer):
     skills = serializers.SlugRelatedField(
         many=True,
