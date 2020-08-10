@@ -46,11 +46,11 @@ export default function JobCard(props) {
       // get existing ops of user
       axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
       .then((resp)=>{
-        let ops = resp.data[0]
+        let ops = resp.data[0].opportunities
         //ops.opportunities.push()
-        ops.opportunities.push(response.data.id);
+        ops.push(response.data.id);
         // update existing ops of user
-        axios.put('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', ops)
+        axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', {"opportunities":ops})
         .then(()=>{
             console.log('Job Saved')
         })
@@ -64,9 +64,9 @@ export default function JobCard(props) {
     // remove it from user ops arrays
     axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
       .then((resp)=>{
-        let ops = resp.data[0]
-        ops.opportunities.splice(ops.opportunities.indexOf(props.adref), 1 );
-        axios.put('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', ops)
+        let ops = resp.data[0].opportunities
+        ops.splice(ops.indexOf(props.adref), 1 );
+        axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', {"opportunities":ops})
         .then(()=>{
             console.log('Job Deleted')
             props.freshPage();
