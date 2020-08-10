@@ -7,11 +7,11 @@ import makeAnimated from 'react-select/animated';
 const options =  [];
 
 axios.get('http://localhost:8000/api/v2/persons').then(	res => {
-	console.log(res['data']['results']);
+	console.log(res['data']);
 	var user;
-	for (user in res['data']['results']) {
-		console.log(res['data']['results'][user]['name']);
-		options.push({value: res['data']['results'][user]['id'], label: res['data']['results'][user]['name']});
+	for (user in res['data']) {
+		console.log(res['data'][user]['name']);
+		options.push({value: res['data'][user]['id'], label: res['data'][user]['name']});
 	}
 })
 
