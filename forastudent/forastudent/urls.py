@@ -27,6 +27,7 @@ import person.skill_view
 router = routers.DefaultRouter()
 router.register(r'opportunity', person.api_views.OpportunityViewSet)
 router.register(r'project', person.api_views.ProjectViewSet)
+router.register(r'skill', person.api_views.SkillViewSet)
 
 urlpatterns = [
     # path('api/v2/skills', person.api_views.RecommendSkill.as_view()),

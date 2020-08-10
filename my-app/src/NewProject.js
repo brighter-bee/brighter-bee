@@ -8,6 +8,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Book, Build, Create, Email, Timelapse, Timer} from "@material-ui/icons";
+import Skills from "./Skills";
 
 class NewProject extends Component {
     constructor() {
@@ -48,6 +49,13 @@ class NewProject extends Component {
                     console.log(error);
                 }
             );
+    }
+
+    updateSkills(skills) {
+        this.setState({
+            skills: skills
+        });
+        console.log(this.state);
     }
 
     render() {
@@ -145,13 +153,7 @@ class NewProject extends Component {
                             onChange={this.updateField}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <div>Skills:</div>
-                        <Build/>
-                        {this.state.skills.map((item, index) => (
-                            <Chip key={index} label={item}/>
-                        ))}
-                    </Grid>
+                    <Skills handleSkills={this.updateSkills.bind(this)} skills={this.state.skills}/>
                     <Grid item xs={12}>
                         <Button
                             variant="contained"

@@ -44,6 +44,14 @@ class OpportunityViewSet(viewsets.ModelViewSet):
     #filter_fields = ('id', )
 
 
+class SkillViewSet(viewsets.ModelViewSet):
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    search_fields = ('name', )
+    filter_fields = ('id', )
+
+
 class GeneralPagination(LimitOffsetPagination):
     default_limit = 5
     max_limit = 10
