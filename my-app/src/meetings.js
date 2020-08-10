@@ -5,12 +5,9 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 const options =  [];
-
 axios.get('http://localhost:8000/api/v2/persons').then(	res => {
-	console.log(res['data']);
 	var user;
 	for (user in res['data']) {
-		console.log(res['data'][user]['name']);
 		options.push({value: res['data'][user]['id'], label: res['data'][user]['name']});
 	}
 })
@@ -92,6 +89,35 @@ class Meetings extends React.Component {
 	selectChange = (selected) => {
 		this.setState({participants: selected});
 	}
+	
+	getZoomLink = (meetingId) => {
+		console.log(meetingId)
+		axios.get('http://localhost:8000/api/v2/meetings/' + meetingId)
+		.then((response) => {
+			console.log(response)
+			window.open(response['data']['url'], "_blank")
+		})
+	}
+	
+	cancelMeeting = (meetingId) => {
+		axios.delete('http://localhost:8000/api/v2/meetings/' + meetingId)
+		.then((response) => {
+			console.log(response)
+		})
+		window.location.reload(false)
+	}
+	
+	getUsername = (userID) => {
+		var index;
+		for (index in options) {
+			if (userID == options[index]['value']) {
+				console.log("MATCHED")
+				return options[index]['label']
+			}
+		}
+		return "User not found: May have deleted account"
+
+	}
 
   	render() {
 	    return (
@@ -100,16 +126,19 @@ class Meetings extends React.Component {
 			<h2> Meetings List </h2>
 			<ol id="meetings_list"> 
 				{this.state.meetingsList.map((item, index) => (
-					<div>
+					<div key={item['id']}>
 						Title: {item['title']} <br></br>
 						Time: {item['time']} <br></br>
 						People:
 						<ul>
-							{item['participants']}
+							{item['participants'].map((item, index) => (
+								<li key ={index}>{this.getUsername(item)}</li>
+							))}
 						</ul>
+
 						<button>Update</button>
-						<button>Get Zoom Link</button>
-						<button>Cancel Attendance</button>
+						<button onClick={() => this.getZoomLink(item['id'])}>Get Zoom Link</button>
+						<button onClick={() => this.cancelMeeting(item['id'])}>Cancel Meeting</button>
 					</div>
 					))
 				}
