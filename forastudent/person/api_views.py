@@ -36,12 +36,12 @@ class OpportunityViewSet(viewsets.ModelViewSet):
     filter_fields = ('id', )
 
 
-#class ProjectViewSet(viewsets.ModelViewSet):
- #   queryset = Project.objects.all()
-  #  serializer_class = ProjectSerializer
-   # filter_backends = (DjangoFilterBackend, SearchFilter)
-    #search_fields = ('name', )
-    #filter_fields = ('id', )
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    search_fields = ('name',)
+    filter_fields = ('id',)
 
 
 class SkillViewSet(viewsets.ModelViewSet):
