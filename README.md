@@ -24,6 +24,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py loaddata fixtures.json
+python manage.py loaddata fixtures2.json
 python manage.py runserver
 ```
 
