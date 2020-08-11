@@ -99,12 +99,12 @@ def recommend_skill_algo(user, user_skill_dict, category_skill_dict, project_ski
 
 
 person_id = 1
-user_skill_dict = {1: [7,4,5], 2: [2, 3, 4], 3: [1,2,3,4,6,8], 4: [5,6,7,8,1,2]}
-category_skill_dict = {1: [1,2,3,8, 6], 2: [4,7, 5]}
+user_skill_dict = {1: [10], 2: [2, 3, 4], 3: [1,2,3,4,6,8], 4: [5,6,7,8,1,2]}
+category_skill_dict = {1: [1,2,3,8, 6], 2: [4,7, 5], 3: [10,11,12]}
 project_skill_dict = {1: [7,4], 2: [2, 3]}
 
-skill_user_dict = {1: [1, 3, 4], 2: [1, 2, 3, 4], 3: [1, 2, 3], 4: [2, 3], 5: [4], 6: [3, 4], 7: [4], 8: [1,3,4] }
-count_skill_frequency = {}
+skill_user_dict = {1: [1, 3, 4], 2: [1, 2, 3, 4], 3: [1, 2, 3], 4: [2, 3], 5: [4], 6: [3, 4], 7: [4], 8: [1,3,4], 10: [1] }
+count_skill_frequency = defaultdict(int)
 for key, value in skill_user_dict.items():
     count_skill_frequency[key] = len(value)
 
