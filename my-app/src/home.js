@@ -345,6 +345,7 @@ function ClippedDrawer(props) {
                     </Route>
                 </Switch>
             </main>
+            {showSearch && <h1>hello</h1>}
         </div>
     );
 }
