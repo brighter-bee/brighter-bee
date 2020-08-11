@@ -82,6 +82,9 @@ class Meeting(models.Model):
     def __str__(self):
         return self.name + " - " + self.number
 
+    class Meta:
+        ordering = ('time', )
+
 
 class Course(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
