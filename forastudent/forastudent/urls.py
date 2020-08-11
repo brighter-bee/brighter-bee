@@ -25,6 +25,9 @@ import person.views
 import person.skill_view
 import person.project_view
 
+
+from person.forum_view import PostView, CommentView, TopicView
+
 router = routers.DefaultRouter()
 router.register(r'opportunity', person.api_views.OpportunityViewSet)
 router.register(r'project', person.api_views.ProjectViewSet)
@@ -49,6 +52,14 @@ urlpatterns = [
     path('skill-recommend/<int:person_id>', person.skill_view.recommend_skill),  # flask url for skill recommendation
     path('project-recommend/<int:person_id>', person.project_view.recommend_project),
     # path('my-skill-recommend', person.api_views.SkillRecommendList.as_view()), # django url for skill recommendation
+
+    # Forum part
+    path('forum/', PostView.as_view({"get": "getPostList", "post": "create"})),
+    path('forum/<int:pk>/', PostView.as_view({"get": "getCurrentPost", "delete": "deletePost", "put": "update"})),
+    path('myPosts/<int:poster>/', PostView.as_view({"get": "getMyPostsList"})),
+    path('forum/topics/', TopicView.as_view({"get": "getTopicList"})),
+    path('reply/', CommentView.as_view({"get": "getCommentList", "post": "create"})),
+    path('reply/reply/', CommentView.as_view({"get": "getCurrentReplyList", "post": "create"}))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
