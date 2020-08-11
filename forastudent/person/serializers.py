@@ -71,18 +71,6 @@ class MeetingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = '__all__'
-
-
-class ReplySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Reply
-        fields = '__all__'
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -262,3 +250,34 @@ class UserSerializer(serializers.ModelSerializer):
 #         data['recommended_skill'] = recommend_skill_algo(person_id, user_skill_dict, category_skill_dict, project_skill_dict)
 #
 #         return data
+
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        ordering = ['-id']
+        model = Post
+        fields = "__all__"
+
+
+class LogicalDeletePostSerializer(serializers.Serializer):
+
+    isDeleted = serializers.BooleanField(default=False)
+
+    def update(self, instance, validated_data):
+        instance.isDeleted = validated_data['isDeleted']
+        instance.save()
+        return instance
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        ordering = ['-id']
+        model = Reply
+        fields = '__all__'
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        ordering = ['-id']
+        model = ForumCategory
+        fields = '__all__'

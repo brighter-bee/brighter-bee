@@ -47,29 +47,6 @@ class Opportunity(models.Model):
         verbose_name_plural = 'Opportunities'
 
 
-class ForumSection(models.Model):
-    name = models.CharField(max_length=100)
-    desc = models.TextField()
-    order = models.PositiveIntegerField()
-    isDeleted = models.BooleanField()
-    createdAt = models.DateTimeField(auto_now_add=True)
-    updatedAt = models.DateTimeField(auto_now=True)
-    icon = models.ImageField(upload_to='images/', default='images/avatar.jpg')
-
-    def __str__(self):
-        return "Section: " + self.name
-
-
-class ForumCategory(ForumSection):
-    section = models.ForeignKey(ForumSection, on_delete=models.CASCADE, related_name="BelongsForumSection")
-
-    def __str__(self):
-        return "Category: " + self.name
-
-    class Meta:
-        verbose_name_plural = 'Forum Categories'
-
-
 class Person(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     TYPES = (
@@ -106,36 +83,6 @@ class Meeting(models.Model):
         return self.name + " - " + self.number
 
 
-class AbstractPost(models.Model):
-    isDeleted = models.BooleanField()
-    content = models.TextField()
-    markdown = models.TextField(null=True, blank=True)
-    createdAt = models.DateTimeField(auto_now_add=True)
-    updatedAt = models.DateTimeField(auto_now=True)
-    poster = models.ForeignKey(Person, on_delete=models.CASCADE)
-
-    class Meta:
-        abstract = True
-
-
-class Post(AbstractPost):
-    name = models.CharField(max_length=100)
-    category = models.ForeignKey(ForumCategory, on_delete=models.CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Reply(AbstractPost):
-    replyTo = models.ForeignKey(Post, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.replyTo.id) + " - reply"
-
-    class Meta:
-        verbose_name_plural = 'Replies'
-
-
 class Course(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     link = models.TextField(blank=True, null=True)
@@ -155,3 +102,65 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ForumSection(models.Model):
+    name = models.CharField(max_length=100)
+    desc = models.TextField()
+    order = models.PositiveIntegerField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+    isDeleted = models.BooleanField(default=False)
+    icon = models.ImageField(upload_to='images/', default='images/avatar.jpg')
+
+    def __str__(self):
+        return "Section: " + self.name
+
+
+class ForumCategory(models.Model):
+    name = models.CharField(max_length=100)
+    desc = models.TextField()
+    order = models.PositiveIntegerField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+    isDeleted = models.BooleanField(default=False)
+    section = models.ForeignKey(ForumSection, on_delete=models.CASCADE, related_name="BelongsToOneForumSection")
+
+    def __str__(self):
+        return "Category: " + self.name
+
+    class Meta:
+        verbose_name_plural = 'Forum Categories'
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=50)
+    markdown = models.CharField(max_length=500, null=True, blank=True)
+    content = models.CharField(max_length=1000)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+    isDeleted = models.BooleanField(default=False)
+    poster = models.ForeignKey(Person, on_delete=models.CASCADE)
+    # poster = models.ForeignKey(Person, on_delete=models.CASCADE)
+    # category = models.ForeignKey(ForumCategory, on_delete=models.CASCADE, null=True, blank=True, db_column='category_id')
+    category = models.ForeignKey(ForumCategory, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Reply(models.Model):
+    markdown = models.TextField(null=True, blank=True)
+    content = models.TextField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    isDeleted = models.BooleanField(default=False)
+    parent_id = models.IntegerField(default=0)
+    replyTo_id = models.IntegerField(default=0)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    poster = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.poster.id) + " - reply"
+
+    class Meta:
+        verbose_name_plural = 'Replies'

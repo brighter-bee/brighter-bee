@@ -229,11 +229,13 @@ function ClippedDrawer(props) {
                         </div>}
 
                         {showSearch && <Button style={{marginLeft:'25%'}} onClick={getJobs} className={classes.searchBtn}>Search</Button>}
-                        <Button color="inherit" style={{marginLeft:'65%'}} href={url + '/profile'}>ABOUT</Button>
-                        <Button color="inherit" style={{marginRight:'-1%'}} href={url + '/profile'}>MY PROFILE</Button>
-                        <Button style={{color : 'white'}} onClick={logout}>
-                            {localStorage.getItem("user") ? 'Logout' : 'Login'}
-                        </Button>
+
+                        <div>
+                            <Button variant="contained" color="blue" style={{marginRight:'20px'}} href={url + '/profile'}>My Profile</Button>
+                            <Button variant="contained" color="secondary" onClick={logout}>
+                                {localStorage.getItem("user") ? 'Logout' : 'Login'}
+                            </Button>
+                        </div>
 
                     </Grid>
                 </Toolbar>
