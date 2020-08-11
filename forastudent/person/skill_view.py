@@ -17,6 +17,8 @@ category_skill_dict = defaultdict(list)
 @require_http_methods(["GET"])
 def recommend_skill(request, person_id):
 
+    # user id is same as person id
+
     data = {
         'recommended_skill': "",
         'course_list': []
@@ -55,18 +57,34 @@ def recommend_skill(request, person_id):
             print(row)
     ########################################
 
-    def user_skill(my_id):
-        my_list=[]
+    # dictionary for skills of each user
+    # key here is user id and value here is list of skill ids for that user
+    def user_skill():
+        my_user_skill_dict = defaultdict(list)
         with connection.cursor() as cursor:
-            cursor.execute('''SELECT b.skill_id FROM person_person a
+            cursor.execute('''SELECT a.id, b.skill_id FROM person_person a
                             LEFT JOIN person_person_skills b on a.id=b.person_id
-                            WHERE a.id= %s''', [my_id])
+                           ''')
             rows = cursor.fetchall()
         for row in rows:
-            my_list.append(row[0])
-        return my_list
+            my_user_skill_dict[row[0]].append(row[1])
+        return my_user_skill_dict
 
+    # dictionary for how many people possess a particular Skill
+    # key here is skill id and value here is list of person id
+    def user_skill_reverse():
+        my_user_skill_dict_reverse = defaultdict(list)
+        with connection.cursor() as cursor:
+            cursor.execute('''SELECT a.id, b.skill_id FROM person_person a
+                            LEFT JOIN person_person_skills b on a.id=b.person_id
+                           ''')
+            rows = cursor.fetchall()
+        for row in rows:
+            my_user_skill_dict_reverse[row[1]].append(row[0])
+        return my_user_skill_dict_reverse
 
+    # dictionary for category and associated skills
+    # key here is category id and value here is list of skill id beloging to that category
     def category_skill():
         my_category_skill_dict = defaultdict(list)
         with connection.cursor() as cursor:
@@ -76,7 +94,8 @@ def recommend_skill(request, person_id):
             my_category_skill_dict[row[1]].append(row[0])
         return my_category_skill_dict
 
-
+    # dictionary for project and associated skills
+    # key here is project id and value here is list of skill id beloging to that project
     def project_skill():
         my_project_skill_dict = defaultdict(list)
         with connection.cursor() as cursor:
@@ -87,10 +106,14 @@ def recommend_skill(request, person_id):
         return my_project_skill_dict
 
 
-    user_skill_dict[person_id] = user_skill(person_id)
+    user_skill_dict = user_skill()
     category_skill_dict = category_skill()
     project_skill_dict = project_skill()
-    # project_skill_dict = {1 : [1,2,3], 2 : [4,5,6]}
+    skill_user_dict = user_skill_reverse() # reverse of user skill dict
+
+    count_skill_frequency = {}
+    for key, value in skill_user_dict.items():
+        count_skill_frequency[key] = len(value)
 
     if flag:
         print(user_skill_dict)
@@ -98,7 +121,7 @@ def recommend_skill(request, person_id):
         print(project_skill_dict)
 
     # skill recommendation algorithm
-    def recommend_skill_algo(user, user_skill_dict, category_skill_dict, project_skill_dict):
+    def recommend_skill_algo(user, user_skill_dict, category_skill_dict, project_skill_dict, count_skill_frequency):
 
         try:
             no_of_skill_project = defaultdict(int)
@@ -128,7 +151,6 @@ def recommend_skill(request, person_id):
                 s,t = next(iter(no_of_skill_short_of_project.items()))
 
             no_of_skill_category = {k: v for k, v in sorted(no_of_skill_category.items(), reverse=True, key=lambda item: item[1])}
-            flag_ = True
 
             # if short of only 1 skill in the project
             if t == 1:
@@ -138,7 +160,8 @@ def recommend_skill(request, person_id):
                         result = skill
                         break
 
-            # if short of 2 skills in the project
+
+            # if short of 2 skills in the project then selects the skill of that category for which user already has maximum skills
             elif t == 2:
                 project = s
                 for skill in project_skill_dict[s]:
@@ -151,17 +174,32 @@ def recommend_skill(request, person_id):
                             result = skill
                             break
 
-            # in all other cases (selects category which has maximum skills)
-            else:
+            # in all other cases (selects skill from that category which has maximum user's skills)
+            # also suggest the skill which most number of users already have
+            if result == "":
                 for key in no_of_skill_category.keys():
-                    if flag_:
-                        for skill in category_skill_dict[key]:
-                            if skill not in user_skill_dict[user]:
-                                result = skill
-                                flag_ = False
-                                break
-                    else:
+                    possible_skills_dict = {}
+                    for skill in category_skill_dict[key]:
+                        if skill not in user_skill_dict[user]:
+                            possible_skills_dict[skill] = count_skill_frequency[skill] # check for frequency of that skill
+                    possible_skills_dict = {k: v for k, v in sorted(possible_skills_dict.items(), reverse=True, key=lambda item: item[1])}
+                    if len(possible_skills_dict) > 0:
+                        m,n = next(iter(possible_skills_dict.items())) # suggests skill which has maximum frequency
+                        result = m
                         break
+
+            # if still can't find suitable skill then goes with t=3 (short of 3 or more skills in a project) and so on
+            if result=="":
+                possible_skills_dict = {}
+                if s:
+                    for skill in project_skill_dict[s]:
+                        if skill not in user_skill_dict[user]:
+                            possible_skills_dict[skill] = count_skill_frequency[skill]
+                            possible_skills_dict = {k: v for k, v in
+                                            sorted(possible_skills_dict.items(), reverse=True, key=lambda item: item[1])}
+                    if len(possible_skills_dict) > 0:
+                        m, n = next(iter(possible_skills_dict.items()))
+                        result = m
 
 
             with connection.cursor() as cursor:
@@ -178,12 +216,13 @@ def recommend_skill(request, person_id):
 
             return recommended_skill
 
+        # if no skill then suggests inter-personal skill
         except:
             recommended_skill = random.choice(["Teams and collaboration", "Leadership skills", "Personal effectiveness", "Time management", "Microsoft teams"])
             return recommended_skill
 
 
-    recommended_skill = recommend_skill_algo(person_id, user_skill_dict, category_skill_dict, project_skill_dict)
+    recommended_skill = recommend_skill_algo(person_id, user_skill_dict, category_skill_dict, project_skill_dict, count_skill_frequency)
 
     course_list = []
     with connection.cursor() as cursor:
