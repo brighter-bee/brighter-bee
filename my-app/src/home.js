@@ -38,6 +38,14 @@ import Button from '@material-ui/core/Button';
 import Axios from 'axios';
 import Grid from "@material-ui/core/Grid";
 
+// native
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -122,6 +130,18 @@ function ClippedDrawer(props) {
 
     const [opsList, setopsList] = useState([]);
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const open = Boolean(anchorEl);
+
+    const handleClose = () => {
+        setAnchorEl(null);
+      };
+
+      const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+
     const updateSearchValue = (event) => {
         setSearchValue(event.target.value);
     }
@@ -204,11 +224,7 @@ function ClippedDrawer(props) {
             <CssBaseline/>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                    <Grid
-                        justify="space-between"
-                        container
-                        spacing={24}
-                    >
+                   
                         <Typography variant="h6" noWrap>
                             Brighter Bee
                         </Typography>
@@ -228,16 +244,43 @@ function ClippedDrawer(props) {
                             />
                         </div>}
 
-                        {showSearch && <Button style={{marginLeft:'25%'}} onClick={getJobs} className={classes.searchBtn}>Search</Button>}
-
-                        <div>
-                            <Button variant="contained" color="blue" style={{marginRight:'20px'}} href={url + '/profile'}>My Profile</Button>
-                            <Button variant="contained" color="secondary" onClick={logout}>
+                        {showSearch && <Button onClick={getJobs} className={classes.searchBtn}>Search</Button>}
+                        <div style={{position:"absolute",right:'1rem'}}>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem href={url + '/profile'}>Profile</MenuItem>
+                <MenuItem onClick={logout}>{localStorage.getItem("user") ? 'Logout' : 'Login'}</MenuItem>
+              </Menu>
+            </div>
+                        {/* <span>
+                            <Button variant="contained"  className={classes.searchBtn} href={url + '/profile'}>My Profile</Button>
+                            <Button variant="contained"  className={classes.searchBtn} onClick={logout}>
                                 {localStorage.getItem("user") ? 'Logout' : 'Login'}
                             </Button>
-                        </div>
+                        </span> */}
 
-                    </Grid>
                 </Toolbar>
             </AppBar>
             <Drawer
