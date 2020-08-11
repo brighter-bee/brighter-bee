@@ -64,6 +64,10 @@ class Project extends React.Component {
           });
       }
 
+      handleEmail ({email, name}) {
+        window.location = `mailto:${email}?subject=${name}`;
+      }
+
   render() {
 
     return (
@@ -81,7 +85,7 @@ class Project extends React.Component {
           <h4>&nbsp; &nbsp; Project duration: <span style={{fontWeight: "normal"}}>{item.duration} </span></h4>
           <h4>&nbsp; &nbsp; Start date: <span style={{fontWeight: "normal"}}>{item.start_date} </span></h4>
           <h4>&nbsp; &nbsp; Brief description: </h4><p style={{marginLeft: "40px", textAlign: "justify", marginRight: "95px"}} >{item.short_desc}</p>
-          <Button style={{marginLeft: "40px"}} variant="contained" color="primary" size="small" >Apply</Button><br></br>
+          <Button style={{marginLeft: "40px"}} variant="contained" color="primary" size="small" onClick={() => this.handleEmail(item) }>Apply</Button><br></br>
           <br></br>
           <hr style={{margin: "0"}}></hr>
         </Typography>
