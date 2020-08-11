@@ -108,7 +108,7 @@ class Skill extends React.Component {
       <h2 style={{color : '#3f51b5'}}>Recommended courses to learn this skill:</h2>
       {this.state.userData.course_list.map((item, index) => (
         <div>
-          <h3>&nbsp; {item.course_name} &nbsp; <a href={item.course_link}>course link</a></h3>
+          <h3>&nbsp; {item.course_name} &nbsp; <a href={item.course_link} target="_blank">course link</a></h3>
         </div>
       ))}
 
