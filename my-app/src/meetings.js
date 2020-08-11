@@ -112,9 +112,10 @@ class Meetings extends React.Component {
 								<li key ={index}>{this.getUsername(item)}</li>
 							))}
 						</ul>
-
-						<Button variant="contained" color="primary" size="small" onClick={() => this.getZoomLink(item['id'])}>Get Zoom Link</Button>
-						<Button variant="contained" color="secondary" size="small" onClick={() => this.cancelMeeting(item['id'])}>Cancel Meeting</Button>
+						<div style={{marginTop: "15px"}}>
+							<Button variant="contained" color="primary" size="small" style={{marginRight: "30px"}} onClick={() => this.getZoomLink(item['id'])}>Launch Zoom</Button>
+							<Button variant="contained" color="secondary" size="small" onClick={() => this.cancelMeeting(item['id'])}>Cancel Meeting</Button>
+						</div>
 					</p>
 					</Typography>
 					<hr style={{width : '50%', margin: "0"}}></hr>

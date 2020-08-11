@@ -38,11 +38,11 @@ class AddMeeting extends React.Component {
 						this.setState({participants : this.state.participants.concat(localStorage.getItem("user"))})
 						console.log(response);
 						console.log("Posted")
-						alert("Success! Refresh to see the new meeting")
+						window.location = '/home/meetings';
 						//ReactDOM.render(<div> {response['data']} </div>, document.getElementById('meetings_list'))
 					}, (error) => {
 						console.log(error);
-						alert("Backend error: Zoom connection may have failed")
+						alert("Too many requests, please try again!");
 					});
 			} else {
 				console.log("else?")
