@@ -11,7 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-// icons 
+// icons
 import ForumIcon from '@material-ui/icons/Forum';
 import WorkIcon from '@material-ui/icons/Work';
 import BuildIcon from '@material-ui/icons/Build';
@@ -194,7 +194,7 @@ function ClippedDrawer(props) {
         {name: 'Create Meeting', icon: <GroupIcon/>, urlVal: url + '/addMeeting'},
         {name: 'Find Projects', icon: <AssessmentIcon/>, urlVal: url + '/findprojects'},
         {name: 'Add Project', icon: <AssessmentIcon/>, urlVal: url + '/addproject'},
-        {name: 'My Profile', icon: <AccountBoxIcon/>, urlVal: url + '/profile'}
+        // {name: 'My Profile', icon: <AccountBoxIcon/>, urlVal: url + '/profile'}
 
     ];
 
@@ -226,11 +226,14 @@ function ClippedDrawer(props) {
                                 onKeyUp={updateSearchValue}
                             />
                         </div>}
-                        {showSearch && <Button onClick={getJobs} className={classes.searchBtn}>Search</Button>}
 
-                        <Button variant="contained" color="secondary" onClick={logout}>
-                            {localStorage.getItem("user") ? 'Log out' : 'Log in'}
+                        {showSearch && <Button style={{marginLeft:'25%'}} onClick={getJobs} className={classes.searchBtn}>Search</Button>}
+                        <Button color="inherit" style={{marginLeft:'65%'}} href={url + '/profile'}>ABOUT</Button>
+                        <Button color="inherit" style={{marginRight:'-1%'}} href={url + '/profile'}>MY PROFILE</Button>
+                        <Button style={{color : 'white'}} onClick={logout}>
+                            {localStorage.getItem("user") ? 'Logout' : 'Login'}
                         </Button>
+
                     </Grid>
                 </Toolbar>
             </AppBar>
