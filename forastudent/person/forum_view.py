@@ -91,11 +91,11 @@ class CommentView(ModelViewSet):
         post = request.GET.get('post')
 
         commentList = Reply.objects.all().filter(post_id=post).filter(parent_id=0).filter(isDeleted=False).order_by('-createdAt')
-        # print(commentList)
+        print(commentList)
 
         count = ceil(commentList.count() / 3)
 
-        pg = PageNumberPagination()
+        pg = MyPageNumber()
 
         page_comments = pg.paginate_queryset(queryset=commentList, request=request, view=self)
 

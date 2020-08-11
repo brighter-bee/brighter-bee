@@ -49,14 +49,12 @@ class PostDetailDialog extends React.Component {
                 ['clean']
             ],
         };
-
         this.formats = [
             'header',
             'bold', 'italic', 'underline', 'strike', 'blockquote',
             'list', 'bullet', 'indent',
             'link', 'image'
         ];
-
 
     this.handleClickOpen_01 = this.handleClickOpen_01.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -69,7 +67,7 @@ class PostDetailDialog extends React.Component {
     componentDidMount () {
         axios.get("http://127.0.0.1:8000/reply/", {
             params:{
-                post: 1,
+                post: this.state.currentPost.id,
                 page: this.state.currentPage,
             }
         }).then(res => {
@@ -87,27 +85,47 @@ class PostDetailDialog extends React.Component {
         this.setState({
             currentPage: value,
         },()=> {
-                this.componentDidMount();
+                this.componentDidMount ();
             });
     }
 
-
-    handleClickOpen_01 (id) {
+    //event when clicking the card in forum page into a single post page
+    handleClickOpen_01 (currentPost) {
         this.setState({
             open_01: true,
+            currentPost: currentPost,
         });
-        axios.get("http://127.0.0.1:8000/forum/"+id+"/").then(res => {
+
+        axios.get("http://127.0.0.1:8000/reply/", {
+            params:{
+                post: currentPost.id,
+                page: this.state.currentPage,
+            }
+        }).then(res => {
             this.setState({
-                currentPost: res.data,
+                replyList: res.data,
+                count: res.data[0].count,
             });
+
         }).catch(err => {
             console.log(err);
         })
+
+        // axios.get("http://127.0.0.1:8000/forum/"+currentPost.id+"/").then(res => {
+        //     this.setState({
+        //         currentPost: res.data,
+        //     });
+        // }).catch(err => {
+        //     console.log(err);
+        // })
     };
 
     handleClose_01 = () => {
         this.setState({
-            open_01: false
+            open_01: false,
+            currentPost: [],
+            replyList: [],
+            count: 0
         })
     };
 
@@ -120,7 +138,8 @@ class PostDetailDialog extends React.Component {
 
     handleClose_02 = () => {
         this.setState({
-            open_02: false
+            open_02: false,
+            content: ''
         })
     };
 
@@ -133,16 +152,19 @@ class PostDetailDialog extends React.Component {
     handleSubmit = () => {
         axios.post("http://127.0.0.1:8000/reply/", {
             content: this.state.content,
-            poster: 1,
-            post: 1,
+            parent_id: 0,
+            replyTo_id: this.state.currentPost.poster,
+            poster: localStorage.getItem('user'),
+            post: this.state.currentPost.id,
         }).then(res => {
             console.log(res);
             // window.location.pathname = "/home/forums/";
             alert('post successfully');
             this.setState({
                 open_02: false,
+                content: ''
             })
-            this.componentDidMount();
+            this.componentDidMount ();
         }).catch(err => {
             console.log(err);
             alert('error!!!')
@@ -152,15 +174,16 @@ class PostDetailDialog extends React.Component {
     render() {
         //generate the post list in the forum home page
         const post_list = this.props.data.map(post =>
-            <CardActionArea key={post.id} component="a" onClick={()=>this.handleClickOpen_01(post.id) }>
+            <CardActionArea key={post.id} component="a" onClick={()=>this.handleClickOpen_01(post) }>
                 <Card style={{display: 'flex',}} variant="outlined">
                     <div style={{flex: 1}} >
                         <Avatar style={{ color: "orange", marginLeft:20, marginTop:10}}></Avatar>
+                        <div style={{marginLeft:20, marginTop:5}}>User: {post.poster}</div>
                         <Typography variant="h8" component="h3" style={{marginLeft:20, marginTop:5}}>
-                            {post.title}
+                            <div>Title: {post.title}</div>
                         </Typography>
                         <Typography variant="subtitle1" paragraph component="h7" >
-                            <div style={{marginLeft:20}} dangerouslySetInnerHTML={{__html:post.content.length>180 ? post.content.substr(0, 180) + "..." : post.content}}></div>
+                            <div style={{marginLeft:22}} dangerouslySetInnerHTML={{__html:post.content.length>180 ? post.content.substr(0, 180) + "..." : post.content}}></div>
                         </Typography>
 
                         <Typography variant="subtitle1" color="textSecondary" style={{position: 'relative',

@@ -15,10 +15,10 @@ class ForumsPage extends React.Component {
             count: 0,
         };
         this.handlePageChange = this.handlePageChange.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
+        // this.componentDidMount = this.componentDidMount.bind(this);
     }
 
-    componentDidMount () {
+    componentDidMount  () {
         axios.get("http://127.0.0.1:8000/forum/", {
             params:{
                 page: this.state.currentPage,
@@ -38,7 +38,7 @@ class ForumsPage extends React.Component {
         this.setState({
             currentPage: value,
         },()=>{
-            this.componentDidMount()
+            this.componentDidMount ()
         }
         )};
 

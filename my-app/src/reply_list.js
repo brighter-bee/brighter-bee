@@ -20,29 +20,33 @@ import Pagination from "@material-ui/lab/Pagination/Pagination";
 // export default function CreatePostDialog() {
 class CommentList extends React.Component {
     constructor(props){
-    super(props);
-    this.state = {
-        currentPost:[],
-        open_01: false,
-        commentList:[],
-        currentComment: '',
-        discussion_list: [],
-        currentPage:1,
-        count:0,
-        parent_id: 0,
-        replyTo_id: 0,
-        post_id: 0,
+        super(props);
+        this.state = {
+            currentPost:[],
+            open_01: false,
+            commentList:[],
+            currentPage:1,
+            count:0,
+
+            currentComment: '',
+            discussion_list: [],
+            parent_id: 0,
+            replyTo_id: 0,
+            post_id: 0,
+            content: ''
         };
+
+        this.handleContentChange = this.handleContentChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleReplyClick (currentComment) {
-
         this.setState({
             open_01: true,
             currentComment: currentComment,
             parent_id: currentComment.id,
-            replyTo_id: currentComment.id,
-            post_id: currentComment.post_id
+            replyTo_id: currentComment.poster,
+            post_id: currentComment.post
         });
 
         axios.get("http://127.0.0.1:8000/reply/reply/", {
@@ -74,6 +78,31 @@ class CommentList extends React.Component {
         })
     };
 
+    handleContentChange (event){
+        this.setState({
+            content:  event.target.value
+        })
+    };
+
+    handleSubmit = () => {
+        axios.post("http://127.0.0.1:8000/reply/reply/", {
+            content: this.state.content,
+            parent_id: this.state.parent_id,
+            replyTo_id: this.state.replyTo_id,
+            poster: localStorage.getItem('user'),
+            post: this.state.post_id
+        }).then(res => {
+            console.log(res);
+            // window.location.pathname = "/home/forums/";
+            alert('post successfully');
+            this.handleClose_01();
+            // this.componentDidMount();
+        }).catch(err => {
+            console.log(err);
+            alert('error!!!')
+        });
+    }
+
     render() {
 
         //generate the post list in the forum home page
@@ -83,7 +112,7 @@ class CommentList extends React.Component {
                     <div style={{flex: 1,}} >
 
                         <Typography variant="subtitle1" paragraph component="h7">
-                            <div style={{marginLeft:10}}>@{reply.replyTo_id}</div>
+                            <div style={{marginLeft:10}}>@User {reply.replyTo_id}</div>
                             <div style={{marginLeft:20}} dangerouslySetInnerHTML={{__html:reply.content.length>160 ? reply.content.substr(0, 160) + "..." : reply.content}}></div>
                         </Typography>
 
@@ -102,7 +131,7 @@ class CommentList extends React.Component {
             </CardActionArea>
         );
 
-        const reply_reply = this.state.discussion_list.map(reply_reply =>
+        const reply_reply_list = this.state.discussion_list.map(reply_reply =>
             <CardActionArea component="a">
                 <Card style={{display: 'flex',}} variant="outlined">
                     <div style={{flex: 1,}} >
@@ -130,12 +159,15 @@ class CommentList extends React.Component {
                             maxWidth='xl' aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Replies box</DialogTitle>
                         <Divider />
-                        <div style={{marginLeft:20, marginTop:10}}>{this.state.currentComment.id}</div>
+                        <div style={{marginLeft:20, marginTop:10}}>User {this.state.currentComment.poster}</div>
                         <div style={{marginLeft:20}} dangerouslySetInnerHTML={{__html:this.state.currentComment.content}}></div>
+                        <div style={{position: 'relative', left:"80%", marginBottom:5}} >
+                            {moment(this.state.currentComment.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+                        </div>
                         <Divider />
 
                         <DialogContent style={{width: 1000, height: 400}}>
-                            {reply_reply}
+                            {reply_reply_list}
                             <Pagination count={this.state.count} color="primary" style={{position: 'relative',
                                 left: '65%', marginTop:10}} page={this.state.currentPage} onChange={this.handlePageChange}
                                     showFirstButton showLastButton />
@@ -144,8 +176,10 @@ class CommentList extends React.Component {
 
                         <form>
                             <TextField label={"@@"} style={{width:100}} disabled={true} placeholder="@" multiline/>
-                            <TextField label="Reply here" style={{width:800}} placeholder="" multiline/>
-                            <Button color="primary" style={{marginTop:10}}>reply</Button>
+                            <TextField style={{width:800}} label={'reply here'} onChange={this.handleContentChange} multiline/>
+                            <Button color="primary" style={{marginTop:10}} onClick={this.handleSubmit} >
+                                reply
+                            </Button>
                         </form>
 
                     </Dialog>

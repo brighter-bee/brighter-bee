@@ -65,7 +65,7 @@ class CreatePostDialog extends React.Component {
         axios.post("http://127.0.0.1:8000/forum/", {
             title: this.state.title,
             content: this.state.content,
-            poster: 1,
+            poster: localStorage.getItem('user'),
             category: 1
         }).then(res => {
             console.log(res);
@@ -113,8 +113,8 @@ class CreatePostDialog extends React.Component {
         })
     };
 
-    componentDidMount() {
-        axios.get("http://127.0.0.1:8000/myPosts/1/", {
+    componentDidMount () {
+        axios.get("http://127.0.0.1:8000/myPosts/"+localStorage.getItem('user')+"", {
             params:{
                 page: this.state.currentPage,
             }
@@ -132,7 +132,7 @@ class CreatePostDialog extends React.Component {
         this.setState({
             currentPage: page,
         }, ()=> {
-            this.componentDidMount()
+            this.componentDidMount ()
         });
     }
 
