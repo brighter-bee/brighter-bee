@@ -45,7 +45,7 @@ class Meetings extends React.Component {
 						var number = res['number']
 						var id = res['id']
 						var newList = this.state.meetingsList.concat({"title" : title, "time" : time, "participants" : participants, "number" : number, "id" : id});
-						this.setState({meetingsList : newList})						
+						this.setState({meetingsList : newList})
 					}
 
 				}
@@ -92,7 +92,7 @@ class Meetings extends React.Component {
 		return "Not found"
 
 	}
-	
+
 	formatDate = (date) => {
 		var options = {year : 'numeric', month :'long', day:'numeric', hour:'numeric', minute :'numeric'};
 		return date.toLocaleDateString([], options);
@@ -100,8 +100,10 @@ class Meetings extends React.Component {
 
   	render() {
 	    return (
-	      <div>
-			<h1> Your upcoming meetings </h1>
+			<div style={{fontFamily: 'Roboto'}}>
+	    <Typography variant="h4" component="h4">
+	    Your upcoming meetings
+	    </Typography>
 
 			<ol id="meetings_list">
 				{this.state.meetingsList.map((item, index) => (
