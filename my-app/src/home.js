@@ -186,14 +186,15 @@ function ClippedDrawer(props) {
     }, [props.location]);
 
     const ALL_PAGES = [
-        {name: 'Forum', icon: <ForumIcon/>, urlVal: url + '/forums'},
+
         {name: 'Find Jobs', icon: <WorkIcon/>, urlVal: url + '/findjobs'},
         {name: 'Saved Jobs', icon: <WorkIcon/>, urlVal: url + '/savedjobs'},
-        {name: 'Skill Up', icon: <BuildIcon/>, urlVal: url + '/skillup'},
-        {name: 'Meetings Page', icon: <GroupIcon/>, urlVal: url + '/meetings'},
-        {name: 'Create Meeting', icon: <GroupIcon/>, urlVal: url + '/addMeeting'},
         {name: 'Find Projects', icon: <AssessmentIcon/>, urlVal: url + '/findprojects'},
         {name: 'Add Project', icon: <AssessmentIcon/>, urlVal: url + '/addproject'},
+        {name: 'Skill Up', icon: <BuildIcon/>, urlVal: url + '/skillup'},
+        {name: 'Scheduled Meetings', icon: <GroupIcon/>, urlVal: url + '/meetings'},
+        {name: 'Create Meeting', icon: <GroupIcon/>, urlVal: url + '/addMeeting'},
+        {name: 'Forum', icon: <ForumIcon/>, urlVal: url + '/forums'},
         // {name: 'My Profile', icon: <AccountBoxIcon/>, urlVal: url + '/profile'}
 
     ];
