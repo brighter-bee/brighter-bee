@@ -50,7 +50,7 @@ def getMeeting(id):
     response_string = res.read().decode('utf-8')
     response_obj = json.loads(response_string)
     print(response_obj)
-    return response_obj['invitation']
+    return response_obj['join_url']
 
 
 #createMeeting("2021-08-30T22:00:00Z", 60, "TestTopic", ["jamesclark@outlook.com.au"])
