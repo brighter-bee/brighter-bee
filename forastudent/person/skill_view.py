@@ -111,7 +111,7 @@ def recommend_skill(request, person_id):
     project_skill_dict = project_skill()
     skill_user_dict = user_skill_reverse() # reverse of user skill dict
 
-    count_skill_frequency = {}
+    count_skill_frequency = defaultdict(int)
     for key, value in skill_user_dict.items():
         count_skill_frequency[key] = len(value)
 
