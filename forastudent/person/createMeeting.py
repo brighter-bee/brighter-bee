@@ -45,7 +45,7 @@ def createMeeting(start_time, duration, topic):
 
 
 def getMeeting(id):
-    conn.request("GET", "/v2/meetings/" + str(id) + "/invitation", headers=headers)
+    conn.request("GET", "/v2/meetings/" + str(id), headers=headers)
     res = conn.getresponse()
     response_string = res.read().decode('utf-8')
     response_obj = json.loads(response_string)
