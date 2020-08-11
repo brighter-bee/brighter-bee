@@ -270,7 +270,7 @@ function ClippedDrawer(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem href={url + '/profile'}>Profile</MenuItem>
+                <MenuItem onClick={() => {window.location = '/home/profile'}}>Profile</MenuItem>
                 <MenuItem onClick={logout}>{localStorage.getItem("user") ? 'Logout' : 'Login'}</MenuItem>
               </Menu>
             </div>
