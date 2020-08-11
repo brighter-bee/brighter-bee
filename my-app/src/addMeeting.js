@@ -111,9 +111,11 @@ class AddMeeting extends React.Component {
 
   	render() {
 	    return (
-	      <div>
+			<div style={{fontFamily: 'Roboto'}}>
+			<Typography variant="h4" component="h4">
+			Plan your meetings
+			</Typography>
 			<Typography>
-			<h1> Plan your meetings </h1>
 			<FormControl>
 			<form onSubmit = {this.handleSubmit}>
 				<h3> Pick a topic </h3>
@@ -122,8 +124,9 @@ class AddMeeting extends React.Component {
 				<TextField required id="date" type="date" name="date" onChange={this.myChangeHandler}/> <br></br>
 				<TextField required id="time" type="time" name="time" onChange={this.myChangeHandler}/>
 				<h3> How many minutes do you want to meet for? </h3>
-				<TextField required id="duration" name="duration" onChange={this.myChangeHandler} label="Duration"/> 
+				<TextField required id="duration" name="duration" onChange={this.myChangeHandler} label="Duration"/>
 				<h3> Who do you want to meet with? </h3>
+				<h6 style={{marginTop: '-20px'}}> *Please include yourself if required </h6>
 
 			    <Select name="participants" onChange={this.selectChange}
 			      closeMenuOnSelect={false}

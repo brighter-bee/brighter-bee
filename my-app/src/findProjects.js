@@ -73,7 +73,7 @@ class Project extends React.Component {
     return (
     <div style={{fontFamily: 'Roboto'}}>
     <Typography variant="h4" component="h4">
-    &nbsp; Following projects best match to your profile
+    Following projects best match to your profile
     </Typography>
       <br></br>
       <br></br>
