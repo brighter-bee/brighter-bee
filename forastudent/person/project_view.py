@@ -34,19 +34,13 @@ def getPageCount(pdf_file):
 
 @require_http_methods(["GET"])
 def recommend_project(request, person_id):
-	person = Person.objects.get(pk=person_id)
-	skills = list(person.skills.all().values_list('id', flat=True))
-
-	projects = Project.objects.all().filter(skills__in=skills).annotate(most_skills=Count('skills')).order_by('-most_skills')
-	json_out = serializers.serialize("json", projects)
-
 
 	#NLP LOGIC STARTS HERE 
 	projs = requests.get('http://localhost:8000/api/project/')
 	projs = projs.json()
 	projs = pd.DataFrame.from_records(projs)
 
-	user = requests.get("http://localhost:8000/api/v2/persons?user=1")
+	user = requests.get("http://localhost:8000/api/v2/persons?user={}".format(person_id))
 	user = user.json()
 	user = pd.DataFrame.from_records(user)
 
