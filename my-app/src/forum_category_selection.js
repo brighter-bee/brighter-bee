@@ -14,7 +14,7 @@ class CategorySelect extends React.Component {
   }
 
     componentDidMount () {
-        axios.get("http://127.0.0.1:8001/forum/topics/", {
+        axios.get("http://127.0.0.1:8000/forum/topics/", {
 
       }).then(res => {
       this.setState({

@@ -67,7 +67,7 @@ class PostDetailDialog extends React.Component {
     }
 
     componentDidMount () {
-        axios.get("http://127.0.0.1:8001/reply/", {
+        axios.get("http://127.0.0.1:8000/reply/", {
             params:{
                 post: 1,
                 page: this.state.currentPage,
@@ -96,7 +96,7 @@ class PostDetailDialog extends React.Component {
         this.setState({
             open_01: true,
         });
-        axios.get("http://127.0.0.1:8001/forum/"+id+"/").then(res => {
+        axios.get("http://127.0.0.1:8000/forum/"+id+"/").then(res => {
             this.setState({
                 currentPost: res.data,
             });
@@ -131,7 +131,7 @@ class PostDetailDialog extends React.Component {
     };
 
     handleSubmit = () => {
-        axios.post("http://127.0.0.1:8001/reply/", {
+        axios.post("http://127.0.0.1:8000/reply/", {
             content: this.state.content,
             poster: 1,
             post: 1,

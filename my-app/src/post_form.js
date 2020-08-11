@@ -62,7 +62,7 @@ class CreatePostDialog extends React.Component {
 
 
     handleClick_01 = () => {
-        axios.post("http://127.0.0.1:8001/forum/", {
+        axios.post("http://127.0.0.1:8000/forum/", {
             title: this.state.title,
             content: this.state.content,
             poster: 1,
@@ -114,7 +114,7 @@ class CreatePostDialog extends React.Component {
     };
 
     componentDidMount() {
-        axios.get("http://127.0.0.1:8001/myPosts/1/", {
+        axios.get("http://127.0.0.1:8000/myPosts/1/", {
             params:{
                 page: this.state.currentPage,
             }

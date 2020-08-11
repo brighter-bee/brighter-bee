@@ -9,6 +9,13 @@ from person.models import Post, Reply, ForumCategory
 from person.serializers import PostSerializer, LogicalDeletePostSerializer, CommentSerializer, TopicSerializer
 
 
+class MyPageNumber(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'size'
+    page_query_param = 'page'
+    max_page_size = None
+
+
 class PostView(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -19,7 +26,7 @@ class PostView(ModelViewSet):
 
         count = ceil(postList.count()/3)
 
-        pg = PageNumberPagination()
+        pg = MyPageNumber()
 
         page_posts = pg.paginate_queryset(queryset=postList, request=request, view=self)
 
@@ -39,7 +46,7 @@ class PostView(ModelViewSet):
 
         count = ceil(myPostsList.count() / 3)
 
-        pg = PageNumberPagination()
+        pg = MyPageNumber()
 
         page_myPosts = pg.paginate_queryset(queryset=myPostsList, request=request, view=self)
 
@@ -111,7 +118,7 @@ class CommentView(ModelViewSet):
 
         count = ceil(replyReplyList.count() / 3)
 
-        pg = PageNumberPagination()
+        pg = MyPageNumber()
 
         page_reply_reply = pg.paginate_queryset(queryset=replyReplyList, request=request, view=self)
 

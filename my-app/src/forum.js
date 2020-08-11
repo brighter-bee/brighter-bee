@@ -19,7 +19,7 @@ class ForumsPage extends React.Component {
     }
 
     componentDidMount () {
-        axios.get("http://127.0.0.1:8001/forum/", {
+        axios.get("http://127.0.0.1:8000/forum/", {
             params:{
                 page: this.state.currentPage,
             }

@@ -9,8 +9,6 @@ import moment from 'moment';
 import axios from "axios";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import ReactQuill from "react-quill";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import TextField from "@material-ui/core/TextField/TextField";
 import Divider from "@material-ui/core/Divider/Divider";
@@ -47,7 +45,7 @@ class CommentList extends React.Component {
             post_id: currentComment.post_id
         });
 
-        axios.get("http://127.0.0.1:8001/reply/reply/", {
+        axios.get("http://127.0.0.1:8000/reply/reply/", {
             params:{
                 id: currentComment.id,
             }

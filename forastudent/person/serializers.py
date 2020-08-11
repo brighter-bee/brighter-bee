@@ -254,6 +254,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
+        ordering = ['-id']
         model = Post
         fields = "__all__"
 
@@ -270,11 +271,13 @@ class LogicalDeletePostSerializer(serializers.Serializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
+        ordering = ['-id']
         model = Reply
         fields = '__all__'
 
 
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
+        ordering = ['-id']
         model = ForumCategory
         fields = '__all__'
