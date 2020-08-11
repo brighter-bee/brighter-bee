@@ -31,20 +31,22 @@ class AddMeeting extends React.Component {
 	handleSubmit = (event) => {
 	    event.preventDefault();
 		console.log(this.state)
-		this.setState({participants : this.state.participants.concat(localStorage.getItem("user"))})
 		try {
-			if (this.state.time != null && this.state.date != null && this.state.duration != null) {
+			if (this.state.participants != null && this.state.time != null && this.state.date != null && this.state.duration != null) {
 				axios.post('http://localhost:8000/api/v2/meetings/new', this.state)
 					.then((response) => {
+						this.setState({participants : this.state.participants.concat(localStorage.getItem("user"))})
 						console.log(response);
 						console.log("Posted")
 						alert("Success! Refresh to see the new meeting")
 						//ReactDOM.render(<div> {response['data']} </div>, document.getElementById('meetings_list'))
 					}, (error) => {
 						console.log(error);
+						alert("Backend error: Zoom connection may have failed")
 					});
 			} else {
 				console.log("else?")
+				alert("Invalid inputs")
 			}
 		} catch (exception) {
 			console.log("g")
