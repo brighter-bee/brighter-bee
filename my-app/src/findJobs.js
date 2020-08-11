@@ -1,6 +1,6 @@
 import React from 'react';
 import JobCard from './jobCard'
-
+import Typography from '@material-ui/core/Typography';
 
 export default function FindJobsPage(props){
 
@@ -10,11 +10,15 @@ export default function FindJobsPage(props){
     }
 
     return (
-        <div>
+        <div style={{fontFamily: 'Roboto'}}>
+        <Typography variant="h4" component="h4">
+        Job opportunities
+        </Typography>
+          <br></br>
             {props.jobs.map((job)=>
                 <div key={job.adref} style={{marginTop:'1rem'}}>
                     {/* load job data here */}
-                    <JobCard 
+                    <JobCard
                     freshPage={refreshPage}
                     adref={job.adref}
                     delete={props.delete}
@@ -26,7 +30,7 @@ export default function FindJobsPage(props){
                     />
                 </div>
             )}
-        </div>   
+        </div>
     )
 
 }
