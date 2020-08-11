@@ -88,6 +88,11 @@ class Meetings extends React.Component {
 		return "Not found"
 
 	}
+	
+	formatDate = (date) => {
+		var options = {year : 'numeric', month :'long', day:'numeric', hour:'numeric', minute :'numeric'};
+		return new Date(date).toLocaleDateString([], options);
+	}
 
   	render() {
 	    return (
@@ -100,8 +105,8 @@ class Meetings extends React.Component {
 					<Typography>
 					<p>
 						Title: <b>{item['title']} </b><br></br>
-						Time: {item['time']} <br></br>
-						People:
+						Time: {this.formatDate(item['time'])} <br></br>
+						Participants:
 						<ul>
 							{item['participants'].map((item, index) => (
 								<li key ={index}>{this.getUsername(item)}</li>
