@@ -8,13 +8,13 @@ import time
 import datetime as dt
 import json
 # Create your views here.
-import numpy as np
+import numpy as np 
 import pandas as pd
 import PyPDF2
 import io
 import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords 
+from nltk.tokenize import word_tokenize 
 
 stop_words = set(stopwords.words('english'))
 
@@ -41,7 +41,7 @@ def recommend_project(request, person_id):
 	json_out = serializers.serialize("json", projects)
 
 
-	#NLP LOGIC STARTS HERE
+	#NLP LOGIC STARTS HERE 
 	projs = requests.get('http://localhost:8000/api/project/')
 	projs = projs.json()
 	projs = pd.DataFrame.from_records(projs)
@@ -89,12 +89,11 @@ def recommend_project(request, person_id):
 	skills = skills.json()
 	skills = pd.DataFrame.from_records(skills)
 
-	for index, row in projs.iterrows():
+	for index, row in projs.iterrows(): 
 		skill_name = []
 		for s in row['skills']:
 			skill_name_temp = skills[(skills['id']==s)]['name'].astype('str').values
 			skill_name.append(skill_name_temp[0])
-		print(skill_name)
 		skill_name = ', '.join(skill_name)
 		projs.set_value(index,'skills', skill_name)
 
@@ -105,8 +104,8 @@ def recommend_project(request, person_id):
 
 	#limit description to 50 words
 	new_desc_arr = []
-	for index, row in projs.iterrows():
-		desc_arr = row['desc'].split()
+	for index, row in projs.iterrows(): 
+		desc_arr = row['desc'].split() 
 		desc_arr = desc_arr[:50]
 		new_desc = ' '.join(desc_arr)
 		new_desc = new_desc+'...'
@@ -116,7 +115,7 @@ def recommend_project(request, person_id):
 
 	projs = projs.sort_values(['common_skills', 'similarity_score'], ascending=False)
 
-	#get top 5 projects
+	#get top 5 projects 
 	projs = projs.head(5)
 
 	projs = projs.to_json(orient = 'records')
@@ -125,3 +124,4 @@ def recommend_project(request, person_id):
 
 
 	return HttpResponse(projs)
+
