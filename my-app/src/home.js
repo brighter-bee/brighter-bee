@@ -189,8 +189,12 @@ function ClippedDrawer(props) {
     }
 
     const logout = () => {
+        let response = window.confirm("Are you sure to logout?");
+        if (response === false) {
+            return;
+        }
+        document.location = '/';
         localStorage.removeItem("user");
-        document.location = '/'
     };
 
     useEffect(() => {
@@ -224,7 +228,7 @@ function ClippedDrawer(props) {
             <CssBaseline/>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                   
+
                         <Typography variant="h6" noWrap>
                             Brighter Bee
                         </Typography>
