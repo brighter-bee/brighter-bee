@@ -101,7 +101,7 @@ class Skill extends React.Component {
       ))}
       <br></br>
       <br></br>
-      <a href={'/home/skillup'}> Not happy with the suggesstion? Get another skill!</a>
+      <a href={'/home/skillup'}> Not happy with the suggesstion? Check if there is any new suggestion!</a>
 
     </div>);
   }
