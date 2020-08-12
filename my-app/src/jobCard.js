@@ -92,11 +92,11 @@ export default function JobCard(props) {
       </CardContent>
       {!props.delete
       ?(<CardActions>
-        <Button variant="contained" color="primary" href={props.url} size="small">Apply</Button>
+        <Button variant="contained" color="primary" href={props.url} target="_blank" size="small">Apply</Button>
         <Button  variant="contained" color="primary" size="small" onClick={handleSaveJob}>Save</Button>
       </CardActions>):
       (<CardActions>
-        <Button variant="contained" color="primary" href={props.url} size="small">Apply</Button>
+        <Button variant="contained" color="primary" href={props.url} target="_blank" size="small">Apply</Button>
         <Button variant="contained" color="secondary" size="small" onClick={handleDelete}>Delete</Button>
       </CardActions>)
       }
