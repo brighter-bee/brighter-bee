@@ -7,6 +7,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import axios from 'axios';
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 
 class SignUpPage extends React.Component {
 
@@ -16,6 +19,7 @@ class SignUpPage extends React.Component {
             username: '',
             password: '',
             password_confirm: '',
+            alertOpen: false,
         };
     }
 
@@ -37,6 +41,7 @@ class SignUpPage extends React.Component {
                     });
             }, (error) => {
                 console.log(error);
+                this.setState({alertOpen: true});
             });
         // if it does throw error
 
@@ -61,6 +66,11 @@ class SignUpPage extends React.Component {
     setPassword(event) {
         this.setState({password: event.target.value});
         this.setState({password_confirm: event.target.value})
+    }
+
+    HandleClose() {
+        console.log(this.state);
+        this.setState({alertOpen: false})
     }
 
     render() {
@@ -99,6 +109,22 @@ class SignUpPage extends React.Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    onClose={this.HandleClose.bind(this)}
+                    open={this.state.alertOpen}
+                    message="Please use a uncommon password (which contain at least 8 characters of both numeric and alphabetic characters)!"
+                    action={
+                        <React.Fragment>
+                            <IconButton size="small" aria-label="close" color="inherit" onClick={this.HandleClose.bind(this)}>
+                                <CloseIcon fontSize="small"/>
+                            </IconButton>
+                        </React.Fragment>
+                    }
+                />
             </div>
         );
     }
