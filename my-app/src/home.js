@@ -43,6 +43,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Mentors from "./Mentors";
 
 
 
@@ -226,6 +227,7 @@ function ClippedDrawer(props) {
         {name: 'Scheduled Meetings', icon: <GroupIcon/>, urlVal: url + '/meetings'},
         {name: 'Create Meeting', icon: <GroupIcon/>, urlVal: url + '/addMeeting'},
         {name: 'Forum', icon: <ForumIcon/>, urlVal: url + '/forums'},
+        {name: 'Find mentors', icon: <GroupIcon/>, urlVal: url + '/mentors'},
         // {name: 'My Profile', icon: <AccountBoxIcon/>, urlVal: url + '/profile'}
 
     ];
@@ -346,6 +348,9 @@ function ClippedDrawer(props) {
                     </Route>
                     <Route path={`${path}/addproject`}>
                         <NewProject username={username}/>
+                    </Route>
+                    <Route path={`${path}/mentors`}>
+                        <Mentors/>
                     </Route>
                     <Route path={`${path}/profile`}>
                         <Profile/>
