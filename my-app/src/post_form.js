@@ -23,7 +23,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-// export default function CreatePostDialog() {
 class CreatePostDialog extends React.Component {
     constructor(props){
     super(props);
@@ -66,7 +65,7 @@ class CreatePostDialog extends React.Component {
             title: this.state.title,
             content: this.state.content,
             poster: localStorage.getItem('user'),
-            category: 1
+            category: 2
         }).then(res => {
             console.log(res);
             window.location.pathname = "/home/forums/";
@@ -181,7 +180,7 @@ class CreatePostDialog extends React.Component {
                                 theme="snow"
                                 modules={this.modules}
                                 formats={this.formats}
-                                style={{height:300, width:600}}
+                                style={{height:300, width:500}}
                                 value={this.state.content}
                                 onChange={this.handleContentChange}>
                             </ReactQuill>

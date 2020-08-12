@@ -5,7 +5,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 
-from person.models import Post, Reply, ForumCategory
+from person.models import Post, Reply, ForumCategory, Person
 from person.serializers import PostSerializer, LogicalDeletePostSerializer, CommentSerializer, TopicSerializer
 
 
@@ -34,7 +34,11 @@ class PostView(ModelViewSet):
         postListSerializer = PostSerializer(instance=page_posts, many=True)
 
         for post in postListSerializer.data:
+            # print(post['poster'])
+            queryUser = Person.objects.get(id=post['poster'])
+            # print(queryUser.name)
             post['count'] = count
+            post['username'] = queryUser.name
 
         # print(postListSerializer.data)
 
@@ -53,7 +57,9 @@ class PostView(ModelViewSet):
         myPostListSerializer = PostSerializer(instance=page_myPosts, many=True)
 
         for myPost in myPostListSerializer.data:
+            queryUser = Person.objects.get(id=myPost['poster'])
             myPost['count'] = count
+            myPost['username'] = queryUser.name
 
         return http.JsonResponse(myPostListSerializer.data, safe=False)
 
@@ -102,7 +108,15 @@ class CommentView(ModelViewSet):
         commentListSerializer = CommentSerializer(instance=page_comments, many=True)
 
         for comment in commentListSerializer.data:
+            # print(comment)
+            query_reply_to_user = Person.objects.get(id=comment['replyTo_id'])
+            query_replies_number = Reply.objects.filter(parent_id=comment['id']).count()
+            query_current_user_name = Person.objects.get(id=comment['poster'])
+            print(query_current_user_name)
             comment['count'] = count
+            comment['replyToName'] = query_reply_to_user.name
+            comment['replyNumber'] = query_replies_number
+            comment['currentName'] = query_current_user_name.name
 
         # print(commentListSerializer.data)
 
@@ -113,7 +127,7 @@ class CommentView(ModelViewSet):
 
         parent_id = request.GET.get('id')
 
-        replyReplyList = Reply.objects.all().filter(parent_id=parent_id).filter(isDeleted=False)
+        replyReplyList = Reply.objects.all().filter(parent_id=parent_id).filter(isDeleted=False).order_by('-createdAt')
         # print(replyReplyList)
 
         count = ceil(replyReplyList.count() / 3)
@@ -125,7 +139,11 @@ class CommentView(ModelViewSet):
         replyReplyListSerializer = CommentSerializer(instance=page_reply_reply, many=True)
 
         for replyReply in replyReplyListSerializer.data:
+            query_reply_reply_to_user = Person.objects.get(id=replyReply['replyTo_id'])
+            query_reply_current_user = Person.objects.get(id=replyReply['poster'])
             replyReply['count'] = count
+            replyReply['replyReplyToName'] = query_reply_reply_to_user.name
+            replyReply['replyReplyCurrentName'] = query_reply_current_user.name
 
         # print(commentListSerializer.data)
 

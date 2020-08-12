@@ -44,16 +44,16 @@ class ForumsPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{overflow:'hidden'}}>
                 <CreatePostDialog />
                 <br/>
                 <PostDetailDialog data={this.state.posts}/>
-                <Grid>
+                <div>
                 <br/>
                     <Pagination count={this.state.count} color="primary" style={{position: 'relative',
                                 left: '65%'}} page={this.state.currentPage} onChange={this.handlePageChange}
                                 showFirstButton showLastButton />
-                </Grid>
+                </div>
             </div>
         );
     }
