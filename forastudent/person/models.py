@@ -107,19 +107,6 @@ class Project(models.Model):
         return self.name
 
 
-class ForumSection(models.Model):
-    name = models.CharField(max_length=100)
-    desc = models.TextField()
-    order = models.PositiveIntegerField()
-    createdAt = models.DateTimeField(auto_now_add=True)
-    updatedAt = models.DateTimeField(auto_now=True)
-    isDeleted = models.BooleanField(default=False)
-    icon = models.ImageField(upload_to='images/', default='images/avatar.jpg')
-
-    def __str__(self):
-        return "Section: " + self.name
-
-
 class ForumCategory(models.Model):
     name = models.CharField(max_length=100)
     desc = models.TextField()
@@ -127,7 +114,6 @@ class ForumCategory(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
     isDeleted = models.BooleanField(default=False)
-    section = models.ForeignKey(ForumSection, on_delete=models.CASCADE, related_name="BelongsToOneForumSection")
 
     def __str__(self):
         return "Category: " + self.name
@@ -144,8 +130,6 @@ class Post(models.Model):
     updatedAt = models.DateTimeField(auto_now=True)
     isDeleted = models.BooleanField(default=False)
     poster = models.ForeignKey(Person, on_delete=models.CASCADE)
-    # poster = models.ForeignKey(Person, on_delete=models.CASCADE)
-    # category = models.ForeignKey(ForumCategory, on_delete=models.CASCADE, null=True, blank=True, db_column='category_id')
     category = models.ForeignKey(ForumCategory, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
