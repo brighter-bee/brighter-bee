@@ -36,6 +36,7 @@ class Meetings extends React.Component {
 					var meeting_date = new Date(res['time']);
 					var time = this.formatDate(meeting_date)
 					var now = new Date()
+					// Ensures the meeting hasn't already finished
 					if (meeting_date < now.setHours(now.getHours() - 2)) {
 						// meeting has already passed
 						console.log("Past meeting found")
@@ -54,6 +55,7 @@ class Meetings extends React.Component {
 			}, (error) => {
 				console.log(error);
 			}	);
+			// Gets the list of people
 			axios.get('http://localhost:8000/api/v2/persons').then(	res => {
 				var user;
 				for (user in res['data']) {
@@ -62,7 +64,6 @@ class Meetings extends React.Component {
 				}
 			});
 	}
-
 
 	getZoomLink = (meetingId) => {
 		console.log(meetingId)
@@ -81,6 +82,7 @@ class Meetings extends React.Component {
 		window.location.reload(false)
 	}
 
+	// Given a userID, get the username
 	getUsername = (userID) => {
 		var index;
 		console.log(this.state.options)
@@ -93,6 +95,7 @@ class Meetings extends React.Component {
 
 	}
 
+	// Changes date formatting to a more human readable form
 	formatDate = (date) => {
 		var options = {year : 'numeric', month :'long', day:'numeric', hour:'numeric', minute :'numeric'};
 		return date.toLocaleDateString([], options);
