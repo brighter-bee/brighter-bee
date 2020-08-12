@@ -58,10 +58,8 @@ class PostDetailDialog extends React.Component {
 
     this.handleClickOpen_01 = this.handleClickOpen_01.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
-
     this.handleClickOpen_02 = this.handleClickOpen_02.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
-    // this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     componentDidMount () {
@@ -77,10 +75,10 @@ class PostDetailDialog extends React.Component {
             });
 
         }).catch(err => {
-            console.log(err);
         })
     }
 
+    //event when page changes
     handlePageChange(event, value) {
         this.setState({
             currentPage: value,
@@ -95,7 +93,6 @@ class PostDetailDialog extends React.Component {
             open_01: true,
             currentPost: currentPost,
         });
-
         axios.get("http://127.0.0.1:8000/reply/", {
             params:{
                 post: currentPost.id,
@@ -106,12 +103,11 @@ class PostDetailDialog extends React.Component {
                 replyList: res.data,
                 count: res.data[0].count,
             });
-
         }).catch(err => {
-            console.log(err);
         })
     };
 
+    //event when closing current post
     handleClose_01 = () => {
         this.setState({
             open_01: false,
@@ -121,12 +117,14 @@ class PostDetailDialog extends React.Component {
         })
     };
 
+    //event when opening comment form
     handleClickOpen_02 () {
         this.setState({
             open_02: true
         });
     };
 
+    //event when closing comment form
     handleClose_02 = () => {
         this.setState({
             open_02: false,
@@ -134,12 +132,14 @@ class PostDetailDialog extends React.Component {
         })
     };
 
+    //monitoring Content field
     handleContentChange (value){
         this.setState({
             content: value
         })
     };
 
+    //handling form submit
     handleSubmit = () => {
         axios.post("http://127.0.0.1:8000/reply/", {
             content: this.state.content,
@@ -148,8 +148,6 @@ class PostDetailDialog extends React.Component {
             poster: localStorage.getItem('user'),
             post: this.state.currentPost.id,
         }).then(res => {
-            console.log(res);
-            // window.location.pathname = "/home/forums/";
             alert('post successfully');
             this.setState({
                 open_02: false,
@@ -157,7 +155,6 @@ class PostDetailDialog extends React.Component {
             })
             this.componentDidMount ();
         }).catch(err => {
-            console.log(err);
             alert('error!!!')
         });
     }
@@ -170,16 +167,16 @@ class PostDetailDialog extends React.Component {
                     <Typography color="primary"  variant="subtitle1" component="h3" style={{marginLeft:20, marginTop:8}}>
                         Title: {post.title}</Typography>
                     <Typography variant="subtitle1" color="textSecondary" style={{marginLeft:20, marginTop:5}} >
-                        User: {post.username}
+                        Poster: {post.username}
                     </Typography>
                     <Typography variant="body1" noWrap>
                         <div style={{marginLeft:22}}
-                             dangerouslySetInnerHTML={{__html:post.content.length>170 ? post.content.substr(0, 170) + "..." : post.content}}>
+                             dangerouslySetInnerHTML={{__html:post.content.length>150 ? post.content.substr(0, 150) + "..." : post.content}}>
                         </div>
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary" style={{position: 'relative',
-                        left: '80%',}} component="h5">
-                        {moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+                        left: '77%',}} component="h5">
+                        posted at {moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}
                     </Typography>
                     </Card>
             </CardActionArea>
@@ -224,7 +221,7 @@ class PostDetailDialog extends React.Component {
                         <Divider />
                     </div>
 
-                    <div style={{overflow:'hidden'}}>
+                    <div >
                         <Button style={{marginLeft:80, marginTop:20, marginBottom:20}}
                             variant="outlined" color="primary" onClick={this.handleClickOpen_02}>
                         Comment

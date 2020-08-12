@@ -53,7 +53,7 @@ urlpatterns = [
     path('project-recommend/<int:person_id>', person.project_view.recommend_project),
     # path('my-skill-recommend', person.api_views.SkillRecommendList.as_view()), # django url for skill recommendation
 
-    # Forum part
+    # endpoint url for the forum module
     path('forum/', PostView.as_view({"get": "getPostList", "post": "create"})),
     path('forum/<int:pk>/', PostView.as_view({"get": "getCurrentPost", "delete": "deletePost", "put": "update"})),
     path('myPosts/<int:poster>/', PostView.as_view({"get": "getMyPostsList"})),

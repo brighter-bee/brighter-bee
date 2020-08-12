@@ -42,6 +42,7 @@ class CommentList extends React.Component {
         this.handleReplyToChange = this.handleReplyToChange.bind(this);
     }
 
+    //event when click into a post
     handleReplyClick (currentComment) {
         this.setState({
             content: '',
@@ -50,7 +51,6 @@ class CommentList extends React.Component {
             parent_id: currentComment.id,
             replyTo_id: currentComment.poster,
             post_id: currentComment.post,
-
             replyToChange: '@' + currentComment.currentName,
         });
 
@@ -63,28 +63,28 @@ class CommentList extends React.Component {
                 discussion_list: res.data,
                 reply_count: res.data[0].count,
             });
-            console.log(this.state.posts);
         }).catch(err => {
-            console.log(err);
         })
     };
 
+    //event to close comment form window
     handleClose_01 = () => {
         this.setState({
             open_01: false,
             discussion_list:[],
             reply_currentPage: 1,
             reply_count:0
-
         })
     };
 
+    //monitoring Content field in the comment form and keep it in record
     handleContentChange (event){
         this.setState({
             content:  event.target.value
         })
     };
 
+    //event when submit comment
     handleSubmit = () => {
         axios.post("http://127.0.0.1:8000/reply/reply/", {
             content: this.state.content,
@@ -93,13 +93,9 @@ class CommentList extends React.Component {
             poster: localStorage.getItem('user'),
             post: this.state.post_id
         }).then(res => {
-            console.log(res);
             alert('post successfully');
             this.handleReplyClick(this.state.currentComment);
-            // this.handleClose_01();
-            // this.componentDidMount();
         }).catch(err => {
-            console.log(err);
             alert('error!!!')
         });
 
@@ -112,12 +108,9 @@ class CommentList extends React.Component {
                 discussion_list: res.data,
                 count: res.data[0].count,
             });
-            console.log(this.state.posts);
         }).catch(err => {
-            console.log(err);
         })
     };
-
 
     componentDidMount () {
         axios.get("http://127.0.0.1:8000/reply/reply/", {
@@ -130,12 +123,11 @@ class CommentList extends React.Component {
                 discussion_list: res.data,
                 count: res.data[0].count,
             });
-            console.log(this.state.posts);
         }).catch(err => {
-            console.log(err);
         })
     }
 
+    //event when page changes in the reply box
     handleReplyPageChange(event, value){
         this.setState({
             reply_currentPage: value,
@@ -145,6 +137,7 @@ class CommentList extends React.Component {
         })
     }
 
+    //monitoring Content field in reply box and keep it in record
     handleReplyToChange (commentDetail) {
         this.setState({
             replyToChange: '@' + commentDetail.replyReplyCurrentName,
@@ -153,7 +146,6 @@ class CommentList extends React.Component {
     }
 
     render() {
-
         //for generating the replying list with the current post
         const reply_list = this.props.data.map(reply =>
             <CardActionArea key={reply.id} component="a"
@@ -183,7 +175,6 @@ class CommentList extends React.Component {
         );
 
         const reply_reply_list = this.state.discussion_list.map(reply_reply =>
-
                 <Card style={{display: 'flex',}} variant="outlined">
                     <div style={{flex: 1}} >
                         <Typography variant="subtitle1" component="h7">
@@ -202,7 +193,6 @@ class CommentList extends React.Component {
                     </div>
                 </Card>
         );
-
 
         return (
             <div style={{overflow:'hidden'}}>
@@ -236,7 +226,6 @@ class CommentList extends React.Component {
                                 reply
                             </Button>
                         </form>
-
                     </Dialog>
                 </div>
             </div>

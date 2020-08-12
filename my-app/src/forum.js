@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from "axios";
-import Grid from '@material-ui/core/Grid';
 import CreatePostDialog from "./post_form";
 import Pagination from "@material-ui/lab/Pagination/Pagination";
 import PostDetailDialog from "./posts_and_detail";
@@ -15,9 +14,9 @@ class ForumsPage extends React.Component {
             count: 0,
         };
         this.handlePageChange = this.handlePageChange.bind(this);
-        // this.componentDidMount = this.componentDidMount.bind(this);
     }
 
+    // GET request for all posts
     componentDidMount  () {
         axios.get("http://127.0.0.1:8000/forum/", {
             params:{
@@ -28,12 +27,11 @@ class ForumsPage extends React.Component {
                 posts: res.data,
                 count: res.data[0].count,
             });
-            console.log(this.state.posts);
         }).catch(err => {
-            console.log(err);
         })
     }
 
+    //event when page changes
     handlePageChange(event, value) {
         this.setState({
             currentPage: value,
