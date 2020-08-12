@@ -68,7 +68,7 @@ class Mentors extends Component {
         return (
             <div>
                 <Typography variant="h4" component="h4">
-                    Meet Mentors
+                    Find Mentors
                 </Typography>
                 <br/>
                 <Paper component="form" style={{border: '1px', padding: '1px 10px', width: '300px'}}>
