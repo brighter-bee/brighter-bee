@@ -11,12 +11,13 @@ import axios from "axios";
 import TextField from '@material-ui/core/TextField';
 
 import Box from '@material-ui/core/Box';
-import CategorySelect from "./forum_category_selection";
 import Pagination from "@material-ui/lab/Pagination/Pagination";
 import Grid from "@material-ui/core/Grid/Grid";
 import PostDetailDialog from "./posts_and_detail";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import InputLabel from "@material-ui/core/InputLabel/InputLabel";
+import Select from "@material-ui/core/Select/Select";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -34,6 +35,10 @@ class CreatePostDialog extends React.Component {
         myPosts: [],
         currentPage: 1,
         count : 0,
+
+        topics:[],
+        topic: '',
+        topic_id:0
     };
 
     this.modules = {
@@ -55,17 +60,16 @@ class CreatePostDialog extends React.Component {
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
-    // this.componentDidMount = this.componentDidMount.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this)
+    this.handlePageChange = this.handlePageChange.bind(this);
+    this.handleSelectChange= this.handleSelectChange.bind(this);
     }
-
 
     handleClick_01 = () => {
         axios.post("http://127.0.0.1:8000/forum/", {
             title: this.state.title,
             content: this.state.content,
             poster: localStorage.getItem('user'),
-            category: 2
+            category: this.state.topic_id
         }).then(res => {
             console.log(res);
             window.location.pathname = "/home/forums/";
@@ -124,7 +128,18 @@ class CreatePostDialog extends React.Component {
             });
         }).catch(err => {
             console.log(err);
-        })
+        });
+
+        // generate topic list
+        axios.get("http://127.0.0.1:8000/forum/topics/", {
+
+        }).then(res => {
+            this.setState({
+            topics: res.data,
+        });
+        }).catch(err => {
+            console.log(err);
+      })
     }
 
     handlePageChange(event, page) {
@@ -135,8 +150,19 @@ class CreatePostDialog extends React.Component {
         });
     }
 
+    handleSelectChange(event){
+        this.setState({
+            topic_id: event.target.value,
+        })
+    }
 
     render() {
+        const topic_list = this.state.topics.map(topic =>
+             <option label={topic.name} value={topic.id}>
+
+             </option>
+        );
+
         return (
             <div>
                 <div>
@@ -173,7 +199,18 @@ class CreatePostDialog extends React.Component {
                             />
                             <br/>
                             <br/>
-                            <CategorySelect></CategorySelect>
+
+                            <div>
+                                <InputLabel htmlFor="grouped-native-select">Topic</InputLabel>
+                                <Select native
+
+                                        onChange={(e)=>this.handleSelectChange(e)}
+                                    id="grouped-native-select" style={{minWidth: 400}}>
+                                    <option aria-label="None" value=""/>
+                                    {topic_list}
+                                </Select>
+                            </div>
+
                             <br/>
                             <br/>
                             <ReactQuill
