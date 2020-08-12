@@ -32,7 +32,6 @@ class Mentors extends Component {
     }
 
     updateField(e) {
-        e.preventDefault();
         const target = e.target;
         const name = target.name;
 
@@ -45,18 +44,18 @@ class Mentors extends Component {
     }
 
     searchCard() {
-        let keyword = this.state.search;
+        let keyword = this.state.search.toLowerCase();
         let all = this.state.all;
         const persons = all.filter(person => {
             let result = false;
             if (person.name) {
-                result = result || person.name.includes(keyword);
+                result = result || person.name.toLowerCase().includes(keyword);
             }
             if (person.location) {
-                result = result || person.location.includes(keyword);
+                result = result || person.location.toLowerCase().includes(keyword);
             }
             if (person.desc) {
-                result = result || person.desc.includes(keyword);
+                result = result || person.desc.toLowerCase().includes(keyword);
             }
             return result;
         });
@@ -73,15 +72,17 @@ class Mentors extends Component {
                 </Typography>
                 <br/>
                 <Paper component="form" style={{border: '1px', padding: '1px 10px', width: '300px'}}>
+                    <InputBase style={{width: '230px'}}
+                           placeholder="Search mentors"
+                           name="search"
+                           value={this.state.search}
+                           onKeyUp={this.updateField}
+                           onChange={this.updateField}
+                           tabIndex="0"
+                    />
                     <IconButton onClick={this.searchCard}>
                         <SearchIcon/>
                     </IconButton>
-                    <InputBase style={{width: '230px'}}
-                               placeholder="Search mentors"
-                               name="search"
-                               value={this.state.search}
-                               onChange={this.updateField}
-                    />
                 </Paper>
                 <Grid container spacing={3}>
                     {this.state.persons.map((person) =>
