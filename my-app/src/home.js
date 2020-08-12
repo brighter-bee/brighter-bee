@@ -189,6 +189,13 @@ function ClippedDrawer(props) {
     }
 
     const logout = () => {
+        // login
+        if (!localStorage.getItem("user")) {
+            document.location = '/';
+            return;
+        }
+
+        // logout
         let response = window.confirm("Are you sure to logout?");
         if (response === false) {
             return;
