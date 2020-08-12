@@ -27,7 +27,7 @@ class AddMeeting extends React.Component {
 		};
 	}
 
-
+	// Post request to backend to create the meeting
 	handleSubmit = (event) => {
 	    event.preventDefault();
 		console.log(this.state)
@@ -54,7 +54,7 @@ class AddMeeting extends React.Component {
 
 	}
 
-
+	// Gets all the users and their usernames
  	componentDidMount() {
 		console.log(localStorage.getItem("user"))
 		axios.get('http://localhost:8000/api/v2/persons').then(	res => {
@@ -79,29 +79,12 @@ class AddMeeting extends React.Component {
 		this.setState({participants: selected});
 	}
 
-	getZoomLink = (meetingId) => {
-		console.log(meetingId)
-		axios.get('http://localhost:8000/api/v2/meetings/' + meetingId)
-		.then((response) => {
-			console.log(response)
-			window.open(response['data']['url'], "_blank")
-		})
-	}
-
-	cancelMeeting = (meetingId) => {
-		axios.delete('http://localhost:8000/api/v2/meetings/' + meetingId)
-		.then((response) => {
-			console.log(response)
-		})
-		window.location.reload(false)
-	}
-
+	// Given a user ID, finds the username in the user options list
 	getUsername = (userID) => {
 		var index;
 		console.log(this.state.options)
 		for (index in this.state.options) {
 			if (userID == this.state.options[index]['value']) {
-				console.log("MATCHED")
 				return this.state.options[index]['label']
 			}
 		}
