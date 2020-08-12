@@ -6,8 +6,7 @@ import json
 
 
 
-# Go to
-# Then get API Key, API Secret and insert below
+# Api key and secret
 api_key = 'p-zpPVCrQMy4SnOlAV9BGw'
 api_sec = '8NWGe7uCQd8574r8EKpZJi3nrNRm3UPezoY7'
 
@@ -19,14 +18,15 @@ payload = {
 
 jwt_encoded = str(jwt.encode(payload, api_sec), 'utf-8')
 
+# Prepares connection to zoom
 conn = http.client.HTTPSConnection("api.zoom.us")
 headers = {
-'authorization': "Bearer %s" % jwt_encoded,
-'content-type': "application/json"
+    'authorization': "Bearer %s" % jwt_encoded,
+    'content-type': "application/json"
 }
 
 
-
+# Creates a meeting using Zoom api and returns meeting ID
 def createMeeting(start_time, duration, topic):
     data = json.dumps({
       "duration": duration,
@@ -43,7 +43,7 @@ def createMeeting(start_time, duration, topic):
 
     return response_obj['id']
 
-
+# Tries to retrieve join URL for Zoom meeting
 def getMeeting(id):
     conn.request("GET", "/v2/meetings/" + str(id), headers=headers)
     res = conn.getresponse()

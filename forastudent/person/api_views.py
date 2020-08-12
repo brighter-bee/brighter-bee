@@ -154,23 +154,35 @@ class MeetingCreate(CreateAPIView):
         return super().create(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        # retrieve request information
         request_string = request.read().decode('utf-8')
         request_obj = json.loads(request_string)
 
+        # Formats datetime for Zoom
         datetime = request_obj['date'] + "T" + request_obj["time"] + ":00"
+        
+        # Sends a post request to Zoom API to create the meeting
         meeting_id = createMeeting(datetime, request_obj['duration'], request_obj['topic'])
+        
+        # Formats datetime for database
         db_datetime = request_obj['date'] + "T" + request_obj["time"] + "+10:00"
+        
         participants = request_obj['participants']
 
+        # Create meeting in database
         meeting = Meeting(name=request_obj['topic'], number=meeting_id, time=db_datetime)
         meeting.save()
+        # Adds the participants to the meeting
         for user in participants:
             if (user != None):
                 print(Person.objects.get(pk=user["value"]))
                 meeting.participants.add(Person.objects.get(pk=user["value"]))
         # check errors
         print(Meeting.objects.all())
-
+        
+        # Returns the same response as Zoom when trying to retrieve the meeting
+        # If the meeting was successfully created, it will return a success
+        # if the meeting wasn't, zoom will respond with an appropriate error code
         response = HttpResponse(getMeeting(meeting_id))
         return response
 
