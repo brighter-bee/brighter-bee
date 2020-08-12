@@ -7,7 +7,6 @@ import { withStyles }  from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 
-
 const animatedComponents = makeAnimated();
 
 class Meetings extends React.Component {
@@ -34,15 +33,21 @@ class Meetings extends React.Component {
 				var index;
 				for (index in response['data']) {
 					var res = response['data'][index]
-					var title = res['name'];
-					var time = res['time'];
-					var participants = res['participants'];
-					var i;
-					var part = []
-					var number = res['number']
-					var id = res['id']
-					var newList = this.state.meetingsList.concat({"title" : title, "time" : time, "participants" : participants, "number" : number, "id" : id});
-					this.setState({meetingsList : newList})
+					var meeting_date = new Date(res['time']);
+					var time = this.formatDate(meeting_date)
+					var now = new Date()
+					if (meeting_date < now.setHours(now.getHours() - 2)) {
+						// meeting has already passed
+						console.log("Past meeting found")
+					} else {
+						var title = res['name'];
+						var participants = res['participants'];
+						var number = res['number']
+						var id = res['id']
+						var newList = this.state.meetingsList.concat({"title" : title, "time" : time, "participants" : participants, "number" : number, "id" : id});
+						this.setState({meetingsList : newList})
+					}
+
 				}
 				console.log(this.state.meetingsList)
 				//ReactDOM.render(<div> {response['data']['results']} </div>, document.getElementById('meetings_list'));
@@ -81,7 +86,6 @@ class Meetings extends React.Component {
 		console.log(this.state.options)
 		for (index in this.state.options) {
 			if (userID == this.state.options[index]['value']) {
-				console.log("MATCHED")
 				return this.state.options[index]['label']
 			}
 		}
@@ -89,10 +93,17 @@ class Meetings extends React.Component {
 
 	}
 
+	formatDate = (date) => {
+		var options = {year : 'numeric', month :'long', day:'numeric', hour:'numeric', minute :'numeric'};
+		return date.toLocaleDateString([], options);
+	}
+
   	render() {
 	    return (
-	      <div>
-			<h1> Your upcoming meetings </h1>
+			<div style={{fontFamily: 'Roboto'}}>
+	    <Typography variant="h4" component="h4">
+	    Your upcoming meetings
+	    </Typography>
 
 			<ol id="meetings_list">
 				{this.state.meetingsList.map((item, index) => (
@@ -101,15 +112,16 @@ class Meetings extends React.Component {
 					<p>
 						Title: <b>{item['title']} </b><br></br>
 						Time: {item['time']} <br></br>
-						People:
+						Participants:
 						<ul>
 							{item['participants'].map((item, index) => (
 								<li key ={index}>{this.getUsername(item)}</li>
 							))}
 						</ul>
-
-						<Button variant="contained" color="primary" size="small" onClick={() => this.getZoomLink(item['id'])}>Get Zoom Link</Button>
-						<Button variant="contained" color="secondary" size="small" onClick={() => this.cancelMeeting(item['id'])}>Cancel Meeting</Button>
+						<div style={{marginTop: "15px"}}>
+							<Button variant="contained" color="primary" size="small" style={{marginRight: "30px"}} onClick={() => this.getZoomLink(item['id'])}>Launch Zoom</Button>
+							<Button variant="contained" color="secondary" size="small" onClick={() => this.cancelMeeting(item['id'])}>Cancel Meeting</Button>
+						</div>
 					</p>
 					</Typography>
 					<hr style={{width : '50%', margin: "0"}}></hr>

@@ -61,7 +61,7 @@ class Person(models.Model):
     desc = models.TextField(blank=True, null=True)
     location = models.TextField(blank=True, null=True)
     avatar = models.ImageField(upload_to='images/', default='images/avatar.jpg', blank=True, null=True)
-    resume = models.FileField(upload_to='resume/', blank=True, null=True)
+    resume = models.FileField(upload_to='resume/', default='resume/blank.pdf', blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     skills = models.ManyToManyField(Skill, blank=True)
     opportunities = models.ManyToManyField(Opportunity, blank=True)
@@ -81,6 +81,9 @@ class Meeting(models.Model):
 
     def __str__(self):
         return self.name + " - " + self.number
+
+    class Meta:
+        ordering = ('time', )
 
 
 class Course(models.Model):

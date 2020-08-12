@@ -20,7 +20,7 @@ import django_filters
 class InListFilter(django_filters.Filter):
     def filter(self, qs, value):
         if value:
-            return qs.filter(**{self.field_name+'__in': value.split(',')})
+            return qs.filter(**{self.field_name + '__in': value.split(',')})
         return qs
 
 
@@ -33,7 +33,7 @@ class OpportunityViewSet(viewsets.ModelViewSet):
     serializer_class = OpportunitySerializer
     filter_class = MultiIdFilterSet
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('id', )
+    filter_fields = ('id',)
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -48,8 +48,8 @@ class SkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    search_fields = ('name', )
-    filter_fields = ('id', )
+    search_fields = ('name',)
+    filter_fields = ('id',)
 
 
 class GeneralPagination(LimitOffsetPagination):
@@ -60,8 +60,8 @@ class GeneralPagination(LimitOffsetPagination):
 class UserList(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    filter_backends = (DjangoFilterBackend, )
-    filter_fields = ('username', )
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('username',)
 
 
 class PersonList(ListAPIView):
@@ -88,15 +88,18 @@ class MeetingList(ListAPIView):
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('id', 'number', 'participants', 'time')
     search_fields = ('name',)
-   # pagination_class = GeneralPagination
+
+
+# pagination_class = GeneralPagination
 
 
 user_skill_dict = defaultdict(list)
 project_skill_dict = defaultdict(list)
 category_skill_dict = defaultdict(list)
+
+
 # retrieve list of all skills for a specific user
 class Person_SkillList(ListAPIView):
-
     username = "sahil.punchhi"
     person_id = 1
 
@@ -108,24 +111,25 @@ class Person_SkillList(ListAPIView):
     # person_id = row[0]
     # for testing purposes
 
- #   with connection.cursor() as cursor:
-  #      cursor.execute('''SELECT * FROM person_skill a''')
-   #     rows = cursor.fetchall()
-   # for row in rows:
-    #    if flag:
-     #       print(row)
-    ########################################
 
- #   def user_skill(my_id):
-  #      my_list=[]
-   #     with connection.cursor() as cursor:
-    #        cursor.execute('''SELECT b.skill_id FROM person_person a
-     #                       LEFT JOIN person_person_skills b on a.id=b.person_id
-      #                      WHERE a.id= %s''', [my_id])
-       #     rows = cursor.fetchall()
-        #for row in rows:
-         #   my_list.append(row[0])
-        #return my_list
+#   with connection.cursor() as cursor:
+#      cursor.execute('''SELECT * FROM person_skill a''')
+#     rows = cursor.fetchall()
+# for row in rows:
+#    if flag:
+#       print(row)
+########################################
+
+#   def user_skill(my_id):
+#      my_list=[]
+#     with connection.cursor() as cursor:
+#        cursor.execute('''SELECT b.skill_id FROM person_person a
+#                       LEFT JOIN person_person_skills b on a.id=b.person_id
+#                      WHERE a.id= %s''', [my_id])
+#     rows = cursor.fetchall()
+# for row in rows:
+#   my_list.append(row[0])
+# return my_list
 
 
 # class Person_SkillList2(CreateAPIView):
@@ -152,22 +156,22 @@ class MeetingCreate(CreateAPIView):
     def post(self, request, *args, **kwargs):
         request_string = request.read().decode('utf-8')
         request_obj = json.loads(request_string)
-        
+
         datetime = request_obj['date'] + "T" + request_obj["time"] + ":00"
-        meeting_id = createMeeting(datetime, request_obj['duration'],request_obj['topic'])
-        db_datetime = request_obj['date'] + "T" + request_obj["time"] + "+11:00"
+        meeting_id = createMeeting(datetime, request_obj['duration'], request_obj['topic'])
+        db_datetime = request_obj['date'] + "T" + request_obj["time"] + "+10:00"
         participants = request_obj['participants']
 
-        meeting = Meeting(name=request_obj['topic'],number=meeting_id,time=db_datetime)
+        meeting = Meeting(name=request_obj['topic'], number=meeting_id, time=db_datetime)
         meeting.save()
         for user in participants:
             if (user != None):
-                print(Person.objects.get(pk = user["value"]))
-                meeting.participants.add(Person.objects.get(pk = user["value"]))
+                print(Person.objects.get(pk=user["value"]))
+                meeting.participants.add(Person.objects.get(pk=user["value"]))
         # check errors
         print(Meeting.objects.all())
 
-        response = HttpResponse(getMeeting(meeting_id))   
+        response = HttpResponse(getMeeting(meeting_id))
         return response
 
 
@@ -175,6 +179,7 @@ class MeetingRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Meeting.objects.all()
     lookup_field = 'id'
     serializer_class = MeetingSerializer
+
     def get(self, request, id):
         print(id)
         m = Meeting.objects.get(pk=int(id))
@@ -187,7 +192,7 @@ class SkillList(ListAPIView):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    filter_fields = ('id', )
+    filter_fields = ('id',)
     search_fields = ('name',)
 
 
@@ -197,7 +202,6 @@ class OpportunityList(ListAPIView):
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('id', 'person')
     search_fields = ('name',)
-
 
 # class SkillRecommendList(generics.ListAPIView):
 #

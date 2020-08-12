@@ -189,8 +189,19 @@ function ClippedDrawer(props) {
     }
 
     const logout = () => {
+        // login
+        if (!localStorage.getItem("user")) {
+            document.location = '/';
+            return;
+        }
+
+        // logout
+        let response = window.confirm("Are you sure to logout?");
+        if (response === false) {
+            return;
+        }
+        document.location = '/';
         localStorage.removeItem("user");
-        document.location = '/'
     };
 
     useEffect(() => {
@@ -224,7 +235,7 @@ function ClippedDrawer(props) {
             <CssBaseline/>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                   
+
                         <Typography variant="h6" noWrap>
                             Brighter Bee
                         </Typography>
@@ -270,7 +281,7 @@ function ClippedDrawer(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem href={url + '/profile'}>Profile</MenuItem>
+                <MenuItem onClick={() => {window.location = '/home/profile'}}>Profile</MenuItem>
                 <MenuItem onClick={logout}>{localStorage.getItem("user") ? 'Logout' : 'Login'}</MenuItem>
               </Menu>
             </div>
@@ -341,6 +352,7 @@ function ClippedDrawer(props) {
                     </Route>
                 </Switch>
             </main>
+            {showSearch && <h1>hello</h1>}
         </div>
     );
 }

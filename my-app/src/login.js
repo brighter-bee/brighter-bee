@@ -38,6 +38,7 @@ class LoginPage extends React.Component {
                     });
             }, (error) => {
                 console.log(error);
+                this.setState({alertOpen: true});
             });
         // .then(res=>{
         //     if (res.data.data.length){
@@ -119,13 +120,9 @@ class LoginPage extends React.Component {
                     }}
                     onClose={this.HandleClose.bind(this)}
                     open={this.state.alertOpen}
-                    autoHideDuration={6000}
-                    message="Username or password incorrect"
+                    message="Username or password incorrect!"
                     action={
                         <React.Fragment>
-                            <Button color="secondary" size="small" onClick={this.HandleClose.bind(this)}>
-                                UNDO
-                            </Button>
                             <IconButton size="small" aria-label="close" color="inherit" onClick={this.HandleClose.bind(this)}>
                                 <CloseIcon fontSize="small"/>
                             </IconButton>
