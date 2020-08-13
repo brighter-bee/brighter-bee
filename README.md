@@ -5,6 +5,13 @@
 This is a web app for professional development and professional connection for students
   
 ### Backend 
+
+```
+cd ~
+wget https://urler.s3-ap-southeast-2.amazonaws.com/nltk_data.zip
+unzip nltk_data.zip
+```
+
 ``` 
 cd forastudent  
 pip install virtualenv  
@@ -13,7 +20,6 @@ source venv/bin/activate
 pip install -r requirements.txt  
 python manage.py migrate  
 python manage.py loaddata fixtures.json  
-python manage.py loaddata fixtures2.json  
 python manage.py runserver  
 ```  
   
