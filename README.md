@@ -67,6 +67,9 @@ Project recommendation APIs (with NLP)
 
 **forastudent/person/skill_view.py**  
 Skill recommendation APIs
+
+![APIs](https://urler.s3-ap-southeast-2.amazonaws.com/api1.jpg)
+![APIs](https://urler.s3-ap-southeast-2.amazonaws.com/api2.jpg)
   
 **forastudent/person/migrations/**
 Database migration files directory
