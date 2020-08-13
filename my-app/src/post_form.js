@@ -65,7 +65,6 @@ class CreatePostDialog extends React.Component {
     }
 
     // sent a POST request to submit a form
-
     handleClick_01 = () => {
         axios.post("http://127.0.0.1:8000/forum/", {
             title: this.state.title,

@@ -175,7 +175,7 @@ class CommentList extends React.Component {
         );
 
         const reply_reply_list = this.state.discussion_list.map(reply_reply =>
-                <Card style={{display: 'flex',}} variant="outlined">
+                <Card style={{display: 'flex',}} variant="outlined" >
                     <div style={{flex: 1}} >
                         <Typography variant="subtitle1" component="h7">
                             <div style={{marginTop:5, marginLeft:10}}>{reply_reply.replyReplyCurrentName} @{reply_reply.replyReplyToName}</div>
@@ -200,7 +200,7 @@ class CommentList extends React.Component {
                 <div style={{overflow:'hidden'}}>
                     <Dialog open={this.state.open_01} onClose={this.handleClose_01}
                             maxWidth='xl' aria-labelledby="form-dialog-title"
-                            style={{overflow:'hidden'}} >
+                            style={{overflow:'hidden'}}>
                         <DialogTitle id="form-dialog-title">Replies box</DialogTitle>
                         <Divider />
                         <div style={{marginLeft:25, marginTop:10}}>{this.state.currentComment.currentName}</div>
@@ -210,7 +210,7 @@ class CommentList extends React.Component {
                         </div>
                         <Divider />
 
-                        <DialogContent style={{width: 1000, height: 400 ,overflow:'hidden'}} >
+                        <DialogContent style={{width: 1000, height: 400 }}>
                             {reply_reply_list}
                             <Pagination count={this.state.reply_count} color="primary"
                                         style={{position: 'relative', left: '65%', marginTop:10}}
