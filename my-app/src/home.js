@@ -223,11 +223,11 @@ function ClippedDrawer(props) {
         {name: 'Saved Jobs', icon: <WorkIcon/>, urlVal: url + '/savedjobs'},
         {name: 'Find Projects', icon: <AssessmentIcon/>, urlVal: url + '/findprojects'},
         {name: 'Add Project', icon: <AssessmentIcon/>, urlVal: url + '/addproject'},
+        {name: 'Find Mentors', icon: <GroupIcon/>, urlVal: url + '/mentors'},
         {name: 'Skill Up', icon: <BuildIcon/>, urlVal: url + '/skillup'},
         {name: 'Scheduled Meetings', icon: <GroupIcon/>, urlVal: url + '/meetings'},
         {name: 'Create Meeting', icon: <GroupIcon/>, urlVal: url + '/addMeeting'},
         {name: 'Forum', icon: <ForumIcon/>, urlVal: url + '/forums'},
-        {name: 'Find mentors', icon: <GroupIcon/>, urlVal: url + '/mentors'},
         // {name: 'My Profile', icon: <AccountBoxIcon/>, urlVal: url + '/profile'}
 
     ];

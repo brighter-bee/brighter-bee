@@ -78,8 +78,12 @@ class Meetings extends React.Component {
 		axios.delete('http://localhost:8000/api/v2/meetings/' + meetingId)
 		.then((response) => {
 			console.log(response)
-		})
-		window.location.reload(false)
+			window.location.reload(false)
+
+		}, (error) => {
+			alert(error)
+		}
+		)
 	}
 
 	// Given a userID, get the username
