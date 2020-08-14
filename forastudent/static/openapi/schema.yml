@@ -1,0 +1,3101 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/opportunity/:
+    get:
+      operationId: listOpportunitys
+      description: ''
+      parameters:
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    type:
+                      enum:
+                      - J
+                      - G
+                      - I
+                      - R
+                      - O
+                    name:
+                      type: string
+                      maxLength: 100
+                    company_name:
+                      type: string
+                    location:
+                      type: string
+                    desc:
+                      type: string
+                    link:
+                      type: string
+                    createdAt:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                    skills:
+                      type: array
+                      items:
+                        type: integer
+                  required:
+                  - type
+                  - name
+                  - company_name
+                  - location
+                  - desc
+                  - link
+          description: ''
+    post:
+      operationId: createOpportunity
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id001
+              properties:
+                type:
+                  enum:
+                  - J
+                  - G
+                  - I
+                  - R
+                  - O
+                name:
+                  type: string
+                  maxLength: 100
+                company_name:
+                  type: string
+                location:
+                  type: string
+                desc:
+                  type: string
+                link:
+                  type: string
+                skills:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - type
+              - name
+              - company_name
+              - location
+              - desc
+              - link
+          application/x-www-form-urlencoded:
+            schema: *id001
+          multipart/form-data:
+            schema: *id001
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  type:
+                    enum:
+                    - J
+                    - G
+                    - I
+                    - R
+                    - O
+                  name:
+                    type: string
+                    maxLength: 100
+                  company_name:
+                    type: string
+                  location:
+                    type: string
+                  desc:
+                    type: string
+                  link:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - type
+                - name
+                - company_name
+                - location
+                - desc
+                - link
+          description: ''
+  /api/opportunity/{id}/:
+    get:
+      operationId: retrieveOpportunity
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this opportunity.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  type:
+                    enum:
+                    - J
+                    - G
+                    - I
+                    - R
+                    - O
+                  name:
+                    type: string
+                    maxLength: 100
+                  company_name:
+                    type: string
+                  location:
+                    type: string
+                  desc:
+                    type: string
+                  link:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - type
+                - name
+                - company_name
+                - location
+                - desc
+                - link
+          description: ''
+    put:
+      operationId: updateOpportunity
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this opportunity.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id002
+              properties:
+                type:
+                  enum:
+                  - J
+                  - G
+                  - I
+                  - R
+                  - O
+                name:
+                  type: string
+                  maxLength: 100
+                company_name:
+                  type: string
+                location:
+                  type: string
+                desc:
+                  type: string
+                link:
+                  type: string
+                skills:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - type
+              - name
+              - company_name
+              - location
+              - desc
+              - link
+          application/x-www-form-urlencoded:
+            schema: *id002
+          multipart/form-data:
+            schema: *id002
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  type:
+                    enum:
+                    - J
+                    - G
+                    - I
+                    - R
+                    - O
+                  name:
+                    type: string
+                    maxLength: 100
+                  company_name:
+                    type: string
+                  location:
+                    type: string
+                  desc:
+                    type: string
+                  link:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - type
+                - name
+                - company_name
+                - location
+                - desc
+                - link
+          description: ''
+    patch:
+      operationId: partial_updateOpportunity
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this opportunity.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id003
+              properties:
+                type:
+                  enum:
+                  - J
+                  - G
+                  - I
+                  - R
+                  - O
+                name:
+                  type: string
+                  maxLength: 100
+                company_name:
+                  type: string
+                location:
+                  type: string
+                desc:
+                  type: string
+                link:
+                  type: string
+                skills:
+                  type: array
+                  items:
+                    type: integer
+          application/x-www-form-urlencoded:
+            schema: *id003
+          multipart/form-data:
+            schema: *id003
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  type:
+                    enum:
+                    - J
+                    - G
+                    - I
+                    - R
+                    - O
+                  name:
+                    type: string
+                    maxLength: 100
+                  company_name:
+                    type: string
+                  location:
+                    type: string
+                  desc:
+                    type: string
+                  link:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - type
+                - name
+                - company_name
+                - location
+                - desc
+                - link
+          description: ''
+    delete:
+      operationId: destroyOpportunity
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this opportunity.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/project/:
+    get:
+      operationId: listProjects
+      description: ''
+      parameters:
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    name:
+                      type: string
+                      maxLength: 1000
+                    desc:
+                      type: string
+                      nullable: true
+                    start_date:
+                      type: string
+                      format: date-time
+                      nullable: true
+                    duration:
+                      type: string
+                      nullable: true
+                      maxLength: 200
+                    email:
+                      type: string
+                      format: email
+                      maxLength: 254
+                    skills:
+                      type: array
+                      items:
+                        type: integer
+                  required:
+                  - name
+          description: ''
+    post:
+      operationId: createProject
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id004
+              properties:
+                name:
+                  type: string
+                  maxLength: 1000
+                desc:
+                  type: string
+                  nullable: true
+                start_date:
+                  type: string
+                  format: date-time
+                  nullable: true
+                duration:
+                  type: string
+                  nullable: true
+                  maxLength: 200
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                skills:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id004
+          multipart/form-data:
+            schema: *id004
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 1000
+                  desc:
+                    type: string
+                    nullable: true
+                  start_date:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  duration:
+                    type: string
+                    nullable: true
+                    maxLength: 200
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - name
+          description: ''
+  /api/project/{id}/:
+    get:
+      operationId: retrieveProject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this project.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 1000
+                  desc:
+                    type: string
+                    nullable: true
+                  start_date:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  duration:
+                    type: string
+                    nullable: true
+                    maxLength: 200
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateProject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this project.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id005
+              properties:
+                name:
+                  type: string
+                  maxLength: 1000
+                desc:
+                  type: string
+                  nullable: true
+                start_date:
+                  type: string
+                  format: date-time
+                  nullable: true
+                duration:
+                  type: string
+                  nullable: true
+                  maxLength: 200
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                skills:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id005
+          multipart/form-data:
+            schema: *id005
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 1000
+                  desc:
+                    type: string
+                    nullable: true
+                  start_date:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  duration:
+                    type: string
+                    nullable: true
+                    maxLength: 200
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - name
+          description: ''
+    patch:
+      operationId: partial_updateProject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this project.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id006
+              properties:
+                name:
+                  type: string
+                  maxLength: 1000
+                desc:
+                  type: string
+                  nullable: true
+                start_date:
+                  type: string
+                  format: date-time
+                  nullable: true
+                duration:
+                  type: string
+                  nullable: true
+                  maxLength: 200
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                skills:
+                  type: array
+                  items:
+                    type: integer
+          application/x-www-form-urlencoded:
+            schema: *id006
+          multipart/form-data:
+            schema: *id006
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 1000
+                  desc:
+                    type: string
+                    nullable: true
+                  start_date:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  duration:
+                    type: string
+                    nullable: true
+                    maxLength: 200
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - name
+          description: ''
+    delete:
+      operationId: destroyProject
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this project.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/skill/:
+    get:
+      operationId: listSkills
+      description: ''
+      parameters:
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    full_name:
+                      type: string
+                      readOnly: true
+                    category:
+                      type: string
+                      readOnly: true
+                    name:
+                      type: string
+                      maxLength: 100
+                  required:
+                  - name
+          description: ''
+    post:
+      operationId: createSkill
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id007
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id007
+          multipart/form-data:
+            schema: *id007
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  full_name:
+                    type: string
+                    readOnly: true
+                  category:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                required:
+                - name
+          description: ''
+  /api/skill/{id}/:
+    get:
+      operationId: retrieveSkill
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this skill.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  full_name:
+                    type: string
+                    readOnly: true
+                  category:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                required:
+                - name
+          description: ''
+    put:
+      operationId: updateSkill
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this skill.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id008
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+              required:
+              - name
+          application/x-www-form-urlencoded:
+            schema: *id008
+          multipart/form-data:
+            schema: *id008
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  full_name:
+                    type: string
+                    readOnly: true
+                  category:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                required:
+                - name
+          description: ''
+    patch:
+      operationId: partial_updateSkill
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this skill.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id009
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+          application/x-www-form-urlencoded:
+            schema: *id009
+          multipart/form-data:
+            schema: *id009
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  full_name:
+                    type: string
+                    readOnly: true
+                  category:
+                    type: string
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                required:
+                - name
+          description: ''
+    delete:
+      operationId: destroySkill
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this skill.
+        schema:
+          type: string
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/v2/skills:
+    get:
+      operationId: listSkills
+      description: ''
+      parameters:
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    full_name:
+                      type: string
+                      readOnly: true
+                    category:
+                      type: string
+                      readOnly: true
+                    name:
+                      type: string
+                      maxLength: 100
+                  required:
+                  - name
+          description: ''
+  /api/v2/users:
+    get:
+      operationId: listUsers
+      description: ''
+      parameters:
+      - name: username
+        required: false
+        in: query
+        description: username
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    password:
+                      type: string
+                      maxLength: 128
+                    last_login:
+                      type: string
+                      format: date-time
+                      nullable: true
+                    is_superuser:
+                      type: boolean
+                      description: Designates that this user has all permissions without
+                        explicitly assigning them.
+                    username:
+                      type: string
+                      description: Required. 150 characters or fewer. Letters, digits
+                        and @/./+/-/_ only.
+                      pattern: ^[\w.@+-]+\Z
+                      maxLength: 150
+                    first_name:
+                      type: string
+                      maxLength: 30
+                    last_name:
+                      type: string
+                      maxLength: 150
+                    email:
+                      type: string
+                      format: email
+                      maxLength: 254
+                    is_staff:
+                      type: boolean
+                      description: Designates whether the user can log into this admin
+                        site.
+                    is_active:
+                      type: boolean
+                      description: Designates whether this user should be treated
+                        as active. Unselect this instead of deleting accounts.
+                    date_joined:
+                      type: string
+                      format: date-time
+                    groups:
+                      type: array
+                      items:
+                        type: integer
+                      description: The groups this user belongs to. A user will get
+                        all permissions granted to each of their groups.
+                    user_permissions:
+                      type: array
+                      items:
+                        type: integer
+                      description: Specific permissions for this user.
+                  required:
+                  - password
+                  - username
+          description: ''
+  /api/v2/persons:
+    get:
+      operationId: listPersons
+      description: ''
+      parameters:
+      - name: type
+        required: false
+        in: query
+        description: type
+        schema:
+          type: string
+          enum:
+          - S
+          - A
+          - I
+          - Z
+          - O
+      - name: location
+        required: false
+        in: query
+        description: location
+        schema:
+          type: string
+      - name: user
+        required: false
+        in: query
+        description: user
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                    skills_names:
+                      type: string
+                      readOnly: true
+                    type:
+                      enum:
+                      - S
+                      - A
+                      - I
+                      - Z
+                      - O
+                      nullable: true
+                    name:
+                      type: string
+                      maxLength: 100
+                    desc:
+                      type: string
+                      nullable: true
+                    location:
+                      type: string
+                      nullable: true
+                    avatar:
+                      type: string
+                      format: binary
+                      nullable: true
+                    resume:
+                      type: string
+                      format: binary
+                      nullable: true
+                    user:
+                      type: integer
+                    skills:
+                      type: array
+                      items:
+                        type: integer
+                    opportunities:
+                      type: array
+                      items:
+                        type: integer
+                  required:
+                  - id
+                  - name
+                  - user
+          description: ''
+  /api/v2/persons/{id}/:
+    get:
+      operationId: RetrievePerson
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique value identifying this person.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                  skills_names:
+                    type: string
+                    readOnly: true
+                  type:
+                    enum:
+                    - S
+                    - A
+                    - I
+                    - Z
+                    - O
+                    nullable: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  desc:
+                    type: string
+                    nullable: true
+                  location:
+                    type: string
+                    nullable: true
+                  avatar:
+                    type: string
+                    format: binary
+                    nullable: true
+                  resume:
+                    type: string
+                    format: binary
+                    nullable: true
+                  user:
+                    type: integer
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                  opportunities:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - id
+                - name
+                - user
+          description: ''
+    put:
+      operationId: UpdatePerson
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique value identifying this person.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id010
+              properties:
+                id:
+                  type: integer
+                type:
+                  enum:
+                  - S
+                  - A
+                  - I
+                  - Z
+                  - O
+                  nullable: true
+                name:
+                  type: string
+                  maxLength: 100
+                desc:
+                  type: string
+                  nullable: true
+                location:
+                  type: string
+                  nullable: true
+                avatar:
+                  type: string
+                  format: binary
+                  nullable: true
+                resume:
+                  type: string
+                  format: binary
+                  nullable: true
+                user:
+                  type: integer
+                skills:
+                  type: array
+                  items:
+                    type: integer
+                opportunities:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - id
+              - name
+              - user
+          application/x-www-form-urlencoded:
+            schema: *id010
+          multipart/form-data:
+            schema: *id010
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                  skills_names:
+                    type: string
+                    readOnly: true
+                  type:
+                    enum:
+                    - S
+                    - A
+                    - I
+                    - Z
+                    - O
+                    nullable: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  desc:
+                    type: string
+                    nullable: true
+                  location:
+                    type: string
+                    nullable: true
+                  avatar:
+                    type: string
+                    format: binary
+                    nullable: true
+                  resume:
+                    type: string
+                    format: binary
+                    nullable: true
+                  user:
+                    type: integer
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                  opportunities:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - id
+                - name
+                - user
+          description: ''
+    patch:
+      operationId: PartialUpdatePerson
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique value identifying this person.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id011
+              properties:
+                id:
+                  type: integer
+                type:
+                  enum:
+                  - S
+                  - A
+                  - I
+                  - Z
+                  - O
+                  nullable: true
+                name:
+                  type: string
+                  maxLength: 100
+                desc:
+                  type: string
+                  nullable: true
+                location:
+                  type: string
+                  nullable: true
+                avatar:
+                  type: string
+                  format: binary
+                  nullable: true
+                resume:
+                  type: string
+                  format: binary
+                  nullable: true
+                user:
+                  type: integer
+                skills:
+                  type: array
+                  items:
+                    type: integer
+                opportunities:
+                  type: array
+                  items:
+                    type: integer
+          application/x-www-form-urlencoded:
+            schema: *id011
+          multipart/form-data:
+            schema: *id011
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                  skills_names:
+                    type: string
+                    readOnly: true
+                  type:
+                    enum:
+                    - S
+                    - A
+                    - I
+                    - Z
+                    - O
+                    nullable: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  desc:
+                    type: string
+                    nullable: true
+                  location:
+                    type: string
+                    nullable: true
+                  avatar:
+                    type: string
+                    format: binary
+                    nullable: true
+                  resume:
+                    type: string
+                    format: binary
+                    nullable: true
+                  user:
+                    type: integer
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                  opportunities:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - id
+                - name
+                - user
+          description: ''
+    delete:
+      operationId: DestroyPerson
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique value identifying this person.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/v2/meetings:
+    get:
+      operationId: listMeetings
+      description: ''
+      parameters:
+      - name: id
+        required: false
+        in: query
+        description: id
+        schema:
+          type: string
+      - name: number
+        required: false
+        in: query
+        description: number
+        schema:
+          type: string
+      - name: participants
+        required: false
+        in: query
+        description: participants
+        schema:
+          type: string
+      - name: time
+        required: false
+        in: query
+        description: time
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    name:
+                      type: string
+                      maxLength: 100
+                    number:
+                      type: string
+                    time:
+                      type: string
+                      format: date-time
+                    participants:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                  - name
+                  - number
+                  - time
+                  - participants
+          description: ''
+  /api/v2/meetings/{id}/:
+    get:
+      operationId: RetrieveMeeting
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this meeting.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  number:
+                    type: string
+                  time:
+                    type: string
+                    format: date-time
+                  participants:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - name
+                - number
+                - time
+                - participants
+          description: ''
+    put:
+      operationId: UpdateMeeting
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this meeting.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id012
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                number:
+                  type: string
+                time:
+                  type: string
+                  format: date-time
+                participants:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - name
+              - number
+              - time
+              - participants
+          application/x-www-form-urlencoded:
+            schema: *id012
+          multipart/form-data:
+            schema: *id012
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  number:
+                    type: string
+                  time:
+                    type: string
+                    format: date-time
+                  participants:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - name
+                - number
+                - time
+                - participants
+          description: ''
+    patch:
+      operationId: PartialUpdateMeeting
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this meeting.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id013
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                number:
+                  type: string
+                time:
+                  type: string
+                  format: date-time
+                participants:
+                  type: array
+                  items:
+                    type: string
+          application/x-www-form-urlencoded:
+            schema: *id013
+          multipart/form-data:
+            schema: *id013
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  number:
+                    type: string
+                  time:
+                    type: string
+                    format: date-time
+                  participants:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - name
+                - number
+                - time
+                - participants
+          description: ''
+    delete:
+      operationId: DestroyMeeting
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this meeting.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/v2/accounts/profile/:
+    get:
+      operationId: listDefaultUserProfiles
+      description: Get or set user profile.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    username:
+                      type: string
+                      description: Required. 150 characters or fewer. Letters, digits
+                        and @/./+/-/_ only.
+                      pattern: ^[\w.@+-]+\Z
+                      maxLength: 150
+                    first_name:
+                      type: string
+                      maxLength: 30
+                    last_name:
+                      type: string
+                      maxLength: 150
+                    email:
+                      type: string
+                      format: email
+                      maxLength: 254
+                  required:
+                  - username
+          description: ''
+    post:
+      operationId: CreateDefaultUserProfile
+      description: Get or set user profile.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id014
+              properties:
+                username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+              required:
+              - username
+          application/x-www-form-urlencoded:
+            schema: *id014
+          multipart/form-data:
+            schema: *id014
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                required:
+                - username
+          description: ''
+    put:
+      operationId: UpdateDefaultUserProfile
+      description: Get or set user profile.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id015
+              properties:
+                username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+              required:
+              - username
+          application/x-www-form-urlencoded:
+            schema: *id015
+          multipart/form-data:
+            schema: *id015
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                required:
+                - username
+          description: ''
+    patch:
+      operationId: PartialUpdateDefaultUserProfile
+      description: Get or set user profile.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id016
+              properties:
+                username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+          application/x-www-form-urlencoded:
+            schema: *id016
+          multipart/form-data:
+            schema: *id016
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                required:
+                - username
+          description: ''
+  /forum/:
+    get:
+      operationId: getPostListPost
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 50
+                  markdown:
+                    type: string
+                    nullable: true
+                    maxLength: 500
+                  content:
+                    type: string
+                    maxLength: 1000
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  poster:
+                    type: string
+                  category:
+                    type: integer
+                    nullable: true
+                required:
+                - title
+                - content
+                - poster
+          description: ''
+    post:
+      operationId: createPost
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id017
+              properties:
+                title:
+                  type: string
+                  maxLength: 50
+                markdown:
+                  type: string
+                  nullable: true
+                  maxLength: 500
+                content:
+                  type: string
+                  maxLength: 1000
+                isDeleted:
+                  type: boolean
+                poster:
+                  type: string
+                category:
+                  type: integer
+                  nullable: true
+              required:
+              - title
+              - content
+              - poster
+          application/x-www-form-urlencoded:
+            schema: *id017
+          multipart/form-data:
+            schema: *id017
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 50
+                  markdown:
+                    type: string
+                    nullable: true
+                    maxLength: 500
+                  content:
+                    type: string
+                    maxLength: 1000
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  poster:
+                    type: string
+                  category:
+                    type: integer
+                    nullable: true
+                required:
+                - title
+                - content
+                - poster
+          description: ''
+  /forum/{id}/:
+    get:
+      operationId: getCurrentPostPost
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this post.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 50
+                  markdown:
+                    type: string
+                    nullable: true
+                    maxLength: 500
+                  content:
+                    type: string
+                    maxLength: 1000
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  poster:
+                    type: string
+                  category:
+                    type: integer
+                    nullable: true
+                required:
+                - title
+                - content
+                - poster
+          description: ''
+    put:
+      operationId: updatePost
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this post.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id018
+              properties:
+                title:
+                  type: string
+                  maxLength: 50
+                markdown:
+                  type: string
+                  nullable: true
+                  maxLength: 500
+                content:
+                  type: string
+                  maxLength: 1000
+                isDeleted:
+                  type: boolean
+                poster:
+                  type: string
+                category:
+                  type: integer
+                  nullable: true
+              required:
+              - title
+              - content
+              - poster
+          application/x-www-form-urlencoded:
+            schema: *id018
+          multipart/form-data:
+            schema: *id018
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 50
+                  markdown:
+                    type: string
+                    nullable: true
+                    maxLength: 500
+                  content:
+                    type: string
+                    maxLength: 1000
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  poster:
+                    type: string
+                  category:
+                    type: integer
+                    nullable: true
+                required:
+                - title
+                - content
+                - poster
+          description: ''
+    delete:
+      operationId: deletePostPost
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this post.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /myPosts/{poster}/:
+    get:
+      operationId: getMyPostsListPost
+      description: ''
+      parameters:
+      - name: poster
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 50
+                  markdown:
+                    type: string
+                    nullable: true
+                    maxLength: 500
+                  content:
+                    type: string
+                    maxLength: 1000
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  poster:
+                    type: string
+                  category:
+                    type: integer
+                    nullable: true
+                required:
+                - title
+                - content
+                - poster
+          description: ''
+  /forum/topics/:
+    get:
+      operationId: getTopicListForumCategory
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  desc:
+                    type: string
+                  order:
+                    type: integer
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                required:
+                - name
+                - desc
+                - order
+          description: ''
+  /reply/:
+    get:
+      operationId: getCommentListReply
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  markdown:
+                    type: string
+                    nullable: true
+                  content:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  parent_id:
+                    type: integer
+                  replyTo_id:
+                    type: integer
+                  post:
+                    type: integer
+                  poster:
+                    type: string
+                required:
+                - content
+                - post
+                - poster
+          description: ''
+    post:
+      operationId: createReply
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id019
+              properties:
+                markdown:
+                  type: string
+                  nullable: true
+                content:
+                  type: string
+                isDeleted:
+                  type: boolean
+                parent_id:
+                  type: integer
+                replyTo_id:
+                  type: integer
+                post:
+                  type: integer
+                poster:
+                  type: string
+              required:
+              - content
+              - post
+              - poster
+          application/x-www-form-urlencoded:
+            schema: *id019
+          multipart/form-data:
+            schema: *id019
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  markdown:
+                    type: string
+                    nullable: true
+                  content:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  parent_id:
+                    type: integer
+                  replyTo_id:
+                    type: integer
+                  post:
+                    type: integer
+                  poster:
+                    type: string
+                required:
+                - content
+                - post
+                - poster
+          description: ''
+  /reply/reply/:
+    get:
+      operationId: getCurrentReplyListReply
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  markdown:
+                    type: string
+                    nullable: true
+                  content:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  parent_id:
+                    type: integer
+                  replyTo_id:
+                    type: integer
+                  post:
+                    type: integer
+                  poster:
+                    type: string
+                required:
+                - content
+                - post
+                - poster
+          description: ''
+    post:
+      operationId: createReply
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id020
+              properties:
+                markdown:
+                  type: string
+                  nullable: true
+                content:
+                  type: string
+                isDeleted:
+                  type: boolean
+                parent_id:
+                  type: integer
+                replyTo_id:
+                  type: integer
+                post:
+                  type: integer
+                poster:
+                  type: string
+              required:
+              - content
+              - post
+              - poster
+          application/x-www-form-urlencoded:
+            schema: *id020
+          multipart/form-data:
+            schema: *id020
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  markdown:
+                    type: string
+                    nullable: true
+                  content:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  isDeleted:
+                    type: boolean
+                  parent_id:
+                    type: integer
+                  replyTo_id:
+                    type: integer
+                  post:
+                    type: integer
+                  poster:
+                    type: string
+                required:
+                - content
+                - post
+                - poster
+          description: ''
+  /api/v2/persons/new:
+    post:
+      operationId: CreatePerson
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id021
+              properties:
+                id:
+                  type: integer
+                type:
+                  enum:
+                  - S
+                  - A
+                  - I
+                  - Z
+                  - O
+                  nullable: true
+                name:
+                  type: string
+                  maxLength: 100
+                desc:
+                  type: string
+                  nullable: true
+                location:
+                  type: string
+                  nullable: true
+                avatar:
+                  type: string
+                  format: binary
+                  nullable: true
+                resume:
+                  type: string
+                  format: binary
+                  nullable: true
+                user:
+                  type: integer
+                skills:
+                  type: array
+                  items:
+                    type: integer
+                opportunities:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - id
+              - name
+              - user
+          application/x-www-form-urlencoded:
+            schema: *id021
+          multipart/form-data:
+            schema: *id021
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                  skills_names:
+                    type: string
+                    readOnly: true
+                  type:
+                    enum:
+                    - S
+                    - A
+                    - I
+                    - Z
+                    - O
+                    nullable: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  desc:
+                    type: string
+                    nullable: true
+                  location:
+                    type: string
+                    nullable: true
+                  avatar:
+                    type: string
+                    format: binary
+                    nullable: true
+                  resume:
+                    type: string
+                    format: binary
+                    nullable: true
+                  user:
+                    type: integer
+                  skills:
+                    type: array
+                    items:
+                      type: integer
+                  opportunities:
+                    type: array
+                    items:
+                      type: integer
+                required:
+                - id
+                - name
+                - user
+          description: ''
+  /api/v2/meetings/new:
+    post:
+      operationId: CreateMeeting
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id022
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                number:
+                  type: string
+                time:
+                  type: string
+                  format: date-time
+                participants:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - name
+              - number
+              - time
+              - participants
+          application/x-www-form-urlencoded:
+            schema: *id022
+          multipart/form-data:
+            schema: *id022
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  number:
+                    type: string
+                  time:
+                    type: string
+                    format: date-time
+                  participants:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - name
+                - number
+                - time
+                - participants
+          description: ''
+  /api/v2/accounts/register/:
+    post:
+      operationId: CreateDefaultRegisterUser
+      description: Register new user.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id023
+              properties:
+                username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+\Z
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+                email:
+                  type: string
+                  format: email
+                  maxLength: 254
+                password:
+                  type: string
+                  maxLength: 128
+                password_confirm:
+                  type: string
+                  writeOnly: true
+              required:
+              - username
+              - password
+              - password_confirm
+          application/x-www-form-urlencoded:
+            schema: *id023
+          multipart/form-data:
+            schema: *id023
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+\Z
+                    maxLength: 150
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    maxLength: 254
+                  password:
+                    type: string
+                    maxLength: 128
+                required:
+                - username
+                - password
+          description: ''
+  /api/v2/accounts/verify-registration/:
+    post:
+      operationId: CreateVerifyRegistration
+      description: Verify registration via signature.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id024
+              properties:
+                user_id:
+                  type: string
+                timestamp:
+                  type: integer
+                signature:
+                  type: string
+              required:
+              - user_id
+              - timestamp
+              - signature
+          application/x-www-form-urlencoded:
+            schema: *id024
+          multipart/form-data:
+            schema: *id024
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user_id:
+                    type: string
+                  timestamp:
+                    type: integer
+                  signature:
+                    type: string
+                required:
+                - user_id
+                - timestamp
+                - signature
+          description: ''
+  /api/v2/accounts/send-reset-password-link/:
+    post:
+      operationId: CreateDefaultSendResetPasswordLink
+      description: Send email with reset password link.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id025
+              properties:
+                login:
+                  type: string
+              required:
+              - login
+          application/x-www-form-urlencoded:
+            schema: *id025
+          multipart/form-data:
+            schema: *id025
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  login:
+                    type: string
+                required:
+                - login
+          description: ''
+  /api/v2/accounts/reset-password/:
+    post:
+      operationId: CreateResetPassword
+      description: Reset password, given the signature and timestamp from the link.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id026
+              properties:
+                user_id:
+                  type: string
+                timestamp:
+                  type: integer
+                signature:
+                  type: string
+                password:
+                  type: string
+              required:
+              - user_id
+              - timestamp
+              - signature
+              - password
+          application/x-www-form-urlencoded:
+            schema: *id026
+          multipart/form-data:
+            schema: *id026
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user_id:
+                    type: string
+                  timestamp:
+                    type: integer
+                  signature:
+                    type: string
+                  password:
+                    type: string
+                required:
+                - user_id
+                - timestamp
+                - signature
+                - password
+          description: ''
+  /api/v2/accounts/login/:
+    post:
+      operationId: CreateDefaultLogin
+      description: Logs in the user via given login and password.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id027
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+              required:
+              - login
+              - password
+          application/x-www-form-urlencoded:
+            schema: *id027
+          multipart/form-data:
+            schema: *id027
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  login:
+                    type: string
+                  password:
+                    type: string
+                required:
+                - login
+                - password
+          description: ''
+  /api/v2/accounts/logout/:
+    post:
+      operationId: CreateLogout
+      description: 'Logs out the user. returns an error if the user is not
+
+        authenticated.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id028
+              properties:
+                revoke_token:
+                  type: boolean
+          application/x-www-form-urlencoded:
+            schema: *id028
+          multipart/form-data:
+            schema: *id028
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  revoke_token:
+                    type: boolean
+          description: ''
+  /api/v2/accounts/change-password/:
+    post:
+      operationId: CreateChangePassword
+      description: Change the user password.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id029
+              properties:
+                old_password:
+                  type: string
+                password:
+                  type: string
+                password_confirm:
+                  type: string
+                  writeOnly: true
+              required:
+              - old_password
+              - password
+              - password_confirm
+          application/x-www-form-urlencoded:
+            schema: *id029
+          multipart/form-data:
+            schema: *id029
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  old_password:
+                    type: string
+                  password:
+                    type: string
+                required:
+                - old_password
+                - password
+          description: ''
+  /api/v2/accounts/register-email/:
+    post:
+      operationId: CreateDefaultRegisterEmail
+      description: Register new email.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id030
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+              - email
+          application/x-www-form-urlencoded:
+            schema: *id030
+          multipart/form-data:
+            schema: *id030
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  email:
+                    type: string
+                    format: email
+                required:
+                - email
+          description: ''
+  /api/v2/accounts/verify-email/:
+    post:
+      operationId: CreateVerifyEmail
+      description: Verify email via signature.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id031
+              properties:
+                user_id:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                timestamp:
+                  type: integer
+                signature:
+                  type: string
+              required:
+              - user_id
+              - email
+              - timestamp
+              - signature
+          application/x-www-form-urlencoded:
+            schema: *id031
+          multipart/form-data:
+            schema: *id031
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  user_id:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+                  timestamp:
+                    type: integer
+                  signature:
+                    type: string
+                required:
+                - user_id
+                - email
+                - timestamp
+                - signature
+          description: ''
