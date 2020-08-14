@@ -12,6 +12,10 @@ wget https://urler.s3-ap-southeast-2.amazonaws.com/nltk_data.zip
 unzip nltk_data.zip
 ```
 
+```
+git clone https://github.com/Mate-work/Project-Integration.git
+```
+
 ``` 
 cd forastudent  
 pip install virtualenv  
