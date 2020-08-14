@@ -1,3 +1,6 @@
+// Skill Recommendation Module
+// Screens user's profile with other users and projects and rcommends a skills
+// along with course links related to that skill
 import React from 'react';
 import { withStyles }  from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -6,6 +9,7 @@ import axios from 'axios';
 
 var  flag = false // console.log flag
 
+// styles used
 const useStyles = theme => ({
   root: {
     display: 'flex',
@@ -26,7 +30,7 @@ const useStyles = theme => ({
   },
 });
 
-
+// welcome text
 const WelcomeText = props => {
   return (
     <div style={{fontFamily: 'Roboto'}}>
@@ -47,7 +51,7 @@ const WelcomeText = props => {
   );
 }
 
-
+// Skill component
 class Skill extends React.Component {
   constructor(props) {
       super(props);
@@ -107,7 +111,7 @@ class Skill extends React.Component {
   }
 };
 
-
+// Skill Recommend component
 class SkillRecommend extends React.Component {
   constructor(props) {
      super(props);
