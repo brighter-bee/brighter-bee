@@ -11,6 +11,8 @@ import {Book, Build, Create, Email, Timelapse, Timer} from "@material-ui/icons";
 import Skills from "./Skills";
 import Typography from '@material-ui/core/Typography';
 
+
+// Add project page
 class NewProject extends Component {
     constructor() {
         super();

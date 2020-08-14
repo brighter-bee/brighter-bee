@@ -18,6 +18,7 @@ import django_filters
 
 
 class InListFilter(django_filters.Filter):
+    """multiple items filter"""
     def filter(self, qs, value):
         if value:
             return qs.filter(**{self.field_name + '__in': value.split(',')})
@@ -25,8 +26,13 @@ class InListFilter(django_filters.Filter):
 
 
 class MultiIdFilterSet(django_filters.FilterSet):
+    """use InListFilter"""
     id = InListFilter(field_name='id')
 
+
+# General backend APIs
+# these APIs do not need as much customization
+# other customized and refined APIs are in separate files
 
 class OpportunityViewSet(viewsets.ModelViewSet):
     queryset = Opportunity.objects.all()

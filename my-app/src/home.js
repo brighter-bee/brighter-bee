@@ -217,6 +217,7 @@ function ClippedDrawer(props) {
         }
     }, [props.location]);
 
+    // Register routes
     const ALL_PAGES = [
 
         {name: 'Find Jobs', icon: <WorkIcon/>, urlVal: url + '/findjobs'},

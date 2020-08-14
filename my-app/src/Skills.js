@@ -4,6 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 
+// Skill selection autocomplete dropdown component
 export default function Skills(props) {
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);

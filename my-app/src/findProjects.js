@@ -9,6 +9,8 @@ import CardContent from '@material-ui/core/CardContent';
 
 var  flag = false // console.log flag
 
+
+// Find Projects Page CSS Styles
 const useStyles = theme => ({
   root: {
     display: 'flex',
@@ -31,6 +33,7 @@ const useStyles = theme => ({
 });
 
 
+// Project Component
 class Project extends React.Component {
   constructor(props) {
       super(props);
@@ -139,7 +142,7 @@ class Project extends React.Component {
 };
 
 
-
+// Find Projects Page
 class ProjectRecommend extends React.Component {
   constructor(props) {
      super(props);

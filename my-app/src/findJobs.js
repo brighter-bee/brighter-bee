@@ -2,6 +2,7 @@ import React from 'react';
 import JobCard from './jobCard'
 import Typography from '@material-ui/core/Typography';
 
+// Find Jobs Page
 export default function FindJobsPage(props){
 
     const refreshPage = () => {

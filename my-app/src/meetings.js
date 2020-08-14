@@ -9,6 +9,8 @@ import Button from "@material-ui/core/Button";
 
 const animatedComponents = makeAnimated();
 
+
+// Scheduled meetings page
 class Meetings extends React.Component {
 
 	constructor(props) {

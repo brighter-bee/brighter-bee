@@ -8,6 +8,8 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from '@material-ui/icons/Search';
 import Paper from "@material-ui/core/Paper";
 
+
+// Find mentors page
 class Mentors extends Component {
     constructor() {
         super();
@@ -20,6 +22,7 @@ class Mentors extends Component {
         this.searchCard = this.searchCard.bind(this);
     }
 
+    // get all users' info
     componentDidMount() {
         axios.get('http://localhost:8000/api/v2/persons')
             .then((response) => {
@@ -43,6 +46,7 @@ class Mentors extends Component {
         this.searchCard();
     }
 
+    // search user based on keyword
     searchCard() {
         let keyword = this.state.search.toLowerCase();
         let all = this.state.all;

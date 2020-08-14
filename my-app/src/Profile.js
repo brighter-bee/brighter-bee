@@ -16,6 +16,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import {Build, Create, DescriptionOutlined, Person, PersonPin, Work} from "@material-ui/icons";
 import Skills from "./Skills";
 
+
+// User profile page
 class Profile extends Component {
     constructor() {
         super();
@@ -41,6 +43,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        // get user profile information
         axios.get('http://localhost:8000/api/v2/persons?user=' + localStorage.getItem('user'))
             .then((response) => {
                 console.log(response);
@@ -76,6 +79,7 @@ class Profile extends Component {
     updateProfile(e) {
         e.preventDefault();
         console.info(this.state.skills);
+        // update user information
         axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', this.state)
             .then((response) => {
                     console.log(response);
@@ -91,6 +95,7 @@ class Profile extends Component {
             "resume",
             this.resume
         );
+        // update user resume file
         axios.patch('http://localhost:8000/api/v2/persons/' + localStorage.getItem('user') + '/', data)
             .then((response) => {
                     console.log(response);

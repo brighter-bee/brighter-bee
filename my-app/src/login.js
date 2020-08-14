@@ -26,8 +26,8 @@ class LoginPage extends React.Component {
     }
 
     LoginHandler = () => {
-        // check if user and password exists in database
         console.log("Login action fired");
+        // Check credentials
         axios.post('http://localhost:8000/api/v2/accounts/login/', this.state.userData)
             .then((response) => {
                 console.log(response);
@@ -40,25 +40,6 @@ class LoginPage extends React.Component {
                 console.log(error);
                 this.setState({alertOpen: true});
             });
-        // .then(res=>{
-        //     if (res.data.data.length){
-        //         // if it does -> redirect to HomePage
-        //         // auth.setUserDetails(this.state.userData.userName);
-        //         // auth.login(()=>{
-        //         //     this.props.history.push('/home')
-        //         // });
-        // 		console.log("Login success");
-        //     } else{
-        //         // if it does not -> throw error
-        //         console.log("Username or password incorrect");
-        //         console.log(res.data.data.length);
-        //         this.setState({alertOpen:true});
-        //         console.log(this.state);
-        //     }
-        // })
-        // .catch(error=>{
-        //     console.log(error)
-        // })
     };
 
     HandleOnBlur(event) {

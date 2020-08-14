@@ -5,6 +5,7 @@ import Pagination from "@material-ui/lab/Pagination/Pagination";
 import PostDetailDialog from "./posts_and_detail";
 
 
+// Forum page
 class ForumsPage extends React.Component {
     constructor(props){
         super(props);
@@ -31,7 +32,7 @@ class ForumsPage extends React.Component {
         })
     }
 
-    //event when page changes
+    // event when page changes
     handlePageChange(event, value) {
         this.setState({
             currentPage: value,

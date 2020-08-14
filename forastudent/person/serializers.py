@@ -7,6 +7,8 @@ from collections import defaultdict
 
 flag = True
 
+# serialize data from database to web and from web to database
+
 
 class SkillSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()

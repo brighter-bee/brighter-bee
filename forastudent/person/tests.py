@@ -5,6 +5,7 @@ from .models import *
 
 
 class MeetingCreateTestCase(APITestCase):
+    """test case for backend api"""
 
     def test_create_meeting(self):
         initial_meeting_count = Meeting.objects.count()

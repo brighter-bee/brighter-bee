@@ -28,6 +28,8 @@ import person.project_view
 
 from person.forum_view import PostView, CommentView, TopicView
 
+# The APIs' urls are listed here
+
 router = routers.DefaultRouter()
 router.register(r'opportunity', person.api_views.OpportunityViewSet)
 router.register(r'project', person.api_views.ProjectViewSet)
@@ -52,7 +54,6 @@ urlpatterns = [
     path('skill-recommend/<int:person_id>', person.skill_view.recommend_skill),  # flask url for skill recommendation
     path('project-recommend/<int:person_id>', person.project_view.recommend_project),
     # path('my-skill-recommend', person.api_views.SkillRecommendList.as_view()), # django url for skill recommendation
-
     # endpoint url for the forum module
     path('forum/', PostView.as_view({"get": "getPostList", "post": "create"})),
     path('forum/<int:pk>/', PostView.as_view({"get": "getCurrentPost", "delete": "deletePost", "put": "update"})),
@@ -62,4 +63,5 @@ urlpatterns = [
     path('reply/reply/', CommentView.as_view({"get": "getCurrentReplyList", "post": "create"}))
 ]
 
+# The url for user upload files path
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

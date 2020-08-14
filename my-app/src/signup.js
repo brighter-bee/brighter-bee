@@ -24,7 +24,7 @@ class SignUpPage extends React.Component {
     }
 
     SignUpHandler = () => {
-        // check if entry exists in database
+        // register user credentials
         console.log(this.state);
         axios.post('http://localhost:8000/api/v2/accounts/register/', this.state)
             .then((response) => {
@@ -34,6 +34,7 @@ class SignUpPage extends React.Component {
                     "name": this.state.username,
                     "user": response.data.id,
                 };
+                // create user profile
                 axios.post('http://localhost:8000/api/v2/persons/new', data)
                     .then((response) => {
                         console.log(response);

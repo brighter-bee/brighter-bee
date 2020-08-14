@@ -11,6 +11,7 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from '@material-ui/core/TextField';
 
 
+// Create meeting page
 const animatedComponents = makeAnimated();
 class AddMeeting extends React.Component {
 

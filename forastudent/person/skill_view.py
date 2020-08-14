@@ -16,6 +16,7 @@ category_skill_dict = defaultdict(list)
 
 @require_http_methods(["GET"])
 def recommend_skill(request, person_id):
+    """recommend skill api"""
 
     # user id is same as person id
 

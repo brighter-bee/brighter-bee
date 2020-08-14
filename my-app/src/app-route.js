@@ -5,6 +5,8 @@ import SignUpPage from './signup';
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
+
+// Register app routes
 class LandingPage extends React.Component {
     render() {
         return (

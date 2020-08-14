@@ -26,6 +26,7 @@ def get_page_count(pdf_file):
 
 @require_http_methods(["GET"])
 def recommend_project(request, person_id):
+    """recommend projects api"""
     # NLP LOGIC STARTS HERE
     projs = requests.get('http://localhost:8000/api/project/')
     projs = projs.json()

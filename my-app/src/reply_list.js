@@ -16,7 +16,6 @@ import MailIcon from '@material-ui/icons/Mail';
 import Pagination from "@material-ui/lab/Pagination/Pagination";
 
 
-// export default function CreatePostDialog() {
 class CommentList extends React.Component {
     constructor(props){
         super(props);

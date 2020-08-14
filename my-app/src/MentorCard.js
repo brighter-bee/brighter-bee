@@ -5,6 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from "@material-ui/core/Grid";
 
+
+// Mentor card component
 const useStyles = makeStyles({
     root: {
         width: '100%',
