@@ -1,6 +1,22 @@
 # Brighter Bee
   
-This is a web app for professional development and professional connection for students
+This is a web app (formally known as 'For A Student') for professional development and professional connection for students.
+
+## FAQ
+
+Q: How to view your source code?
+
+A: We prefer you to use PyCharm IDE
+
+
+Q: What are the main classes?
+
+A: The general APIs are in forastudent/person/api_views.py
+And the customized APIs are in
+forastudent/person/forum_views.py
+forastudent/person/project_views.py
+forastudent/person/skill_views.py
+forastudent/person/createMeeting.py
   
 ## Deployment instructions 
 
@@ -22,8 +38,9 @@ git clone https://github.com/Mate-work/Project-Integration.git
 cd Project-Integration
 ```
 
-Set up a virtual environment 
-and install the required Python packages
+Set up a Python virtual environment
+and install the required Python packages.
+We prefer you to use < Python3.8
 ``` 
 cd forastudent  
 pip install virtualenv  
@@ -31,11 +48,15 @@ virtualenv venv --python=python3.6
 source venv/bin/activate  
 pip install -r requirements.txt  
 ```
+If pip successfully installed all the required packages, that is a success!
 
-Run the backend server
+Run the backend server,
 ```
 python manage.py runserver  
 ```  
+Go to http://localhost:8000/
+If you see a list of urls in a 404 error page, that is a success!
+Please do not panic about the 404 page, since we are not using this URL as an API
   
 ### Frontend  
   
@@ -44,19 +65,21 @@ Install the required JavaScript packages
 cd my-app  
 npm install 
 ```
+If npm does not explicitly give error and error log, that is a success!
 
 Run the front server
 (Wait several seconds for the code to be compiled)
 ```
 npm start  
-```  
+```
+If you see the login page, that is a success!  
 
 
 
 ## User guide and main features
 
 ### Find Jobs and Save Jobs
-To find a job , user can click on the ‘Find Jobs’ Panel and search for a relevant job title in the search box on the top and click on ‘Search’ button to view the response from an external Job delivery API - Adzuna.
+To find a job, user can click on the ‘Find Jobs’ Panel and search for a relevant job title in the search box on the top and click on ‘Search’ button to view the response from an external Job delivery API - Adzuna.
 The job ads are displayed in card format one after the other and the card contains information about the job which helps the user decide which job is to be applied by clicking on the ‘Apply’ button on the card which wll redirect the user on to the corresponding Adzuna job listing.
 The user can also save any of the the search results and choose to apply later from the ‘Saved Jobs’ section, and once the user 
 has applied on that particular listing, he/she can choose to delete that particular job from his deck of saved jobs by clicking on the
